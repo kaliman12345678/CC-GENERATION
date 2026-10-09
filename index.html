@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creador CC — Generación y Exportación Oficial a PDF</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+  <header class="app-navbar">
+    <div class="brand-container">
+      <div class="brand-icon">CC</div>
+      <div>
+        <div class="brand-title">CREADOR CC</div>
+        <div class="brand-subtitle">Plantilla Maestra Oficial • Exportación Fiel a PDF</div>
+      </div>
+    </div>
+    <nav class="nav-tabs">
+      <button class="nav-tab-btn active" data-target="view-generator">
+        <span>📄 Generador Individual</span>
+      </button>
+      <button class="nav-tab-btn" data-target="view-bulk">
+        <span>📑 Generación Masiva (Lotes)</span>
+      </button>
+      <button class="nav-tab-btn" data-target="view-history">
+        <span>🗄️ Historial de Documentos</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="app-main">
+
+    <!-- BARRA OBLIGATORIA DE ACCIONES -->
+    <div class="mandatory-actions-card">
+      <div class="actions-badge-title">
+        <span class="actions-badge">Acciones Obligatorias</span>
+        <div>
+          <strong style="color:#003366; font-size: 15px;">Documento Listo:</strong>
+          <span id="computed-filename" style="font-family: monospace; font-size: 13px; font-weight: bold; background: #e2e8f0; padding: 2px 8px; border-radius: 4px; margin-left: 6px; color: #0f172a;">COMPRAMAS_9004214946.pdf</span>
+        </div>
+      </div>
+
+      <div class="actions-group">
+        <button id="btn-mandatory-preview" class="btn-mandatory btn-preview">
+          <span>👁️ [ VISTA PREVIA ]</span>
+        </button>
+
+        <button id="btn-mandatory-edit" class="btn-mandatory btn-edit">
+          <span>✏️ [ EDITAR ]</span>
+        </button>
+
+        <button id="btn-mandatory-export" class="btn-mandatory btn-export">
+          <span>📑 [ EXPORTAR PDF ]</span>
+        </button>
+
+        <button id="btn-mandatory-download" class="btn-mandatory btn-download">
+          <span>⬇️ [ DESCARGAR PDF ]</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 1: GENERADOR INDIVIDUAL -->
+    <section id="view-generator" class="view-section active">
+      <div class="generator-grid">
+        
+        <!-- PANEL DE EDICIÓN / FORMULARIO -->
+        <div class="form-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Datos del Documento</h2>
+            <span style="font-size: 12px; color: #16a34a; font-weight: 700;">✓ Plantilla Maestra Activa</span>
+          </div>
+
+          <form id="document-form" onsubmit="return false;">
+            
+            <div class="form-group">
+              <label class="form-label" for="field-camaraSeleccionada">Cámara de Comercio (Copia Automática del Estilo Oficial):</label>
+              <select id="field-camaraSeleccionada" class="form-control" style="font-weight: 700; color: #003366; background: #e0f2fe; border-color: #0284c7;">
+                <option value="bucaramanga" selected>Cámara de Comercio de Bucaramanga (Santander)</option>
+                <option value="barranquilla">Cámara de Comercio de Barranquilla (Atlántico)</option>
+                <option value="medellin">Cámara de Comercio de Medellín para Antioquia</option>
+                <option value="cartagena">Cámara de Comercio de Cartagena (Bolívar)</option>
+                <option value="oriente_antioqueno">Cámara de Comercio del Oriente Antioqueño (Rionegro)</option>
+                <option value="cali">Cámara de Comercio de Cali (CompraMas / Valle)</option>
+                <option value="manizales">Cámara de Comercio de Manizales por Caldas</option>
+                <option value="uraba">Cámara de Comercio de Urabá (Apartadó)</option>
+              </select>
+            </div>
+
+            <div class="form-accordion-title">1. Encabezado Oficial</div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="field-codigoVerificacion">Código Verificación:</label>
+                <input type="text" id="field-codigoVerificacion" class="form-control" value="0822NXIH99">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="field-fechaExpedicion">Fecha Expedición:</label>
+                <input type="text" id="field-fechaExpedicion" class="form-control" value="12/04/2022 10:03:42 am">
+              </div>
+            </div>
+
+            <div class="form-accordion-title">2. Identificación y Domicilio</div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-razonSocial">Razón Social:</label>
+              <input type="text" id="field-razonSocial" class="form-control" value="CompraMas">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="field-nit">NIT:</label>
+                <input type="text" id="field-nit" class="form-control" value="900421494-6">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="field-establecimiento">Establecimiento de Comercio:</label>
+                <input type="text" id="field-establecimiento" class="form-control" value="CompraMas">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-domicilioPrincipal">Domicilio Principal:</label>
+              <input type="text" id="field-domicilioPrincipal" class="form-control" value="Jamundi">
+            </div>
+
+            <div class="form-accordion-title">3. Matrícula Mercantil</div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="field-matricula">Matrícula No.:</label>
+                <input type="text" id="field-matricula" class="form-control" value="812832-16">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="field-ultimoAnoRenovado">Último Año Renovado:</label>
+                <input type="text" id="field-ultimoAnoRenovado" class="form-control" value="2022">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="field-fechaMatricula">Fecha de Matrícula:</label>
+                <input type="text" id="field-fechaMatricula" class="form-control" value="17 de marzo de 2011">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="field-fechaRenovacion">Fecha de Renovación:</label>
+                <input type="text" id="field-fechaRenovacion" class="form-control" value="25 de marzo de 2022">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-grupoNiif">Grupo NIIF:</label>
+              <input type="text" id="field-grupoNiif" class="form-control" value="Grupo 2">
+            </div>
+
+            <div class="form-accordion-title">4. Ubicación y Contacto</div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-direccion">Dirección Domicilio Principal:</label>
+              <input type="text" id="field-direccion" class="form-control" value="CL 9 # 56-69 of 201">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="field-ciudadCompleta">Municipio:</label>
+                <input type="text" id="field-ciudadCompleta" class="form-control" value="Cali - Valle">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="field-email">Correo Electrónico:</label>
+                <input type="text" id="field-email" class="form-control" value="administracion@compramas.space">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="field-telefono">Teléfono Comercial 1:</label>
+                <input type="text" id="field-telefono" class="form-control" value="3006864940">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="field-telefono2">Teléfono Comercial 2:</label>
+                <input type="text" id="field-telefono2" class="form-control" value="No reportó">
+              </div>
+            </div>
+
+            <div class="form-accordion-title">5. Notificación Judicial</div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-direccionJudicial">Dirección Notificación Judicial:</label>
+              <input type="text" id="field-direccionJudicial" class="form-control" value="CL 9 # 56-69 of 201">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="field-municipioJudicial">Municipio Notificación:</label>
+                <input type="text" id="field-municipioJudicial" class="form-control" value="Cali - Valle del Cauca">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="field-emailNotificacion">Correo Notificación Judicial:</label>
+                <input type="text" id="field-emailNotificacion" class="form-control" value="administracion@compramas.space">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-telefonoJudicial">Teléfono Notificación:</label>
+              <input type="text" id="field-telefonoJudicial" class="form-control" value="3006864940">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="field-textoNotificacion">Párrafo de Notificación Autorizada:</label>
+              <textarea id="field-textoNotificacion" class="form-control" rows="4">La persona jurídica Aura y Home SI autorizó recibir notificaciones personales a  través de correo electrónico, de conformidad con lo establecido en los artículos 291  del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de  lo Contencioso administrativo.</textarea>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- PANEL DE VISTA PREVIA INTEGRADA -->
+        <div class="preview-container">
+          
+          <!-- BARRA DE HERRAMIENTAS DE VISTA PREVIA -->
+          <div class="preview-toolbar">
+            <div class="toolbar-controls">
+              <button id="btn-zoom-out" class="toolbar-btn" title="Alejar">🔍-</button>
+              <span id="zoom-display" style="font-size: 13px; font-weight: bold; width: 45px; text-align: center;">100%</span>
+              <button id="btn-zoom-in" class="toolbar-btn" title="Acercar">🔍+</button>
+              <button id="btn-zoom-reset" class="toolbar-btn" title="Restablecer">100%</button>
+            </div>
+
+            <div class="toolbar-controls">
+              <button id="btn-page-prev" class="toolbar-btn" title="Página anterior">◀ Anterior</button>
+              <span id="page-indicator" class="page-indicator">Página: 1</span>
+              <button id="btn-page-next" class="toolbar-btn" title="Página siguiente">Siguiente ▶</button>
+            </div>
+
+            <div class="toolbar-controls">
+              <button id="btn-print" class="toolbar-btn" title="Imprimir documento">🖨️ Imprimir</button>
+            </div>
+          </div>
+
+          <!-- DOCUMENTO RENDERIZADO CON LA PLANTILLA MAESTRA -->
+          <div id="document-preview-render" class="cc-document-wrapper">
+            <!-- Render dinámico -->
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: GENERACIÓN MASIVA -->
+    <section id="view-bulk" class="view-section">
+      <div class="bulk-card">
+        <h2 style="font-size: 20px; font-weight: 800; color: #003366; margin-bottom: 8px;">Generación Masiva de Certificados</h2>
+        <p style="font-size: 14px; color: #475569; margin-bottom: 16px;">
+          Ingrese los datos en lote respetando el formato obligatorio: <code>NIT | CIUDAD | RAZÓN SOCIAL</code>. Cada empresa generará un PDF independiente y podrá descargar todos en un único archivo <strong>ZIP</strong>.
+        </p>
+
+        <div class="bulk-format-helper">
+          <strong>Formato:</strong> NIT | CIUDAD | RAZÓN SOCIAL<br>
+          <strong>Ejemplo:</strong><br>
+          900421494-6 | Jamundi | CompraMas<br>
+          900123456-7 | Medellin | COMERCIALIZADORA ANDINA S.A.S.<br>
+          900987654-3 | Cali | DISTRIBUIDORA DEL VALLE S.A.S.
+        </div>
+
+        <textarea id="bulk-text-input" class="bulk-textarea" placeholder="900421494-6 | Jamundi | CompraMas&#10;900123456-7 | Medellin | COMERCIALIZADORA ANDINA S.A.S.&#10;900987654-3 | Cali | DISTRIBUIDORA DEL VALLE S.A.S.">900421494-6 | Jamundi | CompraMas
+900123456-7 | Medellin | COMERCIALIZADORA ANDINA S.A.S.
+900987654-3 | Cali | DISTRIBUIDORA DEL VALLE S.A.S.</textarea>
+
+        <div style="display: flex; gap: 12px; margin-top: 14px; align-items: center;">
+          <button id="btn-parse-bulk" class="btn-mandatory btn-edit">
+            ⚙️ Procesar Lista
+          </button>
+
+          <button id="btn-generate-all-bulk" class="btn-mandatory btn-download">
+            📦 [ DESCARGAR TODOS LOS PDF ] (ZIP)
+          </button>
+        </div>
+
+        <!-- BARRA DE PROGRESO DE GENERACIÓN -->
+        <div id="bulk-progress-box" style="display: none; margin-top: 16px;">
+          <div style="font-size: 13px; font-weight: 600; color: #003366; margin-bottom: 6px;" id="bulk-progress-text">Generando archivos...</div>
+          <div style="background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden;">
+            <div id="bulk-progress-bar" style="background: #16a34a; width: 0%; height: 100%; transition: width 0.2s;"></div>
+          </div>
+        </div>
+
+        <!-- TABLA DE RESULTADOS MASIVOS -->
+        <table class="bulk-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">#</th>
+              <th>NIT</th>
+              <th>Ciudad</th>
+              <th>Razón Social</th>
+              <th>Nombre de Archivo PDF Resultante</th>
+            </tr>
+          </thead>
+          <tbody id="bulk-table-body">
+            <!-- Filas inyectadas dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: HISTORIAL DE DOCUMENTOS -->
+    <section id="view-history" class="view-section">
+      <div class="bulk-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <h2 style="font-size: 20px; font-weight: 800; color: #003366;">Historial y Conservación de Documentos</h2>
+            <p style="font-size: 14px; color: #475569;">
+              Todos los PDF generados se guardan asociados al registro correspondiente.
+            </p>
+          </div>
+        </div>
+
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Archivo PDF</th>
+              <th>Razón Social</th>
+              <th>NIT</th>
+              <th>Ciudad</th>
+              <th>Fecha Registro</th>
+              <th style="text-align: right;">Acciones Disponibles</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body">
+            <!-- Filas inyectadas dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE VISTA PREVIA FULLSCREEN -->
+  <div id="modal-preview-backdrop" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">🔍 Vista Previa del Documento (Plantilla Maestra)</div>
+        <button id="modal-close-btn" style="background:none; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
+      </div>
+      <div id="modal-preview-body" class="modal-body">
+        <!-- Render clonado -->
+      </div>
+      <div class="modal-footer">
+        <div style="font-size: 13px; color: #475569;">
+          Comprobación visual: Verifique que coincida con la plantilla maestra antes de descargar.
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-mandatory btn-edit" onclick="document.getElementById('modal-close-btn').click();">
+            Cerrar
+          </button>
+          <button class="btn-mandatory btn-download" onclick="document.getElementById('modal-close-btn').click(); document.getElementById('btn-mandatory-download').click();">
+            ⬇️ [ DESCARGAR PDF ]
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="assets/libs/jspdf.umd.min.js"></script>
+  <script src="assets/libs/html2canvas.min.js"></script>
+  <script src="assets/libs/jszip.min.js"></script>
+  <script src="assets/js/template-image-data.js"></script>
+  <script src="assets/js/official-logos-data.js"></script>
+  <script src="assets/js/logos.js"></script>
+  <script src="assets/js/template-engine.js"></script>
+  <script src="assets/js/pdf-generator.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/app.js"></script>
+
+</body>
+</html>
