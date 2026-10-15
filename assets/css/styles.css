@@ -1,0 +1,507 @@
+/* ==========================================================================
+   ESTILOS GENERALES & PLANTILLAS MAESTRAS POR CÁMARA (CREADOR CC)
+   ========================================================================== */
+
+:root {
+  --primary: #003366;
+  --primary-hover: #002244;
+  --secondary: #d9222a;
+  --accent: #2563eb;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --bg-app: #f1f5f9;
+  --bg-card: #ffffff;
+  --border-color: #cbd5e1;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  
+  /* Medidas oficiales de papel carta */
+  --page-width: 215.9mm;
+  --page-height: 279.4mm;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOP NAVBAR */
+.app-navbar {
+  background: linear-gradient(135deg, #002244 0%, #003366 100%);
+  color: white;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  background: white;
+  color: #003366;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.brand-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.brand-subtitle {
+  font-size: 11px;
+  opacity: 0.8;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-tab-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-tab-btn.active {
+  background: white;
+  color: #003366;
+  border-color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* APP MAIN */
+.app-main {
+  flex: 1;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.view-section {
+  display: none;
+}
+
+.view-section.active {
+  display: block;
+}
+
+/* BARRA DE ACCIONES OBLIGATORIAS */
+.mandatory-actions-card {
+  background: white;
+  border: 2px solid #2563eb;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.actions-badge-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.actions-badge {
+  background: #eff6ff;
+  color: #1d4ed8;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.actions-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-mandatory {
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid transparent;
+}
+
+.btn-preview { background-color: #0284c7; color: white; }
+.btn-preview:hover { background-color: #0369a1; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35); }
+
+.btn-edit { background-color: #475569; color: white; }
+.btn-edit:hover { background-color: #334155; box-shadow: 0 4px 12px rgba(71, 85, 105, 0.35); }
+
+.btn-export { background-color: #d9222a; color: white; }
+.btn-export:hover { background-color: #b91c1c; box-shadow: 0 4px 12px rgba(217, 34, 42, 0.4); }
+
+.btn-download { background-color: #16a34a; color: white; }
+.btn-download:hover { background-color: #15803d; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4); }
+
+/* GRID PRINCIPAL */
+.generator-grid {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .generator-grid { grid-template-columns: 1fr; }
+}
+
+.form-panel {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 1px solid var(--border-color);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.panel-header {
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px; }
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  outline: none;
+  background-color: #f8fafc;
+}
+.form-control:focus {
+  border-color: var(--accent);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-accordion-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  margin: 20px 0 10px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px dashed #cbd5e1;
+}
+
+/* VISTA PREVIA CONTENEDOR */
+.preview-container {
+  background: #64748b;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.25);
+  overflow-x: auto;
+  min-height: 800px;
+}
+
+.preview-toolbar {
+  width: 100%;
+  max-width: 820px;
+  background: white;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.toolbar-controls { display: flex; align-items: center; gap: 8px; }
+.toolbar-btn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.toolbar-btn:hover { background: #e2e8f0; }
+
+.cc-document-wrapper { transform-origin: top center; transition: transform 0.2s ease; }
+
+/* HOJA BASE FÍSICA CARTA */
+.cc-page {
+  width: var(--page-width);
+  min-height: var(--page-height);
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  margin-bottom: 30px;
+  padding: 18mm 20mm;
+  position: relative;
+  font-family: "Courier New", Courier, monospace;
+  color: #111111;
+  font-size: 9.5pt;
+  line-height: 1.35;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   ELEMENTOS TIPOGRÁFICOS COMUNES Y SEPARADORES
+   ========================================================================== */
+.dashed-separator {
+  font-family: monospace;
+  font-size: 8pt;
+  letter-spacing: -1px;
+  margin: 6px 0;
+  color: #333333;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.centered-spaced-title {
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 4px;
+  margin: 10px 0;
+}
+
+.section-heading-centered {
+  text-align: center;
+  font-weight: bold;
+  font-size: 10pt;
+  margin: 14px 0 6px 0;
+}
+
+/* ==========================================================================
+   1. ESTILO BUCARAMANGA
+   ========================================================================== */
+.style-bucaramanga { padding: 16mm 18mm; font-size: 9pt; }
+.bga-header-grid { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+.bga-header-left { flex: 1; }
+.bga-header-right { margin-left: 15px; }
+.bga-logo-img { max-width: 175px; height: auto; }
+.bga-main-title { font-weight: bold; font-size: 10.5pt; margin-bottom: 4px; }
+.bga-sub { font-size: 8.5pt; margin-bottom: 3px; }
+.bga-meta { font-size: 8.5pt; margin-bottom: 3px; }
+.bga-receipt { font-size: 8.5pt; margin-bottom: 3px; font-weight: bold; }
+.bga-code { font-size: 9pt; }
+.bga-disclaimer { font-size: 7.2pt; text-align: justify; line-height: 1.25; margin: 4px 0; }
+.bga-cert-title { margin: 10px 0 6px 0; font-size: 9.5pt; line-height: 1.3; }
+.bga-row-simple { margin: 6px 0; font-weight: bold; }
+.bga-law-intro { font-size: 8.5pt; text-align: justify; line-height: 1.28; margin: 8px 0; }
+.bga-meta-group { display: flex; justify-content: space-between; font-weight: bold; margin: 6px 0; font-size: 8.5pt; }
+.bga-record-block { margin: 8px 0; font-size: 9pt; }
+.bga-bold-sub { font-weight: bold; margin-bottom: 4px; }
+.bga-table-lines { margin-left: 2px; }
+.bga-line-item { display: flex; margin-bottom: 2px; }
+.bga-lbl { width: 130px; font-weight: bold; }
+.bga-val { flex: 1; }
+.bga-footer-law { font-size: 8pt; text-align: justify; margin-top: 15px; line-height: 1.25; }
+
+/* ==========================================================================
+   2. ESTILO BARRANQUILLA
+   ========================================================================== */
+.style-barranquilla { padding: 18mm 20mm; }
+.baq-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 8px; }
+.baq-logo-img { max-width: 140px; height: auto; }
+.baq-title-box { flex: 1; text-align: center; }
+.baq-name { font-family: Arial, sans-serif; font-size: 11pt; font-weight: bold; }
+.baq-cert-type { font-size: 8.5pt; font-weight: bold; margin-top: 3px; }
+.baq-date { font-size: 8.5pt; font-weight: bold; margin-top: 3px; }
+.baq-receipt { font-size: 8.5pt; margin-top: 2px; }
+.baq-code-strip { text-align: center; font-size: 8.5pt; font-weight: bold; margin: 6px 0; }
+.baq-disclaimer { font-size: 7.5pt; text-align: justify; line-height: 1.25; }
+.standard-kv-list { margin: 6px 0; }
+.kv-row { display: flex; margin-bottom: 2px; }
+.kv-k { width: 260px; font-weight: normal; }
+.kv-v { flex: 1; font-weight: normal; }
+
+/* ==========================================================================
+   3. ESTILO MEDELLÍN
+   ========================================================================== */
+.style-medellin { padding: 18mm 20mm; }
+.med-header-grid { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.med-header-center { flex: 1; text-align: center; }
+.med-name { font-family: Arial, sans-serif; font-size: 11pt; }
+.med-title { font-weight: bold; font-size: 9.5pt; margin-top: 3px; }
+.med-date { font-size: 8.5pt; margin-top: 3px; }
+.med-receipt { font-size: 8.5pt; margin-top: 2px; }
+.med-code { font-size: 9pt; margin-top: 4px; font-weight: bold; }
+.med-logo-img { max-width: 145px; height: auto; }
+.med-disclaimer { font-size: 7.5pt; text-align: justify; line-height: 1.25; }
+.med-intro-cert { font-size: 8.5pt; text-align: justify; font-weight: bold; margin: 10px 0; }
+.med-table-rows { margin: 6px 0; }
+.med-row { display: flex; margin-bottom: 2px; }
+.med-lbl { width: 280px; }
+.med-val { flex: 1; }
+.med-legal-bottom { font-size: 8.5pt; text-align: justify; margin-top: 14px; line-height: 1.3; }
+
+/* ==========================================================================
+   4. ESTILO CARTAGENA
+   ========================================================================== */
+.style-cartagena { padding: 18mm 20mm; }
+.ctg-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 8px; }
+.ctg-logo-img { max-width: 120px; height: auto; }
+.ctg-center-titles { flex: 1; text-align: center; }
+.ctg-main-name { font-weight: bold; font-size: 10pt; }
+.ctg-sub-name { font-weight: bold; font-size: 8.5pt; margin-top: 2px; }
+.ctg-meta { font-size: 8.5pt; font-weight: bold; margin-top: 3px; }
+.ctg-receipt { font-size: 8pt; margin-top: 2px; }
+.ctg-code { font-size: 8.5pt; font-weight: bold; margin-top: 3px; }
+.ctg-disclaimer { font-size: 7.2pt; text-align: justify; line-height: 1.25; margin: 8px 0; }
+.ctg-cert-intro { font-size: 8.5pt; font-weight: bold; margin: 10px 0; text-align: justify; }
+.ctg-rows { margin: 6px 0; }
+.ctg-row { display: flex; margin-bottom: 2px; }
+.ctg-lbl { width: 290px; }
+.ctg-val { flex: 1; }
+.ctg-legal-notif { font-size: 8.5pt; text-align: justify; margin: 10px 0; line-height: 1.3; }
+.ctg-footer-pagination { text-align: center; font-size: 8.5pt; margin-top: 20px; }
+
+/* ==========================================================================
+   5. ESTILO ORIENTE ANTIOQUEÑO
+   ========================================================================== */
+.style-oriente { padding: 18mm 20mm; }
+.oriente-header { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 8px; }
+.oriente-logo-img { max-width: 120px; height: auto; }
+.oriente-center-titles { flex: 1; text-align: center; }
+.oriente-main-name { font-weight: bold; font-size: 9.5pt; }
+.oriente-sub-name { font-weight: bold; font-size: 8.5pt; margin-top: 2px; }
+.oriente-meta { font-size: 8.5pt; margin-top: 3px; }
+.oriente-receipt { font-size: 8pt; margin-top: 2px; }
+.oriente-code { font-size: 8.5pt; font-weight: bold; margin-top: 3px; }
+.oriente-disclaimer { font-size: 7.2pt; text-align: justify; line-height: 1.25; margin: 8px 0; }
+.oriente-intro-cert { font-size: 8.5pt; font-weight: bold; margin: 10px 0; text-align: justify; }
+.oriente-rows { margin: 6px 0; }
+.oriente-row { display: flex; margin-bottom: 2px; }
+.oriente-lbl { width: 290px; }
+.oriente-val { flex: 1; }
+.oriente-legal-notif { font-size: 8.5pt; text-align: justify; margin: 10px 0; line-height: 1.3; }
+
+/* ==========================================================================
+   6. ESTILO CALI (COMPRAMAS)
+   ========================================================================== */
+.cc-page-master-official {
+  height: var(--page-height);
+  min-height: var(--page-height);
+  padding: 0 !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  display: block !important;
+  overflow: hidden;
+  position: relative;
+}
+.cali-overlay { position: absolute; font-family: "Courier New", Courier, monospace; color: #111111; box-sizing: border-box; white-space: nowrap; }
+.cali-code { left: 56.03%; top: 17.08%; font-weight: bold; font-size: 14.2px; }
+.cali-date { left: 56.95%; top: 9.85%; font-size: 13.8px; }
+.cali-empresa { left: 35.75%; top: 43.63%; font-size: 14px; line-height: 1.62; }
+.cali-matricula { left: 41.59%; top: 53.59%; font-size: 13.8px; line-height: 1.58; }
+.cali-ubicacion { left: 6.90%; top: 66.47%; width: 86.5%; font-size: 13.5px; white-space: normal; }
+.cali-subblock-values { margin-left: 45.8%; line-height: 1.54; }
+.cali-line { height: 20px; display: flex; align-items: center; }
+.cali-legal-text { margin-top: 12px; font-size: 12.8px; line-height: 1.35; text-align: justify; }
+
+/* MODAL, MASIVO Y OTROS */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-backdrop.active { display: flex; }
+.modal-dialog { background: white; width: 95vw; max-width: 1200px; height: 92vh; border-radius: 16px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+.modal-header { background: #003366; color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-size: 17px; font-weight: 700; }
+.modal-body { flex: 1; background: #64748b; overflow-y: auto; padding: 24px; display: flex; justify-content: center; }
+.modal-footer { background: #f8fafc; padding: 12px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+
+.bulk-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); border: 1px solid var(--border-color); margin-bottom: 24px; }
+.bulk-format-helper { background: #f8fafc; border: 1px dashed #94a3b8; padding: 12px 16px; border-radius: 8px; margin: 12px 0 16px 0; font-family: monospace; font-size: 13px; color: #334155; }
+.bulk-textarea { width: 100%; height: 180px; padding: 12px; font-family: "Courier New", Courier, monospace; font-size: 13px; border: 1px solid var(--border-color); border-radius: 8px; }
+.bulk-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+.bulk-table th { background: #f1f5f9; text-align: left; padding: 10px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #475569; border-bottom: 2px solid #cbd5e1; }
+.bulk-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid #e2e8f0; }
+
+.history-table { width: 100%; border-collapse: collapse; }
+.history-table th { background: #003366; color: white; text-align: left; padding: 12px 16px; font-size: 13px; font-weight: 700; }
+.history-table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid #e2e8f0; }
+.history-table tr:hover { background-color: #f8fafc; }
+.action-btn-sm { padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; margin-right: 4px; }
+.action-btn-sm.btn-open { background: #e0f2fe; color: #0284c7; }
+.action-btn-sm.btn-view { background: #fef3c7; color: #b45309; }
+.action-btn-sm.btn-down { background: #dcfce7; color: #15803d; }
+.action-btn-sm.btn-regen { background: #f3e8ff; color: #7e22ce; }
+.action-btn-sm.btn-del { background: #fee2e2; color: #b91c1c; }
+
+.toast-notification { position: fixed; bottom: 24px; right: 24px; background: #1e293b; color: white; padding: 14px 20px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 9999; transform: translateY(100px); opacity: 0; transition: all 0.3s ease; }
+.toast-notification.show { transform: translateY(0); opacity: 1; }
+
+@media print {
+  body * { visibility: hidden; }
+  .preview-container, .preview-container * { visibility: visible; }
+  .preview-toolbar, .app-navbar, .mandatory-actions-card { display: none !important; }
+  .cc-page { box-shadow: none !important; margin: 0 !important; page-break-after: always; break-after: page; }
+}
