@@ -446,8 +446,32 @@ body {
 .oriente-legal-notif { font-size: 8.5pt; text-align: justify; margin: 10px 0; line-height: 1.3; }
 
 /* ==========================================================================
-   6. ESTILO CALI (COMPRAMAS)
+   6. ESTILO CALI (AUTÉNTICO)
    ========================================================================== */
+.style-cali-authentic { padding: 18mm 20mm; }
+.cali-header-flex { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 6px; }
+.cali-logo-wrap { width: 140px; }
+.cali-logo-img-auth { max-width: 135px; max-height: 85px; object-fit: contain; }
+.cali-titles-wrap { flex: 1; text-align: center; }
+.cali-auth-name { font-family: Arial, sans-serif; font-size: 11pt; font-weight: bold; }
+.cali-auth-title { font-weight: bold; font-size: 8.5pt; margin-top: 3px; }
+.cali-auth-date { font-size: 8.5pt; margin-top: 3px; }
+.cali-auth-receipt { font-size: 8.5pt; margin-top: 2px; }
+.cali-auth-code { font-size: 9pt; margin-top: 3px; }
+.cali-auth-disclaimer { font-size: 7.2pt; text-align: justify; line-height: 1.25; margin: 6px 0; border: 1px solid #111; padding: 4px 6px; }
+.cali-auth-banner { font-size: 7.2pt; text-align: justify; line-height: 1.25; margin: 4px 0 8px 0; font-weight: bold; }
+.cali-auth-intro { font-size: 8.5pt; font-weight: bold; margin: 8px 0; text-align: justify; }
+.cali-table-auth { margin: 6px 0; }
+.cali-row-auth { display: flex; margin-bottom: 2px; }
+.cali-lbl-auth { width: 280px; }
+.cali-val-auth { flex: 1; }
+.cali-auth-legal { font-size: 8.5pt; text-align: justify; margin-top: 14px; line-height: 1.3; }
+
+/* ==========================================================================
+   7. ESTILOS MANIZALES Y URABÁ
+   ========================================================================== */
+.style-manizales, .style-uraba { padding: 18mm 20mm; }
+
 .cc-page-master-official {
   height: var(--page-height);
   min-height: var(--page-height);

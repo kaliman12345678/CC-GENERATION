@@ -25,6 +25,9 @@
       <button class="nav-tab-btn" data-target="view-bulk">
         <span>📑 Generación Masiva (Lotes)</span>
       </button>
+      <button class="nav-tab-btn" data-target="view-templates">
+        <span>🎨 Gestor de Plantillas y Logos</span>
+      </button>
       <button class="nav-tab-btn" data-target="view-history">
         <span>🗄️ Historial de Documentos</span>
       </button>
@@ -300,6 +303,120 @@
             </tr>
           </thead>
           <tbody id="bulk-table-body">
+            <!-- Filas inyectadas dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: GESTOR DE PLANTILLAS Y LOGOS (SIN TOCAR CÓDIGO) -->
+    <section id="view-templates" class="view-section">
+      <div class="bulk-card">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+          <div>
+            <h2 style="font-size: 22px; font-weight: 800; color: #003366;">Gestor de Plantillas y Logos</h2>
+            <p style="font-size: 14px; color: #475569; margin-top: 4px;">
+              Agregue nuevas Cámaras de Comercio, suba sus logotipos y personalice sus textos y URLs directamente desde aquí, <strong>sin tocar una sola línea de código</strong>.
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button id="btn-export-templates" class="toolbar-btn" style="background:#e0f2fe; color:#0284c7; border-color:#bae6fd; font-weight:700;">
+              💾 Exportar Plantillas (JSON)
+            </button>
+            <button id="btn-import-templates" class="toolbar-btn" style="background:#f1f5f9; color:#334155; font-weight:700;">
+              📥 Importar Plantillas (JSON)
+            </button>
+            <input type="file" id="input-import-json" accept=".json" style="display: none;">
+          </div>
+        </div>
+
+        <!-- FORMULARIO DE AGREGAR / EDITAR CÁMARA -->
+        <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 20px; margin-bottom: 28px;">
+          <h3 style="font-size: 16px; font-weight: 700; color: #003366; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+            <span>➕ Registrar Nueva Cámara / Plantilla</span>
+          </h3>
+
+          <form id="custom-template-form" onsubmit="return false;">
+            <input type="hidden" id="custom-template-id" value="">
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="custom-name">Nombre Oficial de la Cámara:</label>
+                <input type="text" id="custom-name" class="form-control" placeholder="Ej: Cámara de Comercio de Bogotá" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="custom-city">Ciudad Principal:</label>
+                <input type="text" id="custom-city" class="form-control" placeholder="Ej: Bogotá" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="custom-keywords">Ciudades / Palabras Clave Abarcadas (separadas por coma):</label>
+                <input type="text" id="custom-keywords" class="form-control" placeholder="Ej: bogota, soacha, chia, cundinamarca">
+                <small style="color: #64748b; font-size: 11px;">Al escribir cualquiera de estas ciudades en el generador, se aplicará esta plantilla automáticamente.</small>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="custom-verify-url">Portal Web de Verificación:</label>
+                <input type="text" id="custom-verify-url" class="form-control" placeholder="Ej: www.ccb.org.co">
+              </div>
+            </div>
+
+            <div class="form-row" style="align-items: center; margin-top: 6px;">
+              <div class="form-group">
+                <label class="form-label" for="custom-logo-file">Subir Logotipo Oficial (PNG, JPG, SVG):</label>
+                <input type="file" id="custom-logo-file" class="form-control" accept="image/*">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Ubicación del Logotipo en el Documento:</label>
+                <div style="display: flex; gap: 20px; align-items: center; margin-top: 8px;">
+                  <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                    <input type="radio" name="custom-logo-pos" value="left" checked> Superior Izquierda
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                    <input type="radio" name="custom-logo-pos" value="right"> Superior Derecha
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- VISTA PREVIA DEL LOGO SUBIDO -->
+            <div id="custom-logo-preview-box" style="display: none; margin-bottom: 16px; padding: 12px; background: white; border: 1px dashed #94a3b8; border-radius: 8px; width: fit-content;">
+              <span style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 6px;">Vista previa del logo:</span>
+              <img id="custom-logo-preview-img" src="" alt="Logo" style="max-height: 60px; max-width: 220px; object-fit: contain;">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="custom-disclaimer">Leyenda de Verificación Oficial (Opcional):</label>
+              <textarea id="custom-disclaimer" class="form-control" rows="2" placeholder="Texto de validación legal que aparecerá en el encabezado. Si se deja vacío, se generará el texto oficial estándar con la URL de la entidad."></textarea>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 16px;">
+              <button id="btn-save-custom-template" class="btn-mandatory btn-download">
+                ✓ Guardar Plantilla y Logo
+              </button>
+              <button id="btn-reset-custom-form" class="btn-mandatory btn-edit" type="button">
+                Limpiar Formulario
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- LISTA DE CÁMARAS Y PLANTILLAS ACTIVAS -->
+        <h3 style="font-size: 17px; font-weight: 800; color: #003366; margin-bottom: 12px;">Cámaras y Plantillas Disponibles</h3>
+        <table class="bulk-table">
+          <thead>
+            <tr>
+              <th style="width: 80px;">Logo</th>
+              <th>Cámara de Comercio</th>
+              <th>Ciudad / Cobertura</th>
+              <th>Posición Logo</th>
+              <th>Tipo</th>
+              <th style="text-align: right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="custom-templates-table-body">
             <!-- Filas inyectadas dinámicamente -->
           </tbody>
         </table>

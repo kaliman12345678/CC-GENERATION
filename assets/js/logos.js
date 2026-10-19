@@ -1,8 +1,8 @@
 /**
- * Catálogo Oficial de Cámaras de Comercio y Configuración de Estilos
+ * Catálogo Oficial de Cámaras de Comercio y Configuración Dinámica de Estilos
  */
 
-const CHAMBER_CATALOG = {
+const BUILTIN_CHAMBERS = {
   bucaramanga: {
     id: 'bucaramanga',
     name: 'Cámara de Comercio de Bucaramanga',
@@ -86,36 +86,71 @@ const CHAMBER_CATALOG = {
 };
 
 /**
- * Obtener la cámara de comercio y su configuración de estilo según la ciudad seleccionada o escrita
+ * Obtener catálogo unificado (Cámaras del sistema + Plantillas personalizadas agregadas por el usuario)
+ */
+function getUnifiedChamberCatalog() {
+  const unified = { ...BUILTIN_CHAMBERS };
+  
+  if (typeof StorageManager !== 'undefined' && StorageManager.getCustomTemplates) {
+    const customList = StorageManager.getCustomTemplates();
+    customList.forEach(custom => {
+      unified[custom.id] = {
+        id: custom.id,
+        name: custom.name || 'Nueva Cámara',
+        styleId: 'custom',
+        logoPosition: custom.logoPosition || 'left',
+        city: custom.city || 'Ciudad',
+        logoBase64: custom.logoBase64,
+        verifyUrl: custom.verifyUrl || 'www.confecamaras.org.co',
+        disclaimer: custom.disclaimer,
+        lawIntro: custom.lawIntro,
+        keywords: (custom.keywords || custom.city || '').toLowerCase().split(',').map(s => s.trim()).filter(Boolean),
+        isCustom: true
+      };
+    });
+  }
+  
+  return unified;
+}
+
+const CHAMBER_CATALOG = BUILTIN_CHAMBERS;
+
+/**
+ * Buscar cámara por ciudad en el catálogo unificado
  */
 function getChamberByCity(cityName) {
-  if (!cityName) return CHAMBER_CATALOG.bucaramanga;
+  const catalog = getUnifiedChamberCatalog();
+  if (!cityName) return catalog.bucaramanga || Object.values(catalog)[0];
 
   const normalized = cityName.toLowerCase().trim()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-  for (const chamber of Object.values(CHAMBER_CATALOG)) {
-    if (chamber.keywords.some(k => normalized.includes(k))) {
+  // 1. Coincidencia por palabra clave
+  for (const chamber of Object.values(catalog)) {
+    if (chamber.keywords && chamber.keywords.some(k => normalized.includes(k))) {
       return chamber;
     }
   }
 
-  // Por defecto si no coincide, buscar si coincide con el id o nombre
-  for (const [id, chamber] of Object.entries(CHAMBER_CATALOG)) {
-    if (normalized.includes(id) || normalized.includes(chamber.city.toLowerCase())) {
+  // 2. Coincidencia por ID o nombre de ciudad
+  for (const [id, chamber] of Object.entries(catalog)) {
+    if (normalized.includes(id) || (chamber.city && normalized.includes(chamber.city.toLowerCase()))) {
       return chamber;
     }
   }
 
-  return CHAMBER_CATALOG.bucaramanga;
+  return catalog.bucaramanga || Object.values(catalog)[0];
 }
 
 /**
- * Obtener imagen del logo en base64
+ * Obtener imagen del logo en base64 (soporta tanto del sistema como subidos por el usuario)
  */
 function getChamberLogoSrc(chamber) {
+  if (chamber.logoBase64) {
+    return chamber.logoBase64;
+  }
   if (typeof OFFICIAL_LOGOS_BASE64 !== 'undefined' && OFFICIAL_LOGOS_BASE64[chamber.logoKey]) {
     return OFFICIAL_LOGOS_BASE64[chamber.logoKey];
   }
-  return `assets/logos/logo-${chamber.logoKey}.png`;
+  return `assets/logos/logo-${chamber.logoKey || 'cali'}.png`;
 }
