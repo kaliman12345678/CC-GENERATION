@@ -92,7 +92,8 @@ const TemplateEngine = {
         <div class="dashed-separator">-------------------------------------------------------------------------------------------------------------------</div>
 
         <div class="bga-cert-title">
-          CERTIFICADO DE EXISTENCIA Y REPRESENTACION LEGAL ENTIDAD SIN ANIMO DE LUCRO DE:<br>
+          CERTIFICADO DE EXISTENCIA Y REPRESENTACION LEGAL<br>
+          ENTIDADES SIN ANIMO DE LUCRO<br>
           ${razon}
         </div>
 
@@ -139,6 +140,10 @@ const TemplateEngine = {
         <div class="bga-footer-law">
           QUE POR CERTIFICADO DE EXISTENCIA No 410 DE FECHA 1968/12/10 DE LA DEPARTAMENTO ADMINISTRATIVO NAL. DE COOPERATIVAS DE BUCARAMANGA INSCRITA EN ESTA CAMARA DE COMERCIO EL 1997/02/17 BAJO EL No 565 DEL LIBRO 1, SE REGISTRO
         </div>
+
+        <div class="doc-footer-pagination">
+          Página: 1 de 7
+        </div>
       </div>
     `;
   },
@@ -163,7 +168,7 @@ const TemplateEngine = {
           </div>
           <div class="baq-title-box">
             <div class="baq-name">Cámara de Comercio de Barranquilla</div>
-            <div class="baq-cert-type">CERTIFICADO DE EXISTENCIA Y REPRESENTACION LEGAL<br>DE ENTIDADES SIN ANIMO DE LUCRO.</div>
+            <div class="baq-cert-type">CERTIFICADO DE EXISTENCIA Y REPRESENTACION LEGAL<br>ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="baq-date">Fecha de expedición: ${fecha}</div>
             <div class="baq-receipt">Recibo No. ${recibo}, Valor: 11,600</div>
           </div>
@@ -213,8 +218,8 @@ const TemplateEngine = {
           <div class="kv-row"><span class="kv-k">Teléfono para notificación 3:</span> <span class="kv-v">No reportó</span></div>
         </div>
 
-        <div class="ctg-footer-pagination" style="margin-top: 35px;">
-          Página 1 de 5
+        <div class="doc-footer-pagination">
+          Página: 1 de 7
         </div>
       </div>
     `;
@@ -238,6 +243,7 @@ const TemplateEngine = {
           <div class="med-header-center">
             <div class="med-name">Cámara de Comercio de Medellín para Antioquia</div>
             <div class="med-title">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+            <div class="med-title" style="font-size: 8.5pt; margin-top: 1px;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="med-date">Fecha de expedición: ${fecha}</div>
             <div class="med-receipt">Recibo No.: ${recibo} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Valor: $00</div>
             <div class="med-code">CÓDIGO DE VERIFICACIÓN: ${codigo}</div>
@@ -296,8 +302,8 @@ const TemplateEngine = {
           La persona jurídica ${(data.razonSocial || 'CORPORACION MAKAIA ASESORIA INTERNACIONAL').toUpperCase()} SI autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento...
         </div>
 
-        <div style="text-align: center; font-style: italic; font-weight: bold; font-size: 8pt; margin-top: 15px;">
-          Página: 1 de 10
+        <div class="doc-footer-pagination">
+          Página: 1 de 7
         </div>
       </div>
     `;
@@ -324,6 +330,7 @@ const TemplateEngine = {
           <div class="ctg-center-titles">
             <div class="ctg-main-name">CÁMARA DE COMERCIO DE CARTAGENA</div>
             <div class="ctg-sub-name">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+            <div class="ctg-sub-name" style="font-size: 8pt; margin-top: 1px;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="ctg-meta">Fecha expedición: ${fecha}</div>
             <div class="ctg-receipt">Recibo No. ${recibo}, Valor 12100</div>
             <div class="ctg-code">CÓDIGO DE VERIFICACIÓN ${codigo}</div>
@@ -379,8 +386,8 @@ const TemplateEngine = {
           por documento privado del 18 de Noviembre de 2016 otorgado en Cartagena, inscrito en esta Cámara de Comercio el 21 de Noviembre de 2016 bajo el número 127545 del Libro IX del Registro Mercantil, se constituyó una sociedad por acciones simplificadas de
         </div>
 
-        <div class="ctg-footer-pagination">
-          Página 1 de 5
+        <div class="doc-footer-pagination">
+          Página: 1 de 7
         </div>
       </div>
     `;
@@ -401,13 +408,14 @@ const TemplateEngine = {
 
     return `
       <div class="cc-page style-cali-authentic">
-        <div class="cali-header-flex">
-          <div class="cali-logo-wrap">
+        <div class="cali-header-grid">
+          <div class="cali-logo-absolute">
             <img src="${logoSrc}" alt="Cámara de Comercio de Cali" class="cali-logo-img-auth">
           </div>
-          <div class="cali-titles-wrap">
+          <div class="cali-titles-centered">
             <div class="cali-auth-name">Camara de Comercio de Cali</div>
             <div class="cali-auth-title">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+            <div class="cali-auth-subtitle">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="cali-auth-date">Fecha expedición: ${fecha}</div>
             <div class="cali-auth-receipt">Recibo No. ${recibo}, Valor: $7.200</div>
             <div class="cali-auth-code">CODIGO DE VERIFICACIÓN: <strong>${codigo}</strong></div>
@@ -462,6 +470,10 @@ const TemplateEngine = {
         <div class="cali-auth-legal">
           La persona jurídica ${razon} SI autorizó recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.
         </div>
+
+        <div class="doc-footer-pagination">
+          Página: 1 de 7
+        </div>
       </div>
     `;
   },
@@ -485,6 +497,7 @@ const TemplateEngine = {
           <div class="bga-header-left">
             <div class="bga-main-title">CÁMARA DE COMERCIO DE MANIZALES POR CALDAS</div>
             <div class="bga-sub">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+            <div class="bga-sub" style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="bga-meta">Fecha de expedición: ${fecha}</div>
             <div class="bga-receipt">Recibo No. ${recibo} &nbsp;&nbsp;&nbsp;&nbsp; Valor: $00</div>
             <div class="bga-code">CÓDIGO DE VERIFICACIÓN: <strong>${codigo}</strong></div>
@@ -537,6 +550,10 @@ const TemplateEngine = {
         <div class="cali-auth-legal">
           La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.
         </div>
+
+        <div class="doc-footer-pagination">
+          Página: 1 de 7
+        </div>
       </div>
     `;
   },
@@ -560,6 +577,7 @@ const TemplateEngine = {
           <div class="bga-header-left">
             <div class="bga-main-title">CÁMARA DE COMERCIO DE URABÁ</div>
             <div class="bga-sub">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+            <div class="bga-sub" style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="bga-meta">Fecha de expedición: ${fecha}</div>
             <div class="bga-receipt">Recibo No. ${recibo}</div>
             <div class="bga-code">CÓDIGO DE VERIFICACIÓN: <strong>${codigo}</strong></div>
@@ -611,6 +629,10 @@ const TemplateEngine = {
         <div class="cali-auth-legal">
           La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.
         </div>
+
+        <div class="doc-footer-pagination">
+          Página: 1 de 7
+        </div>
       </div>
     `;
   },
@@ -638,6 +660,7 @@ const TemplateEngine = {
         <div class="bga-header-left">
           <div class="bga-main-title">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
           <div class="bga-sub">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+          <div class="bga-sub" style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
           <div class="bga-meta">LUGAR Y FECHA DE EXPEDICIÓN: ${(chamber.city || data.ciudad || 'COLOMBIA').toUpperCase()}, ${fecha}</div>
           <div class="bga-receipt">Recibo No. ${recibo}</div>
           <div class="bga-code">CÓDIGO DE VERIFICACIÓN: <strong>${codigo}</strong></div>
@@ -654,6 +677,7 @@ const TemplateEngine = {
         <div class="ctg-center-titles">
           <div class="ctg-main-name">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
           <div class="ctg-sub-name">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+          <div class="ctg-sub-name" style="font-size: 8pt; margin-top: 1px;">ENTIDADES SIN ANIMO DE LUCRO</div>
           <div class="ctg-meta">Fecha expedición: ${fecha}</div>
           <div class="ctg-receipt">Recibo No. ${recibo}</div>
           <div class="ctg-code">CÓDIGO DE VERIFICACIÓN ${codigo}</div>
@@ -708,6 +732,10 @@ const TemplateEngine = {
 
         <div class="bga-legal-notif" style="font-size: 8.5pt; text-align: justify; margin-top: 14px; line-height: 1.3;">
           La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.
+        </div>
+
+        <div class="doc-footer-pagination">
+          Página: 1 de 7
         </div>
       </div>
     `;

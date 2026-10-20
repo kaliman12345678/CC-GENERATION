@@ -423,7 +423,8 @@ body {
 .ctg-lbl { width: 290px; }
 .ctg-val { flex: 1; }
 .ctg-legal-notif { font-size: 8.5pt; text-align: justify; margin: 10px 0; line-height: 1.3; }
-.ctg-footer-pagination { text-align: center; font-size: 8.5pt; margin-top: 20px; }
+.ctg-footer-pagination { text-align: center; font-size: 8.5pt; margin-top: 20px; font-family: "Courier New", Courier, monospace; }
+.doc-footer-pagination { text-align: center; font-size: 8.5pt; margin-top: 25px; margin-bottom: 10px; font-family: "Courier New", Courier, monospace; color: #111; }
 
 /* ==========================================================================
    5. ESTILO ORIENTE ANTIOQUEÑO
@@ -449,17 +450,18 @@ body {
    6. ESTILO CALI (AUTÉNTICO)
    ========================================================================== */
 .style-cali-authentic { padding: 18mm 20mm; }
-.cali-header-flex { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 6px; }
-.cali-logo-wrap { width: 140px; }
+.cali-header-grid { position: relative; margin-bottom: 12px; }
+.cali-logo-absolute { position: absolute; left: 0; top: 0; width: 140px; }
 .cali-logo-img-auth { max-width: 135px; max-height: 85px; object-fit: contain; }
-.cali-titles-wrap { flex: 1; text-align: center; }
+.cali-titles-centered { text-align: center; width: 100%; padding: 0 140px; box-sizing: border-box; }
 .cali-auth-name { font-family: Arial, sans-serif; font-size: 11pt; font-weight: bold; }
 .cali-auth-title { font-weight: bold; font-size: 8.5pt; margin-top: 3px; }
+.cali-auth-subtitle { font-weight: bold; font-size: 8pt; margin-top: 2px; }
 .cali-auth-date { font-size: 8.5pt; margin-top: 3px; }
 .cali-auth-receipt { font-size: 8.5pt; margin-top: 2px; }
 .cali-auth-code { font-size: 9pt; margin-top: 3px; }
-.cali-auth-disclaimer { font-size: 7.2pt; text-align: justify; line-height: 1.25; margin: 6px 0; border: 1px solid #111; padding: 4px 6px; }
-.cali-auth-banner { font-size: 7.2pt; text-align: justify; line-height: 1.25; margin: 4px 0 8px 0; font-weight: bold; }
+.cali-auth-disclaimer { font-size: 7.2pt; text-align: justify; line-height: 1.25; margin: 8px 0; border: none; padding: 0; }
+.cali-auth-banner { font-size: 7.2pt; text-align: justify; line-height: 1.25; margin: 6px 0 8px 0; font-weight: bold; }
 .cali-auth-intro { font-size: 8.5pt; font-weight: bold; margin: 8px 0; text-align: justify; }
 .cali-table-auth { margin: 6px 0; }
 .cali-row-auth { display: flex; margin-bottom: 2px; }
