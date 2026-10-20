@@ -36,6 +36,7 @@ const AppState = {
   currentPageIndex: 0,
   totalPages: 1,
   previewVerified: true,
+  manualChamberSelection: false,
   bulkList: []
 };
 
@@ -125,11 +126,18 @@ function initFormInputs() {
       input.addEventListener('input', (e) => {
         AppState.currentData[key] = e.target.value;
         
-        // Si el usuario cambia la ciudad, auto-detectar y cambiar la cámara
-        if (key === 'ciudad' || key === 'ciudadCompleta') {
+        // Sincronizar sinónimos de domicilio/ciudad
+        if (key === 'domicilioPrincipal') {
+          AppState.currentData.ciudad = e.target.value;
+        } else if (key === 'ciudad') {
+          AppState.currentData.domicilioPrincipal = e.target.value;
+        }
+
+        // Si el usuario cambia la ciudad, auto-detectar y sugerir la cámara si no ha sido forzada
+        if (key === 'ciudad' || key === 'domicilioPrincipal') {
           const matchedChamber = getChamberByCity(e.target.value);
           const camaraSelect = document.getElementById('field-camaraSeleccionada');
-          if (camaraSelect && matchedChamber) {
+          if (camaraSelect && matchedChamber && !AppState.manualChamberSelection) {
             camaraSelect.value = matchedChamber.id;
             AppState.currentData.camaraSeleccionada = matchedChamber.id;
           }
@@ -147,14 +155,8 @@ function initFormInputs() {
   if (camaraSelect) {
     camaraSelect.addEventListener('change', (e) => {
       const chamberKey = e.target.value;
+      AppState.manualChamberSelection = true;
       AppState.currentData.camaraSeleccionada = chamberKey;
-      const chamber = CHAMBER_CATALOG[chamberKey];
-      if (chamber) {
-        // Actualizar nombres y municipios automáticamente si corresponde
-        AppState.currentData.ciudadCompleta = `${chamber.city} - Colombia`;
-        const cityInput = document.getElementById('field-ciudadCompleta');
-        if (cityInput) cityInput.value = AppState.currentData.ciudadCompleta;
-      }
       renderCurrentDocument();
     });
   }

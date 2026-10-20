@@ -69,6 +69,21 @@ const TemplateEngine = {
     const recibo = data.reciboNo || this.generateReceiptNumber('bucaramanga');
     const codigo = data.codigoVerificacion || this.generateVerificationCode('bucaramanga');
     const razon = (data.razonSocial || 'COOPERATIVA DE CAFICULTORES DE SANTANDER LTDA.').toUpperCase();
+    const nit = data.nit || '890201988-3';
+    const domicilio = (data.domicilioPrincipal || data.ciudad || 'SAN GIL').toUpperCase();
+    const matricula = data.matricula || '05-500460-21 DEL 1997/02/17';
+    const fechaRen = data.fechaRenovacion || 'MARZO 15 DE 2022';
+    const niif = data.grupoNiif || 'GRUPO II.';
+    const direccion = data.direccion || 'CR. 12 NO. 9-44';
+    const municipio = (data.ciudadCompleta || data.municipioJudicial || 'SAN GIL - SANTANDER').toUpperCase();
+    const tel1 = data.telefono || '7242556';
+    const tel2 = data.telefono2 || '3143824057';
+    const email = data.email || 'secretaria@coopsantander.com';
+    const dirJud = data.direccionJudicial || direccion;
+    const munJud = (data.municipioJudicial || municipio).toUpperCase();
+    const telJud1 = data.telefonoJudicial || tel1;
+    const telJud2 = data.telefonoJudicial2 || '3143824057';
+    const emailJud = data.emailNotificacion || email;
 
     return `
       <div class="cc-page style-bucaramanga">
@@ -106,34 +121,34 @@ const TemplateEngine = {
         <div class="centered-spaced-title">C E R T I F I C A</div>
 
         <div class="bga-meta-group">
-          <div>FECHA DE RENOVACIÓN: ${data.fechaRenovacion || 'MARZO 15 DE 2022'}</div>
-          <div>GRUPO NIIF: ${data.grupoNiif || 'GRUPO II.'}</div>
+          <div>FECHA DE RENOVACIÓN: ${fechaRen}</div>
+          <div>GRUPO NIIF: ${niif}</div>
         </div>
 
         <div class="centered-spaced-title">C E R T I F I C A</div>
 
         <div class="bga-record-block">
-          <div>REGISTRO: ${data.matricula || '05-500460-21 DEL 1997/02/17'}</div>
+          <div>REGISTRO: ${matricula}</div>
           <div>NOMBRE:${razon}</div>
-          <div>NIT: ${data.nit || '890201988-3'}</div>
+          <div>NIT: ${nit}</div>
           <br>
-          <div>DOMICILIO: ${(data.ciudad || 'SAN GIL').toUpperCase()}</div>
+          <div>DOMICILIO: ${domicilio}</div>
           <br>
           <div class="bga-table-lines">
-            <div class="bga-line-item"><span class="bga-lbl">DIRECCION :</span> <span class="bga-val">${data.direccion || 'CR. 12 NO. 9-44'}</span></div>
-            <div class="bga-line-item"><span class="bga-lbl">MUNICIPIO :</span> <span class="bga-val">${(data.ciudadCompleta || 'SAN GIL - SANTANDER').toUpperCase()}</span></div>
-            <div class="bga-line-item"><span class="bga-lbl">TELEFONO1:</span> <span class="bga-val">${data.telefono || '7242556'}</span></div>
-            <div class="bga-line-item"><span class="bga-lbl">TELEFONO2:</span> <span class="bga-val">${data.telefono2 || '3143824057'}</span></div>
-            <div class="bga-line-item"><span class="bga-lbl">EMAIL :</span> <span class="bga-val">${data.email || 'secretaria@coopsantander.com'}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">DIRECCION :</span> <span class="bga-val">${direccion}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">MUNICIPIO :</span> <span class="bga-val">${municipio}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">TELEFONO1:</span> <span class="bga-val">${tel1}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">TELEFONO2:</span> <span class="bga-val">${tel2}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">EMAIL :</span> <span class="bga-val">${email}</span></div>
           </div>
           <br>
           <div class="bga-bold-sub">NOTIFICACION JUDICIAL</div>
           <div class="bga-table-lines">
-            <div class="bga-line-item"><span class="bga-lbl">DIRECCION:</span> <span class="bga-val">${data.direccionJudicial || data.direccion || 'CR. 12 NO. 9-44'}</span></div>
-            <div class="bga-line-item"><span class="bga-lbl">MUNICIPIO:</span> <span class="bga-val">${(data.municipioJudicial || 'SAN GIL - SANTANDER').toUpperCase()}</span></div>
-            <div class="bga-line-item"><span class="bga-lbl">TELEFONO1:</span> <span class="bga-val">${data.telefonoJudicial || data.telefono || '7242556'}</span></div>
-            <div class="bga-line-item"><span class="bga-lbl">TELEFONO2:</span> <span class="bga-val">${data.telefonoJudicial2 || '3143824057'}</span></div>
-            <div class="bga-line-item"><span class="bga-lbl">EMAIL :</span> <span class="bga-val">${data.emailNotificacion || data.email || 'secretaria@coopsantander.com'}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">DIRECCION:</span> <span class="bga-val">${dirJud}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">MUNICIPIO:</span> <span class="bga-val">${munJud}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">TELEFONO1:</span> <span class="bga-val">${telJud1}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">TELEFONO2:</span> <span class="bga-val">${telJud2}</span></div>
+            <div class="bga-line-item"><span class="bga-lbl">EMAIL :</span> <span class="bga-val">${emailJud}</span></div>
           </div>
         </div>
 
@@ -159,6 +174,26 @@ const TemplateEngine = {
     const fecha = data.fechaExpedicion || this.formatDateByChamber('barranquilla');
     const recibo = data.reciboNo || '12739387';
     const codigo = data.codigoVerificacion || this.generateVerificationCode('barranquilla');
+    const razon = (data.razonSocial || 'FUNDACION ISRAAID COLOMBIA').toUpperCase();
+    const sigla = data.sigla || data.establecimiento || 'No reportó';
+    const nit = data.nit || '901.409.873 - 9';
+    const domicilio = data.domicilioPrincipal || data.ciudad || 'Barranquilla';
+    const matricula = data.matricula || '18.048';
+    const fechaMat = data.fechaMatricula || '10 de Sep/bre de 2020';
+    const ultimoAno = data.ultimoAnoRenovado || '2025';
+    const fechaRen = data.fechaRenovacion || '28 de Marzo de 2025';
+    const niif = data.grupoNiif || '4. GRUPO III. Microempresas';
+    const direccion = data.direccion || 'CL 77 B No 57 - 103 OF 2303';
+    const municipio = data.ciudadCompleta || data.municipioJudicial || 'Barranquilla - Atlantico';
+    const email = data.email || 'kgarcia@israaid.org';
+    const tel1 = data.telefono || '3354438';
+    const tel2 = data.telefono2 || 'No reportó';
+    const tel3 = data.telefono3 || 'No reportó';
+    const dirJud = data.direccionJudicial || direccion;
+    const munJud = data.municipioJudicial || municipio;
+    const emailJud = data.emailNotificacion || email;
+    const telJud1 = data.telefonoJudicial || tel1;
+    const telJud2 = data.telefonoJudicial2 || 'No reportó';
 
     return `
       <div class="cc-page style-barranquilla">
@@ -186,35 +221,35 @@ const TemplateEngine = {
         <div class="section-heading-centered">NOMBRE, IDENTIFICACIÓN Y DOMICILIO</div>
         <div class="standard-kv-list">
           <div class="kv-row"><span class="kv-k">Razón Social:</span></div>
-          <div class="kv-row"><span class="kv-v" style="font-weight: normal; margin-left: 0;">${(data.razonSocial || 'FUNDACION ISRAAID COLOMBIA').toUpperCase()}</span></div>
-          <div class="kv-row"><span class="kv-k">Sigla:</span> <span class="kv-v">${data.sigla || 'ISRAAID E ISRAAID COLOMBIA'}</span></div>
-          <div class="kv-row"><span class="kv-k">Nit:</span> <span class="kv-v">${data.nit || '901.409.873 - 9'}</span></div>
-          <div class="kv-row"><span class="kv-k">Domicilio Principal:</span> <span class="kv-v">${data.ciudad || 'Barranquilla'}</span></div>
+          <div class="kv-row"><span class="kv-v" style="font-weight: normal; margin-left: 0;">${razon}</span></div>
+          <div class="kv-row"><span class="kv-k">Sigla:</span> <span class="kv-v">${sigla}</span></div>
+          <div class="kv-row"><span class="kv-k">Nit:</span> <span class="kv-v">${nit}</span></div>
+          <div class="kv-row"><span class="kv-k">Domicilio Principal:</span> <span class="kv-v">${domicilio}</span></div>
         </div>
 
         <div class="section-heading-centered" style="margin-top: 18px;">INSCRIPCIÓN</div>
         <div class="standard-kv-list">
-          <div class="kv-row"><span class="kv-k">Registro No.:</span> <span class="kv-v">${data.matricula || '18.048'}</span></div>
-          <div class="kv-row"><span class="kv-k">Fecha de registro:</span> <span class="kv-v">${data.fechaMatricula || '10 de Sep/bre de 2020'}</span></div>
-          <div class="kv-row"><span class="kv-k">Último año renovado:</span> <span class="kv-v">${data.ultimoAnoRenovado || '2025'}</span></div>
-          <div class="kv-row"><span class="kv-k">Fecha de renovación del registro:</span> <span class="kv-v">${data.fechaRenovacion || '28 de Marzo de 2025'}</span></div>
-          <div class="kv-row"><span class="kv-k">Grupo NIIF:</span> <span class="kv-v">${data.grupoNiif || '4. GRUPO III. Microempresas'}</span></div>
+          <div class="kv-row"><span class="kv-k">Registro No.:</span> <span class="kv-v">${matricula}</span></div>
+          <div class="kv-row"><span class="kv-k">Fecha de registro:</span> <span class="kv-v">${fechaMat}</span></div>
+          <div class="kv-row"><span class="kv-k">Último año renovado:</span> <span class="kv-v">${ultimoAno}</span></div>
+          <div class="kv-row"><span class="kv-k">Fecha de renovación del registro:</span> <span class="kv-v">${fechaRen}</span></div>
+          <div class="kv-row"><span class="kv-k">Grupo NIIF:</span> <span class="kv-v">${niif}</span></div>
         </div>
 
         <div class="section-heading-centered" style="margin-top: 18px;">UBICACIÓN</div>
         <div class="standard-kv-list">
-          <div class="kv-row"><span class="kv-k">Direccion domicilio principal:</span> <span class="kv-v">${data.direccion || 'CL 77 B No 57 - 103 OF 2303'}</span></div>
-          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${data.ciudadCompleta || 'Barranquilla - Atlantico'}</span></div>
-          <div class="kv-row"><span class="kv-k">Correo electrónico:</span> <span class="kv-v">${data.email || 'kgarcia@israaid.org'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${data.telefono || '3354438'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span> <span class="kv-v">${data.telefono2 || 'No reportó'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono comercial 3:</span> <span class="kv-v">${data.telefono3 || 'No reportó'}</span></div>
+          <div class="kv-row"><span class="kv-k">Direccion domicilio principal:</span> <span class="kv-v">${direccion}</span></div>
+          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${municipio}</span></div>
+          <div class="kv-row"><span class="kv-k">Correo electrónico:</span> <span class="kv-v">${email}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${tel1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span> <span class="kv-v">${tel2}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 3:</span> <span class="kv-v">${tel3}</span></div>
           <br>
-          <div class="kv-row"><span class="kv-k">Direccion para notificación judicial:</span> <span class="kv-v">${data.direccionJudicial || data.direccion || 'CL 77 B No 57 - 103 OF 2303'}</span></div>
-          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${data.municipioJudicial || 'Barranquilla - Atlantico'}</span></div>
-          <div class="kv-row"><span class="kv-k">Correo electrónico de notificación:</span> <span class="kv-v">${data.emailNotificacion || data.email || 'kgarcia@israaid.org'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono para notificación 1:</span> <span class="kv-v">${data.telefonoJudicial || data.telefono || '3354438'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono para notificación 2:</span> <span class="kv-v">${data.telefonoJudicial2 || 'No reportó'}</span></div>
+          <div class="kv-row"><span class="kv-k">Direccion para notificación judicial:</span> <span class="kv-v">${dirJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${munJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Correo electrónico de notificación:</span> <span class="kv-v">${emailJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 1:</span> <span class="kv-v">${telJud1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 2:</span> <span class="kv-v">${telJud2}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono para notificación 3:</span> <span class="kv-v">No reportó</span></div>
         </div>
 
@@ -236,6 +271,28 @@ const TemplateEngine = {
     const fecha = data.fechaExpedicion || this.formatDateByChamber('medellin');
     const recibo = data.reciboNo || '0030458833';
     const codigo = data.codigoVerificacion || this.generateVerificationCode('medellin');
+    const razon = (data.razonSocial || 'CORPORACION MAKAIA ASESORIA INTERNACIONAL').toUpperCase();
+    const sigla = data.sigla || data.establecimiento || 'No reportó';
+    const nit = data.nit || '900106664-1';
+    const domicilio = (data.domicilioPrincipal || data.ciudad || data.ciudadCompleta || 'MEDELLÍN, ANTIOQUIA, COLOMBIA').toUpperCase();
+    const matricula = data.matricula || '21-009711-21';
+    const fechaMat = data.fechaMatricula || '08 de Septiembre de 2006';
+    const ultimoAno = data.ultimoAnoRenovado || '2026';
+    const fechaRen = data.fechaRenovacion || '19 de Marzo de 2026';
+    const niif = data.grupoNiif || 'GRUPO III.';
+    const direccion = data.direccion || 'Carrera 43 A 34 155 OF 701';
+    const municipio = (data.ciudadCompleta || data.municipioJudicial || 'MEDELLÍN, ANTIOQUIA, COLOMBIA').toUpperCase();
+    const email = data.email || 'direccion.operaciones@makaia.org';
+    const tel1 = data.telefono || '4480374';
+    const tel2 = data.telefono2 || '3188022847';
+    const tel3 = data.telefono3 || '3117209148';
+    const dirJud = data.direccionJudicial || direccion;
+    const munJud = (data.municipioJudicial || municipio).toUpperCase();
+    const emailJud = data.emailNotificacion || email;
+    const telJud1 = data.telefonoJudicial || tel1;
+    const telJud2 = data.telefonoJudicial2 || '3188022847';
+    const telJud3 = data.telefonoJudicial3 || '3113428926';
+    const textoLegal = data.textoNotificacion || `La persona jurídica ${razon} SI autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento...`;
 
     return `
       <div class="cc-page style-medellin">
@@ -265,41 +322,41 @@ const TemplateEngine = {
 
         <div class="section-heading-centered" style="margin-top: 15px;">NOMBRE, IDENTIFICACIÓN Y DOMICILIO</div>
         <div class="med-table-rows">
-          <div class="med-row"><span class="med-lbl">Razón social:</span> <span class="med-val">${(data.razonSocial || 'CORPORACION MAKAIA ASESORIA INTERNACIONAL').toUpperCase()}</span></div>
-          <div class="med-row"><span class="med-lbl">Sigla:</span> <span class="med-val">${data.sigla || 'No reportó'}</span></div>
-          <div class="med-row"><span class="med-lbl">Nit:</span> <span class="med-val">${data.nit || '900106664-1'}</span></div>
-          <div class="med-row"><span class="med-lbl">Domicilio principal:</span> <span class="med-val">${(data.ciudadCompleta || 'MEDELLÍN, ANTIOQUIA, COLOMBIA').toUpperCase()}</span></div>
+          <div class="med-row"><span class="med-lbl">Razón social:</span> <span class="med-val">${razon}</span></div>
+          <div class="med-row"><span class="med-lbl">Sigla:</span> <span class="med-val">${sigla}</span></div>
+          <div class="med-row"><span class="med-lbl">Nit:</span> <span class="med-val">${nit}</span></div>
+          <div class="med-row"><span class="med-lbl">Domicilio principal:</span> <span class="med-val">${domicilio}</span></div>
         </div>
 
         <div class="section-heading-centered" style="margin-top: 15px;">INSCRIPCION</div>
         <div class="med-table-rows">
-          <div class="med-row"><span class="med-lbl">Inscripción No.:</span> <span class="med-val">${data.matricula || '21-009711-21'}</span></div>
-          <div class="med-row"><span class="med-lbl">Fecha inscripción:</span> <span class="med-val">${data.fechaMatricula || '08 de Septiembre de 2006'}</span></div>
-          <div class="med-row"><span class="med-lbl">Último año renovado:</span> <span class="med-val">${data.ultimoAnoRenovado || '2026'}</span></div>
-          <div class="med-row"><span class="med-lbl">Fecha de renovación:</span> <span class="med-val">${data.fechaRenovacion || '19 de Marzo de 2026'}</span></div>
-          <div class="med-row"><span class="med-lbl">Grupo NIIF:</span> <span class="med-val">${data.grupoNiif || 'GRUPO III.'}</span></div>
+          <div class="med-row"><span class="med-lbl">Inscripción No.:</span> <span class="med-val">${matricula}</span></div>
+          <div class="med-row"><span class="med-lbl">Fecha inscripción:</span> <span class="med-val">${fechaMat}</span></div>
+          <div class="med-row"><span class="med-lbl">Último año renovado:</span> <span class="med-val">${ultimoAno}</span></div>
+          <div class="med-row"><span class="med-lbl">Fecha de renovación:</span> <span class="med-val">${fechaRen}</span></div>
+          <div class="med-row"><span class="med-lbl">Grupo NIIF:</span> <span class="med-val">${niif}</span></div>
         </div>
 
         <div class="section-heading-centered" style="margin-top: 15px;">UBICACIÓN</div>
         <div class="med-table-rows">
-          <div class="med-row"><span class="med-lbl">Dirección del domicilio principal:</span> <span class="med-val">${data.direccion || 'Carrera 43 A 34 155 OF 701'}</span></div>
-          <div class="med-row"><span class="med-lbl">Municipio:</span> <span class="med-val">${(data.ciudadCompleta || 'MEDELLÍN, ANTIOQUIA, COLOMBIA').toUpperCase()}</span></div>
-          <div class="med-row"><span class="med-lbl">Correo electrónico:</span> <span class="med-val">${data.email || 'direccion.operaciones@makaia.org'}</span></div>
-          <div class="med-row"><span class="med-lbl">Teléfono comercial 1:</span> <span class="med-val">${data.telefono || '4480374'}</span></div>
-          <div class="med-row"><span class="med-lbl">Teléfono comercial 2:</span> <span class="med-val">${data.telefono2 || '3188022847'}</span></div>
-          <div class="med-row"><span class="med-lbl">Teléfono comercial 3:</span> <span class="med-val">${data.telefono3 || '3117209148'}</span></div>
+          <div class="med-row"><span class="med-lbl">Dirección del domicilio principal:</span> <span class="med-val">${direccion}</span></div>
+          <div class="med-row"><span class="med-lbl">Municipio:</span> <span class="med-val">${municipio}</span></div>
+          <div class="med-row"><span class="med-lbl">Correo electrónico:</span> <span class="med-val">${email}</span></div>
+          <div class="med-row"><span class="med-lbl">Teléfono comercial 1:</span> <span class="med-val">${tel1}</span></div>
+          <div class="med-row"><span class="med-lbl">Teléfono comercial 2:</span> <span class="med-val">${tel2}</span></div>
+          <div class="med-row"><span class="med-lbl">Teléfono comercial 3:</span> <span class="med-val">${tel3}</span></div>
           <div class="med-row"><span class="med-lbl">Página web:</span> <span class="med-val">No reportó</span></div>
           <br>
-          <div class="med-row"><span class="med-lbl">Dirección para notificación judicial:</span> <span class="med-val">${data.direccionJudicial || data.direccion || 'Carrera 43 A 34 155 OF 701'}</span></div>
-          <div class="med-row"><span class="med-lbl">Municipio:</span> <span class="med-val">${(data.municipioJudicial || 'MEDELLÍN, ANTIOQUIA, COLOMBIA').toUpperCase()}</span></div>
-          <div class="med-row"><span class="med-lbl">Correo electrónico de notificación:</span> <span class="med-val">${data.emailNotificacion || data.email || 'carlos.gonzalez@makaia.org'}</span></div>
-          <div class="med-row"><span class="med-lbl">Teléfono para notificación 1:</span> <span class="med-val">${data.telefonoJudicial || data.telefono || '4480374'}</span></div>
-          <div class="med-row"><span class="med-lbl">Teléfono para notificación 2:</span> <span class="med-val">${data.telefonoJudicial2 || '3188022847'}</span></div>
-          <div class="med-row"><span class="med-lbl">Teléfono para notificación 3:</span> <span class="med-val">3113428926</span></div>
+          <div class="med-row"><span class="med-lbl">Dirección para notificación judicial:</span> <span class="med-val">${dirJud}</span></div>
+          <div class="med-row"><span class="med-lbl">Municipio:</span> <span class="med-val">${munJud}</span></div>
+          <div class="med-row"><span class="med-lbl">Correo electrónico de notificación:</span> <span class="med-val">${emailJud}</span></div>
+          <div class="med-row"><span class="med-lbl">Teléfono para notificación 1:</span> <span class="med-val">${telJud1}</span></div>
+          <div class="med-row"><span class="med-lbl">Teléfono para notificación 2:</span> <span class="med-val">${telJud2}</span></div>
+          <div class="med-row"><span class="med-lbl">Teléfono para notificación 3:</span> <span class="med-val">${telJud3}</span></div>
         </div>
 
         <div class="med-legal-bottom">
-          La persona jurídica ${(data.razonSocial || 'CORPORACION MAKAIA ASESORIA INTERNACIONAL').toUpperCase()} SI autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento...
+          ${textoLegal}
         </div>
 
         <div class="doc-footer-pagination">
@@ -320,6 +377,24 @@ const TemplateEngine = {
     const fecha = data.fechaExpedicion || this.formatDateByChamber('cartagena');
     const recibo = data.reciboNo || 'S012133722';
     const codigo = data.codigoVerificacion || this.generateVerificationCode('cartagena');
+    const razon = (data.razonSocial || 'SPERCOL S.A.S').toUpperCase();
+    const nit = data.nit || '901028458-1';
+    const domicilio = data.domicilioPrincipal || data.ciudad || data.ciudadCompleta || 'Cartagena, Bolivar';
+    const matricula = data.matricula || '36975512';
+    const fechaMat = data.fechaMatricula || '21 de noviembre de 2016';
+    const ultimoAno = data.ultimoAnoRenovado || '2026';
+    const fechaRen = data.fechaRenovacion || '31 de marzo de 2026';
+    const niif = data.grupoNiif || 'GRUPO III - MICROEMPRESAS';
+    const direccion = data.direccion || 'BARRIO BOSQUE, TRANSVERSAL 54 Nro. 30 - 403, SANTILLANA DE LOS PATIOS';
+    const municipio = data.ciudadCompleta || data.municipioJudicial || 'Cartagena, Bolivar';
+    const email = data.email || 'spercol.sas@hotmail.com';
+    const tel1 = data.telefono || '3504624532';
+    const tel2 = data.telefono2 || '3107290100';
+    const tel3 = data.telefono3 || '3108280913';
+    const dirJud = data.direccionJudicial || direccion;
+    const munJud = data.municipioJudicial || municipio;
+    const emailJud = data.emailNotificacion || email;
+    const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través del correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y del 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     return `
       <div class="cc-page style-cartagena">
@@ -347,38 +422,38 @@ const TemplateEngine = {
 
         <div class="section-heading-centered">NOMBRE, IDENTIFICACIÓN Y DOMICILIO</div>
         <div class="ctg-rows">
-          <div class="ctg-row"><span class="ctg-lbl">Razón Social :</span> <span class="ctg-val">${(data.razonSocial || 'SPERCOL S.A.S').toUpperCase()}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Nit :</span> <span class="ctg-val">${data.nit || '901028458-1'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Domicilio:</span> <span class="ctg-val">${data.ciudadCompleta || 'Cartagena, Bolivar'}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Razón Social :</span> <span class="ctg-val">${razon}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Nit :</span> <span class="ctg-val">${nit}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Domicilio:</span> <span class="ctg-val">${domicilio}</span></div>
         </div>
 
         <div class="section-heading-centered">MATRÍCULA</div>
         <div class="ctg-rows">
-          <div class="ctg-row"><span class="ctg-lbl">Matrícula No:</span> <span class="ctg-val">${data.matricula || '36975512'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Fecha de matrícula:</span> <span class="ctg-val">${data.fechaMatricula || '21 de noviembre de 2016'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Ultimo año renovado:</span> <span class="ctg-val">${data.ultimoAnoRenovado || '2026'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Fecha de renovación:</span> <span class="ctg-val">${data.fechaRenovacion || '31 de marzo de 2026'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Grupo NIIF :</span> <span class="ctg-val">${data.grupoNiif || 'GRUPO III - MICROEMPRESAS'}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Matrícula No:</span> <span class="ctg-val">${matricula}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Fecha de matrícula:</span> <span class="ctg-val">${fechaMat}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Ultimo año renovado:</span> <span class="ctg-val">${ultimoAno}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Fecha de renovación:</span> <span class="ctg-val">${fechaRen}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Grupo NIIF :</span> <span class="ctg-val">${niif}</span></div>
         </div>
 
         <div class="section-heading-centered">UBICACIÓN</div>
         <div class="ctg-rows">
-          <div class="ctg-row"><span class="ctg-lbl">Dirección del domicilio principal :</span> <span class="ctg-val">${data.direccion || 'BARRIO BOSQUE, TRANSVERSAL 54 Nro. 30 - 403, SANTILLANA DE LOS PATIOS'}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Dirección del domicilio principal :</span> <span class="ctg-val">${direccion}</span></div>
           <div class="ctg-row"><span class="ctg-lbl">Barrio :</span> <span class="ctg-val">BOSQUE</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Municipio :</span> <span class="ctg-val">${data.ciudadCompleta || 'Cartagena, Bolivar'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Correo electrónico :</span> <span class="ctg-val">${data.email || 'spercol.sas@hotmail.com'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Teléfono comercial 1 :</span> <span class="ctg-val">${data.telefono || '3504624532'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Teléfono comercial 2 :</span> <span class="ctg-val">${data.telefono2 || '3107290100'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Teléfono comercial 3 :</span> <span class="ctg-val">${data.telefono3 || '3108280913'}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Municipio :</span> <span class="ctg-val">${municipio}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Correo electrónico :</span> <span class="ctg-val">${email}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Teléfono comercial 1 :</span> <span class="ctg-val">${tel1}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Teléfono comercial 2 :</span> <span class="ctg-val">${tel2}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Teléfono comercial 3 :</span> <span class="ctg-val">${tel3}</span></div>
           <br>
-          <div class="ctg-row"><span class="ctg-lbl">Dirección para notificación judicial :</span> <span class="ctg-val">${data.direccionJudicial || data.direccion || 'BARRIO BOSQUE, TRANSVERSAL 54 Nro. 30 - 403, SANTILLANA DE LOS PATIOS'}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Dirección para notificación judicial :</span> <span class="ctg-val">${dirJud}</span></div>
           <div class="ctg-row"><span class="ctg-lbl">Barrio :</span> <span class="ctg-val">BOSQUE</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Municipio :</span> <span class="ctg-val">${data.municipioJudicial || 'Cartagena, Bolivar'}</span></div>
-          <div class="ctg-row"><span class="ctg-lbl">Correo electrónico de notificación :</span> <span class="ctg-val">${data.emailNotificacion || data.email || 'spercol.sas@hotmail.com'}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Municipio :</span> <span class="ctg-val">${munJud}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Correo electrónico de notificación :</span> <span class="ctg-val">${emailJud}</span></div>
         </div>
 
         <div class="ctg-legal-notif">
-          La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través del correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y del 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.
+          ${textoLegal}
         </div>
 
         <div class="section-heading-centered" style="margin-top: 15px;">CONSTITUCIÓN</div>
@@ -405,6 +480,25 @@ const TemplateEngine = {
     const recibo = data.reciboNo || '8414394';
     const codigo = data.codigoVerificacion || this.generateVerificationCode('cali');
     const razon = (data.razonSocial || 'FUNDALIVIO S.A.S.').toUpperCase();
+    const nit = data.nit || '805019927-6';
+    const domicilio = data.domicilioPrincipal || data.ciudad || 'Cali';
+    const matricula = data.matricula || '559967-16';
+    const fechaMat = data.fechaMatricula || '07 de mayo de 2001';
+    const ultimoAno = data.ultimoAnoRenovado || '2022';
+    const fechaRen = data.fechaRenovacion || '16 de marzo de 2022';
+    const niif = data.grupoNiif || 'Grupo 2';
+    const direccion = data.direccion || 'CL 19 NORTE # 5 - 35 CU 706 707 801';
+    const municipio = data.ciudadCompleta || data.municipioJudicial || 'Cali - Valle';
+    const email = data.email || 'FUNDALIVIO@FUNDALIVIO.COM';
+    const tel1 = data.telefono || '6607742';
+    const tel2 = data.telefono2 || 'No reportó';
+    const tel3 = data.telefono3 || 'No reportó';
+    const dirJud = data.direccionJudicial || direccion;
+    const munJud = data.municipioJudicial || municipio;
+    const emailJud = data.emailNotificacion || email;
+    const telJud1 = data.telefonoJudicial || tel1;
+    const telJud2 = data.telefonoJudicial2 || 'No reportó';
+    const textoLegal = data.textoNotificacion || `La persona jurídica ${razon} SI autorizó recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     return `
       <div class="cc-page style-cali-authentic">
@@ -437,38 +531,38 @@ const TemplateEngine = {
         <div class="section-heading-centered" style="margin: 14px 0 8px 0;">NOMBRE, IDENTIFICACIÓN Y DOMICILIO</div>
         <div class="cali-table-auth">
           <div class="cali-row-auth"><span class="cali-lbl-auth">Razón social:</span> <span class="cali-val-auth">${razon}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Nit.:</span> <span class="cali-val-auth">${data.nit || '805019927-6'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Domicilio principal:</span> <span class="cali-val-auth">${data.ciudad || 'Cali'}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Nit.:</span> <span class="cali-val-auth">${nit}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Domicilio principal:</span> <span class="cali-val-auth">${domicilio}</span></div>
         </div>
 
         <div class="section-heading-centered" style="margin: 14px 0 8px 0;">MATRÍCULA</div>
         <div class="cali-table-auth">
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Matrícula No.:</span> <span class="cali-val-auth">${data.matricula || '559967-16'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Fecha de matrícula en esta Cámara:</span> <span class="cali-val-auth">${data.fechaMatricula || '07 de mayo de 2001'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Último año renovado:</span> <span class="cali-val-auth">${data.ultimoAnoRenovado || '2022'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Fecha de renovación:</span> <span class="cali-val-auth">${data.fechaRenovacion || '16 de marzo de 2022'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Grupo NIIF:</span> <span class="cali-val-auth">${data.grupoNiif || 'Grupo 2'}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Matrícula No.:</span> <span class="cali-val-auth">${matricula}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Fecha de matrícula en esta Cámara:</span> <span class="cali-val-auth">${fechaMat}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Último año renovado:</span> <span class="cali-val-auth">${ultimoAno}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Fecha de renovación:</span> <span class="cali-val-auth">${fechaRen}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Grupo NIIF:</span> <span class="cali-val-auth">${niif}</span></div>
         </div>
 
         <div class="section-heading-centered" style="margin: 14px 0 8px 0;">UBICACIÓN</div>
         <div class="cali-table-auth">
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Dirección del domicilio principal:</span> <span class="cali-val-auth">${data.direccion || 'CL 19 NORTE # 5 - 35 CU 706 707 801'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Municipio:</span> <span class="cali-val-auth">${data.ciudadCompleta || 'Cali - Valle'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Correo electrónico:</span> <span class="cali-val-auth">${data.email || 'FUNDALIVIO@FUNDALIVIO.COM'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono comercial 1:</span> <span class="cali-val-auth">${data.telefono || '6607742'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono comercial 2:</span> <span class="cali-val-auth">${data.telefono2 || 'No reportó'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono comercial 3:</span> <span class="cali-val-auth">${data.telefono3 || 'No reportó'}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Dirección del domicilio principal:</span> <span class="cali-val-auth">${direccion}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Municipio:</span> <span class="cali-val-auth">${municipio}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Correo electrónico:</span> <span class="cali-val-auth">${email}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono comercial 1:</span> <span class="cali-val-auth">${tel1}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono comercial 2:</span> <span class="cali-val-auth">${tel2}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono comercial 3:</span> <span class="cali-val-auth">${tel3}</span></div>
           <br>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Dirección para notificación judicial:</span> <span class="cali-val-auth">${data.direccionJudicial || data.direccion || 'CL 19 NORTE # 5 - 35 CU 706 707 801'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Municipio:</span> <span class="cali-val-auth">${data.municipioJudicial || 'Cali - Valle'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Correo electrónico de notificación:</span> <span class="cali-val-auth">${data.emailNotificacion || data.email || 'FUNDALIVIO@FUNDALIVIO.COM'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono para notificación 1:</span> <span class="cali-val-auth">${data.telefonoJudicial || data.telefono || '6607742'}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono para notificación 2:</span> <span class="cali-val-auth">${data.telefonoJudicial2 || 'No reportó'}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Dirección para notificación judicial:</span> <span class="cali-val-auth">${dirJud}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Municipio:</span> <span class="cali-val-auth">${munJud}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Correo electrónico de notificación:</span> <span class="cali-val-auth">${emailJud}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono para notificación 1:</span> <span class="cali-val-auth">${telJud1}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono para notificación 2:</span> <span class="cali-val-auth">${telJud2}</span></div>
           <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono para notificación 3:</span> <span class="cali-val-auth">No reportó</span></div>
         </div>
 
         <div class="cali-auth-legal">
-          La persona jurídica ${razon} SI autorizó recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.
+          ${textoLegal}
         </div>
 
         <div class="doc-footer-pagination">
@@ -490,6 +584,23 @@ const TemplateEngine = {
     const recibo = data.reciboNo || '00492812';
     const codigo = data.codigoVerificacion || this.generateVerificationCode('manizales');
     const razon = (data.razonSocial || 'EMPRESA EJEMPLO S.A.S.').toUpperCase();
+    const nit = data.nit || '900.123.456-7';
+    const domicilio = data.domicilioPrincipal || data.ciudad || data.ciudadCompleta || 'Manizales - Caldas';
+    const matricula = data.matricula || '218392-16';
+    const fechaMat = data.fechaMatricula || '12 de mayo de 2015';
+    const ultimoAno = data.ultimoAnoRenovado || '2026';
+    const fechaRen = data.fechaRenovacion || '24 de marzo de 2026';
+    const niif = data.grupoNiif || 'Grupo 2';
+    const direccion = data.direccion || 'CR 23 # 26-60 OF 402';
+    const municipio = data.ciudadCompleta || data.municipioJudicial || 'Manizales - Caldas';
+    const email = data.email || 'gerencia@empresa.com.co';
+    const tel1 = data.telefono || '8841234';
+    const tel2 = data.telefono2 || 'No reportó';
+    const dirJud = data.direccionJudicial || direccion;
+    const munJud = data.municipioJudicial || municipio;
+    const emailJud = data.emailNotificacion || email;
+    const telJud1 = data.telefonoJudicial || tel1;
+    const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     return `
       <div class="cc-page style-manizales">
@@ -520,35 +631,35 @@ const TemplateEngine = {
         <div class="section-heading-centered">NOMBRE, IDENTIFICACIÓN Y DOMICILIO</div>
         <div class="standard-kv-list">
           <div class="kv-row"><span class="kv-k">Razón Social:</span> <span class="kv-v">${razon}</span></div>
-          <div class="kv-row"><span class="kv-k">Nit:</span> <span class="kv-v">${data.nit || '900.123.456-7'}</span></div>
-          <div class="kv-row"><span class="kv-k">Domicilio Principal:</span> <span class="kv-v">${data.ciudadCompleta || 'Manizales - Caldas'}</span></div>
+          <div class="kv-row"><span class="kv-k">Nit:</span> <span class="kv-v">${nit}</span></div>
+          <div class="kv-row"><span class="kv-k">Domicilio Principal:</span> <span class="kv-v">${domicilio}</span></div>
         </div>
 
         <div class="section-heading-centered">MATRÍCULA / INSCRIPCIÓN</div>
         <div class="standard-kv-list">
-          <div class="kv-row"><span class="kv-k">Matrícula No.:</span> <span class="kv-v">${data.matricula || '218392-16'}</span></div>
-          <div class="kv-row"><span class="kv-k">Fecha de matrícula:</span> <span class="kv-v">${data.fechaMatricula || '12 de mayo de 2015'}</span></div>
-          <div class="kv-row"><span class="kv-k">Último año renovado:</span> <span class="kv-v">${data.ultimoAnoRenovado || '2026'}</span></div>
-          <div class="kv-row"><span class="kv-k">Fecha de renovación:</span> <span class="kv-v">${data.fechaRenovacion || '24 de marzo de 2026'}</span></div>
-          <div class="kv-row"><span class="kv-k">Grupo NIIF:</span> <span class="kv-v">${data.grupoNiif || 'Grupo 2'}</span></div>
+          <div class="kv-row"><span class="kv-k">Matrícula No.:</span> <span class="kv-v">${matricula}</span></div>
+          <div class="kv-row"><span class="kv-k">Fecha de matrícula:</span> <span class="kv-v">${fechaMat}</span></div>
+          <div class="kv-row"><span class="kv-k">Último año renovado:</span> <span class="kv-v">${ultimoAno}</span></div>
+          <div class="kv-row"><span class="kv-k">Fecha de renovación:</span> <span class="kv-v">${fechaRen}</span></div>
+          <div class="kv-row"><span class="kv-k">Grupo NIIF:</span> <span class="kv-v">${niif}</span></div>
         </div>
 
         <div class="section-heading-centered">UBICACIÓN Y CONTACTO</div>
         <div class="standard-kv-list">
-          <div class="kv-row"><span class="kv-k">Dirección domicilio principal:</span> <span class="kv-v">${data.direccion || 'CR 23 # 26-60 OF 402'}</span></div>
-          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${data.ciudadCompleta || 'Manizales - Caldas'}</span></div>
-          <div class="kv-row"><span class="kv-k">Correo electrónico:</span> <span class="kv-v">${data.email || 'gerencia@empresa.com.co'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${data.telefono || '8841234'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span> <span class="kv-v">${data.telefono2 || 'No reportó'}</span></div>
+          <div class="kv-row"><span class="kv-k">Dirección domicilio principal:</span> <span class="kv-v">${direccion}</span></div>
+          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${municipio}</span></div>
+          <div class="kv-row"><span class="kv-k">Correo electrónico:</span> <span class="kv-v">${email}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${tel1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span> <span class="kv-v">${tel2}</span></div>
           <br>
-          <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span> <span class="kv-v">${data.direccionJudicial || data.direccion || 'CR 23 # 26-60 OF 402'}</span></div>
-          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${data.municipioJudicial || 'Manizales - Caldas'}</span></div>
-          <div class="kv-row"><span class="kv-k">Correo notificación judicial:</span> <span class="kv-v">${data.emailNotificacion || data.email || 'notificaciones@empresa.com.co'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono para notificación:</span> <span class="kv-v">${data.telefonoJudicial || data.telefono || '8841234'}</span></div>
+          <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span> <span class="kv-v">${dirJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${munJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Correo notificación judicial:</span> <span class="kv-v">${emailJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación:</span> <span class="kv-v">${telJud1}</span></div>
         </div>
 
         <div class="cali-auth-legal">
-          La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.
+          ${textoLegal}
         </div>
 
         <div class="doc-footer-pagination">
@@ -570,6 +681,22 @@ const TemplateEngine = {
     const recibo = data.reciboNo || '00192837';
     const codigo = data.codigoVerificacion || this.generateVerificationCode('uraba');
     const razon = (data.razonSocial || 'EMPRESA URABA S.A.S.').toUpperCase();
+    const nit = data.nit || '900.876.543-2';
+    const domicilio = data.domicilioPrincipal || data.ciudad || data.ciudadCompleta || 'Apartadó - Antioquia';
+    const matricula = data.matricula || '98721-16';
+    const fechaMat = data.fechaMatricula || '18 de octubre de 2018';
+    const ultimoAno = data.ultimoAnoRenovado || '2026';
+    const fechaRen = data.fechaRenovacion || '29 de marzo de 2026';
+    const niif = data.grupoNiif || 'Grupo 2';
+    const direccion = data.direccion || 'CALLE 100 # 105-20';
+    const municipio = data.ciudadCompleta || data.municipioJudicial || 'Apartadó - Antioquia';
+    const email = data.email || 'contacto@empresa.com.co';
+    const tel1 = data.telefono || '8281234';
+    const dirJud = data.direccionJudicial || direccion;
+    const munJud = data.municipioJudicial || municipio;
+    const emailJud = data.emailNotificacion || email;
+    const telJud1 = data.telefonoJudicial || tel1;
+    const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     return `
       <div class="cc-page style-uraba">
@@ -600,34 +727,34 @@ const TemplateEngine = {
         <div class="section-heading-centered">NOMBRE, IDENTIFICACIÓN Y DOMICILIO</div>
         <div class="standard-kv-list">
           <div class="kv-row"><span class="kv-k">Razón Social:</span> <span class="kv-v">${razon}</span></div>
-          <div class="kv-row"><span class="kv-k">Nit:</span> <span class="kv-v">${data.nit || '900.876.543-2'}</span></div>
-          <div class="kv-row"><span class="kv-k">Domicilio Principal:</span> <span class="kv-v">${data.ciudadCompleta || 'Apartadó - Antioquia'}</span></div>
+          <div class="kv-row"><span class="kv-k">Nit:</span> <span class="kv-v">${nit}</span></div>
+          <div class="kv-row"><span class="kv-k">Domicilio Principal:</span> <span class="kv-v">${domicilio}</span></div>
         </div>
 
         <div class="section-heading-centered">MATRÍCULA / INSCRIPCIÓN</div>
         <div class="standard-kv-list">
-          <div class="kv-row"><span class="kv-k">Matrícula No.:</span> <span class="kv-v">${data.matricula || '98721-16'}</span></div>
-          <div class="kv-row"><span class="kv-k">Fecha de matrícula:</span> <span class="kv-v">${data.fechaMatricula || '18 de octubre de 2018'}</span></div>
-          <div class="kv-row"><span class="kv-k">Último año renovado:</span> <span class="kv-v">${data.ultimoAnoRenovado || '2026'}</span></div>
-          <div class="kv-row"><span class="kv-k">Fecha de renovación:</span> <span class="kv-v">${data.fechaRenovacion || '29 de marzo de 2026'}</span></div>
-          <div class="kv-row"><span class="kv-k">Grupo NIIF:</span> <span class="kv-v">${data.grupoNiif || 'Grupo 2'}</span></div>
+          <div class="kv-row"><span class="kv-k">Matrícula No.:</span> <span class="kv-v">${matricula}</span></div>
+          <div class="kv-row"><span class="kv-k">Fecha de matrícula:</span> <span class="kv-v">${fechaMat}</span></div>
+          <div class="kv-row"><span class="kv-k">Último año renovado:</span> <span class="kv-v">${ultimoAno}</span></div>
+          <div class="kv-row"><span class="kv-k">Fecha de renovación:</span> <span class="kv-v">${fechaRen}</span></div>
+          <div class="kv-row"><span class="kv-k">Grupo NIIF:</span> <span class="kv-v">${niif}</span></div>
         </div>
 
         <div class="section-heading-centered">UBICACIÓN Y CONTACTO</div>
         <div class="standard-kv-list">
-          <div class="kv-row"><span class="kv-k">Dirección domicilio principal:</span> <span class="kv-v">${data.direccion || 'CALLE 100 # 105-20'}</span></div>
-          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${data.ciudadCompleta || 'Apartadó - Antioquia'}</span></div>
-          <div class="kv-row"><span class="kv-k">Correo electrónico:</span> <span class="kv-v">${data.email || 'contacto@empresa.com.co'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${data.telefono || '8281234'}</span></div>
+          <div class="kv-row"><span class="kv-k">Dirección domicilio principal:</span> <span class="kv-v">${direccion}</span></div>
+          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${municipio}</span></div>
+          <div class="kv-row"><span class="kv-k">Correo electrónico:</span> <span class="kv-v">${email}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${tel1}</span></div>
           <br>
-          <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span> <span class="kv-v">${data.direccionJudicial || data.direccion || 'CALLE 100 # 105-20'}</span></div>
-          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${data.municipioJudicial || 'Apartadó - Antioquia'}</span></div>
-          <div class="kv-row"><span class="kv-k">Correo notificación judicial:</span> <span class="kv-v">${data.emailNotificacion || data.email || 'notificaciones@empresa.com.co'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono para notificación:</span> <span class="kv-v">${data.telefonoJudicial || data.telefono || '8281234'}</span></div>
+          <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span> <span class="kv-v">${dirJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${munJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Correo notificación judicial:</span> <span class="kv-v">${emailJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación:</span> <span class="kv-v">${telJud1}</span></div>
         </div>
 
         <div class="cali-auth-legal">
-          La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.
+          ${textoLegal}
         </div>
 
         <div class="doc-footer-pagination">
@@ -648,6 +775,25 @@ const TemplateEngine = {
     const recibo = data.reciboNo || this.generateReceiptNumber('bucaramanga');
     const codigo = data.codigoVerificacion || this.generateVerificationCode('bucaramanga');
     const isRight = chamber.logoPosition === 'right';
+    const razon = (data.razonSocial || 'EMPRESA REGISTRADA S.A.S.').toUpperCase();
+    const sigla = data.sigla || data.establecimiento || 'No reportó';
+    const nit = data.nit || '900.123.456-7';
+    const domicilio = (data.domicilioPrincipal || data.ciudad || chamber.city || 'COLOMBIA').toUpperCase();
+    const matricula = data.matricula || '812832-16';
+    const fechaMat = data.fechaMatricula || '17 de marzo de 2011';
+    const ultimoAno = data.ultimoAnoRenovado || '2026';
+    const fechaRen = data.fechaRenovacion || '25 de marzo de 2026';
+    const niif = data.grupoNiif || 'Grupo 2';
+    const direccion = data.direccion || 'CL 9 # 56-69 OF 201';
+    const municipio = (data.ciudadCompleta || data.municipioJudicial || chamber.city || 'COLOMBIA').toUpperCase();
+    const email = data.email || 'contacto@empresa.com.co';
+    const tel1 = data.telefono || '3006864940';
+    const tel2 = data.telefono2 || 'No reportó';
+    const dirJud = data.direccionJudicial || direccion;
+    const munJud = (data.municipioJudicial || municipio).toUpperCase();
+    const emailJud = data.emailNotificacion || email;
+    const telJud1 = data.telefonoJudicial || tel1;
+    const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     const disclaimer = chamber.disclaimer || 
       `LA PERSONA O ENTIDAD A LA QUE USTED LE VA A ENTREGAR EL CERTIFICADO PUEDE VERIFICAR EL CONTENIDO Y CONFIABILIDAD, INGRESANDO A ${chamber.verifyUrl || 'WWW.CONFECAMARAS.ORG.CO'} Y DIGITANDO EL CÓDIGO DE VERIFICACIÓN CITADO EN EL ENCABEZADO. ESTE CERTIFICADO PODRÁ SER VALIDADO DE MANERA ILIMITADA DURANTE 60 DÍAS CALENDARIO A PARTIR DE SU EXPEDICIÓN.`;
@@ -701,37 +847,37 @@ const TemplateEngine = {
 
         <div class="section-heading-centered">NOMBRE, IDENTIFICACIÓN Y DOMICILIO</div>
         <div class="standard-kv-list">
-          <div class="kv-row"><span class="kv-k">Razón Social:</span><span class="kv-v">${(data.razonSocial || 'EMPRESA REGISTRADA S.A.S.').toUpperCase()}</span></div>
-          <div class="kv-row"><span class="kv-k">Sigla:</span><span class="kv-v">${data.sigla || 'No reportó'}</span></div>
-          <div class="kv-row"><span class="kv-k">Nit:</span><span class="kv-v">${data.nit || '900.123.456-7'}</span></div>
-          <div class="kv-row"><span class="kv-k">Domicilio Principal:</span><span class="kv-v">${(data.ciudadCompleta || data.ciudad || chamber.city || 'COLOMBIA').toUpperCase()}</span></div>
+          <div class="kv-row"><span class="kv-k">Razón Social:</span><span class="kv-v">${razon}</span></div>
+          <div class="kv-row"><span class="kv-k">Sigla:</span><span class="kv-v">${sigla}</span></div>
+          <div class="kv-row"><span class="kv-k">Nit:</span><span class="kv-v">${nit}</span></div>
+          <div class="kv-row"><span class="kv-k">Domicilio Principal:</span><span class="kv-v">${domicilio}</span></div>
         </div>
 
         <div class="section-heading-centered">MATRÍCULA / INSCRIPCIÓN</div>
         <div class="standard-kv-list">
-          <div class="kv-row"><span class="kv-k">Matrícula No.:</span><span class="kv-v">${data.matricula || '812832-16'}</span></div>
-          <div class="kv-row"><span class="kv-k">Fecha de matrícula:</span><span class="kv-v">${data.fechaMatricula || '17 de marzo de 2011'}</span></div>
-          <div class="kv-row"><span class="kv-k">Último año renovado:</span><span class="kv-v">${data.ultimoAnoRenovado || '2026'}</span></div>
-          <div class="kv-row"><span class="kv-k">Fecha de renovación:</span><span class="kv-v">${data.fechaRenovacion || '25 de marzo de 2026'}</span></div>
-          <div class="kv-row"><span class="kv-k">Grupo NIIF:</span><span class="kv-v">${data.grupoNiif || 'Grupo 2'}</span></div>
+          <div class="kv-row"><span class="kv-k">Matrícula No.:</span><span class="kv-v">${matricula}</span></div>
+          <div class="kv-row"><span class="kv-k">Fecha de matrícula:</span><span class="kv-v">${fechaMat}</span></div>
+          <div class="kv-row"><span class="kv-k">Último año renovado:</span><span class="kv-v">${ultimoAno}</span></div>
+          <div class="kv-row"><span class="kv-k">Fecha de renovación:</span><span class="kv-v">${fechaRen}</span></div>
+          <div class="kv-row"><span class="kv-k">Grupo NIIF:</span><span class="kv-v">${niif}</span></div>
         </div>
 
         <div class="section-heading-centered">UBICACIÓN Y CONTACTO</div>
         <div class="standard-kv-list">
-          <div class="kv-row"><span class="kv-k">Dirección domicilio principal:</span><span class="kv-v">${data.direccion || 'CL 9 # 56-69 OF 201'}</span></div>
-          <div class="kv-row"><span class="kv-k">Municipio:</span><span class="kv-v">${(data.ciudadCompleta || data.ciudad || chamber.city || 'COLOMBIA').toUpperCase()}</span></div>
-          <div class="kv-row"><span class="kv-k">Correo electrónico:</span><span class="kv-v">${data.email || 'contacto@empresa.com.co'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span><span class="kv-v">${data.telefono || '3006864940'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span><span class="kv-v">${data.telefono2 || 'No reportó'}</span></div>
+          <div class="kv-row"><span class="kv-k">Dirección domicilio principal:</span><span class="kv-v">${direccion}</span></div>
+          <div class="kv-row"><span class="kv-k">Municipio:</span><span class="kv-v">${municipio}</span></div>
+          <div class="kv-row"><span class="kv-k">Correo electrónico:</span><span class="kv-v">${email}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span><span class="kv-v">${tel1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span><span class="kv-v">${tel2}</span></div>
           <br>
-          <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span><span class="kv-v">${data.direccionJudicial || data.direccion || 'CL 9 # 56-69 OF 201'}</span></div>
-          <div class="kv-row"><span class="kv-k">Municipio:</span><span class="kv-v">${(data.municipioJudicial || data.ciudadCompleta || chamber.city || 'COLOMBIA').toUpperCase()}</span></div>
-          <div class="kv-row"><span class="kv-k">Correo notificación judicial:</span><span class="kv-v">${data.emailNotificacion || data.email || 'notificaciones@empresa.com.co'}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono para notificación:</span><span class="kv-v">${data.telefonoJudicial || data.telefono || '3006864940'}</span></div>
+          <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span><span class="kv-v">${dirJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Municipio:</span><span class="kv-v">${munJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Correo notificación judicial:</span><span class="kv-v">${emailJud}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación:</span><span class="kv-v">${telJud1}</span></div>
         </div>
 
         <div class="bga-legal-notif" style="font-size: 8.5pt; text-align: justify; margin-top: 14px; line-height: 1.3;">
-          La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.
+          ${textoLegal}
         </div>
 
         <div class="doc-footer-pagination">
