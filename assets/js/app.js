@@ -9,6 +9,7 @@ const AppState = {
     tipoPlantilla: 'master_official', // Plantilla Maestra Oficial por defecto
     codigoVerificacion: '0822NXIH99',
     fechaExpedicion: '12/04/2022 10:03:42 am',
+    reciboNo: '0030458833',
     razonSocial: 'CompraMas',
     nit: '900421494-6',
     establecimiento: 'CompraMas',
@@ -30,6 +31,7 @@ const AppState = {
     emailNotificacion: 'administracion@compramas.space',
     telefonoJudicial: '3006864940',
     telefonoJudicial2: 'No reportó',
+    telefonoJudicial3: 'No reportó',
     textoNotificacion: 'La persona jurídica Aura y Home SI autorizó recibir notificaciones personales a  través de correo electrónico, de conformidad con lo establecido en los artículos 291  del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de  lo Contencioso administrativo.'
   },
   zoomLevel: 1.0,
@@ -115,15 +117,20 @@ function populateChamberDropdown() {
 }
 
 /**
- * Vincula los inputs del formulario al estado
+ * Vincula los inputs del formulario al estado de manera bidireccional y dinámica
  */
 function initFormInputs() {
-  // Llenar campos con los valores del estado
-  for (const [key, value] of Object.entries(AppState.currentData)) {
-    const input = document.getElementById(`field-${key}`);
-    if (input) {
-      input.value = value || '';
-      input.addEventListener('input', (e) => {
+  const formElements = document.querySelectorAll('#document-form input, #document-form select, #document-form textarea');
+  formElements.forEach(input => {
+    if (input.id && input.id.startsWith('field-') && input.id !== 'field-camaraSeleccionada') {
+      const key = input.id.replace('field-', '');
+      if (AppState.currentData[key] !== undefined) {
+        input.value = AppState.currentData[key] || '';
+      } else {
+        AppState.currentData[key] = input.value || '';
+      }
+
+      input.oninput = (e) => {
         AppState.currentData[key] = e.target.value;
         
         // Sincronizar sinónimos de domicilio/ciudad
@@ -146,19 +153,22 @@ function initFormInputs() {
         AppState.previewVerified = false;
         updateActionButtonsState();
         renderCurrentDocument();
-      });
+      };
     }
-  }
+  });
 
   // Cambio manual de Cámara de Comercio Oficial
   const camaraSelect = document.getElementById('field-camaraSeleccionada');
   if (camaraSelect) {
-    camaraSelect.addEventListener('change', (e) => {
+    if (AppState.currentData.camaraSeleccionada) {
+      camaraSelect.value = AppState.currentData.camaraSeleccionada;
+    }
+    camaraSelect.onchange = (e) => {
       const chamberKey = e.target.value;
       AppState.manualChamberSelection = true;
       AppState.currentData.camaraSeleccionada = chamberKey;
       renderCurrentDocument();
-    });
+    };
   }
 }
 
@@ -456,6 +466,7 @@ function parseBulkText(text) {
           emailNotificacion: `administracion@${razonSocial ? razonSocial.toLowerCase().replace(/[^a-z0-9]/g, '') : 'empresa'}.space`,
           telefonoJudicial: '3006864940',
           telefonoJudicial2: 'No reportó',
+          telefonoJudicial3: 'No reportó',
           textoNotificacion: `La persona jurídica ${razonSocial || 'Aura y Home'} SI autorizó recibir notificaciones personales a  través de correo electrónico, de conformidad con lo establecido en los artículos 291  del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de  lo Contencioso administrativo.`
         });
       }

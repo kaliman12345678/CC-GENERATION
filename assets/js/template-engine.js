@@ -76,13 +76,14 @@ const TemplateEngine = {
     const niif = data.grupoNiif || 'GRUPO II.';
     const direccion = data.direccion || 'CR. 12 NO. 9-44';
     const municipio = (data.ciudadCompleta || data.municipioJudicial || 'SAN GIL - SANTANDER').toUpperCase();
-    const tel1 = data.telefono || '7242556';
-    const tel2 = data.telefono2 || '3143824057';
-    const email = data.email || 'secretaria@coopsantander.com';
+    const tel1 = data.telefono || 'No reportó';
+    const tel2 = data.telefono2 || 'No reportó';
+    const email = data.email || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = (data.municipioJudicial || municipio).toUpperCase();
-    const telJud1 = data.telefonoJudicial || tel1;
-    const telJud2 = data.telefonoJudicial2 || '3143824057';
+    const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
+    const telJud2 = data.telefonoJudicial2 || 'No reportó';
+    const telJud3 = data.telefonoJudicial3 || 'No reportó';
     const emailJud = data.emailNotificacion || email;
 
     return `
@@ -185,15 +186,16 @@ const TemplateEngine = {
     const niif = data.grupoNiif || '4. GRUPO III. Microempresas';
     const direccion = data.direccion || 'CL 77 B No 57 - 103 OF 2303';
     const municipio = data.ciudadCompleta || data.municipioJudicial || 'Barranquilla - Atlantico';
-    const email = data.email || 'kgarcia@israaid.org';
-    const tel1 = data.telefono || '3354438';
+    const email = data.email || 'No reportó';
+    const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const tel3 = data.telefono3 || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
-    const telJud1 = data.telefonoJudicial || tel1;
+    const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
     const telJud2 = data.telefonoJudicial2 || 'No reportó';
+    const telJud3 = data.telefonoJudicial3 || 'No reportó';
 
     return `
       <div class="cc-page style-barranquilla">
@@ -250,7 +252,7 @@ const TemplateEngine = {
           <div class="kv-row"><span class="kv-k">Correo electrónico de notificación:</span> <span class="kv-v">${emailJud}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono para notificación 1:</span> <span class="kv-v">${telJud1}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono para notificación 2:</span> <span class="kv-v">${telJud2}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono para notificación 3:</span> <span class="kv-v">No reportó</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 3:</span> <span class="kv-v">${telJud3}</span></div>
         </div>
 
         <div class="doc-footer-pagination">
@@ -282,16 +284,16 @@ const TemplateEngine = {
     const niif = data.grupoNiif || 'GRUPO III.';
     const direccion = data.direccion || 'Carrera 43 A 34 155 OF 701';
     const municipio = (data.ciudadCompleta || data.municipioJudicial || 'MEDELLÍN, ANTIOQUIA, COLOMBIA').toUpperCase();
-    const email = data.email || 'direccion.operaciones@makaia.org';
-    const tel1 = data.telefono || '4480374';
-    const tel2 = data.telefono2 || '3188022847';
-    const tel3 = data.telefono3 || '3117209148';
+    const email = data.email || 'No reportó';
+    const tel1 = data.telefono || 'No reportó';
+    const tel2 = data.telefono2 || 'No reportó';
+    const tel3 = data.telefono3 || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = (data.municipioJudicial || municipio).toUpperCase();
     const emailJud = data.emailNotificacion || email;
-    const telJud1 = data.telefonoJudicial || tel1;
-    const telJud2 = data.telefonoJudicial2 || '3188022847';
-    const telJud3 = data.telefonoJudicial3 || '3113428926';
+    const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
+    const telJud2 = data.telefonoJudicial2 || 'No reportó';
+    const telJud3 = data.telefonoJudicial3 || 'No reportó';
     const textoLegal = data.textoNotificacion || `La persona jurídica ${razon} SI autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento...`;
 
     return `
@@ -387,13 +389,16 @@ const TemplateEngine = {
     const niif = data.grupoNiif || 'GRUPO III - MICROEMPRESAS';
     const direccion = data.direccion || 'BARRIO BOSQUE, TRANSVERSAL 54 Nro. 30 - 403, SANTILLANA DE LOS PATIOS';
     const municipio = data.ciudadCompleta || data.municipioJudicial || 'Cartagena, Bolivar';
-    const email = data.email || 'spercol.sas@hotmail.com';
-    const tel1 = data.telefono || '3504624532';
-    const tel2 = data.telefono2 || '3107290100';
-    const tel3 = data.telefono3 || '3108280913';
+    const email = data.email || 'No reportó';
+    const tel1 = data.telefono || 'No reportó';
+    const tel2 = data.telefono2 || 'No reportó';
+    const tel3 = data.telefono3 || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
+    const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
+    const telJud2 = data.telefonoJudicial2 || 'No reportó';
+    const telJud3 = data.telefonoJudicial3 || 'No reportó';
     const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través del correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y del 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     return `
@@ -450,6 +455,9 @@ const TemplateEngine = {
           <div class="ctg-row"><span class="ctg-lbl">Barrio :</span> <span class="ctg-val">BOSQUE</span></div>
           <div class="ctg-row"><span class="ctg-lbl">Municipio :</span> <span class="ctg-val">${munJud}</span></div>
           <div class="ctg-row"><span class="ctg-lbl">Correo electrónico de notificación :</span> <span class="ctg-val">${emailJud}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Teléfono para notificación 1 :</span> <span class="ctg-val">${telJud1}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Teléfono para notificación 2 :</span> <span class="ctg-val">${telJud2}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Teléfono para notificación 3 :</span> <span class="ctg-val">${telJud3}</span></div>
         </div>
 
         <div class="ctg-legal-notif">
@@ -489,15 +497,16 @@ const TemplateEngine = {
     const niif = data.grupoNiif || 'Grupo 2';
     const direccion = data.direccion || 'CL 19 NORTE # 5 - 35 CU 706 707 801';
     const municipio = data.ciudadCompleta || data.municipioJudicial || 'Cali - Valle';
-    const email = data.email || 'FUNDALIVIO@FUNDALIVIO.COM';
-    const tel1 = data.telefono || '6607742';
+    const email = data.email || 'No reportó';
+    const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const tel3 = data.telefono3 || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
-    const telJud1 = data.telefonoJudicial || tel1;
+    const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
     const telJud2 = data.telefonoJudicial2 || 'No reportó';
+    const telJud3 = data.telefonoJudicial3 || 'No reportó';
     const textoLegal = data.textoNotificacion || `La persona jurídica ${razon} SI autorizó recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     return `
@@ -558,7 +567,7 @@ const TemplateEngine = {
           <div class="cali-row-auth"><span class="cali-lbl-auth">Correo electrónico de notificación:</span> <span class="cali-val-auth">${emailJud}</span></div>
           <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono para notificación 1:</span> <span class="cali-val-auth">${telJud1}</span></div>
           <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono para notificación 2:</span> <span class="cali-val-auth">${telJud2}</span></div>
-          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono para notificación 3:</span> <span class="cali-val-auth">No reportó</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono para notificación 3:</span> <span class="cali-val-auth">${telJud3}</span></div>
         </div>
 
         <div class="cali-auth-legal">
@@ -593,13 +602,16 @@ const TemplateEngine = {
     const niif = data.grupoNiif || 'Grupo 2';
     const direccion = data.direccion || 'CR 23 # 26-60 OF 402';
     const municipio = data.ciudadCompleta || data.municipioJudicial || 'Manizales - Caldas';
-    const email = data.email || 'gerencia@empresa.com.co';
-    const tel1 = data.telefono || '8841234';
+    const email = data.email || 'No reportó';
+    const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
+    const tel3 = data.telefono3 || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
-    const telJud1 = data.telefonoJudicial || tel1;
+    const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
+    const telJud2 = data.telefonoJudicial2 || 'No reportó';
+    const telJud3 = data.telefonoJudicial3 || 'No reportó';
     const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     return `
@@ -651,11 +663,14 @@ const TemplateEngine = {
           <div class="kv-row"><span class="kv-k">Correo electrónico:</span> <span class="kv-v">${email}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${tel1}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span> <span class="kv-v">${tel2}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 3:</span> <span class="kv-v">${tel3}</span></div>
           <br>
           <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span> <span class="kv-v">${dirJud}</span></div>
           <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${munJud}</span></div>
           <div class="kv-row"><span class="kv-k">Correo notificación judicial:</span> <span class="kv-v">${emailJud}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono para notificación:</span> <span class="kv-v">${telJud1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 1:</span> <span class="kv-v">${telJud1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 2:</span> <span class="kv-v">${telJud2}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 3:</span> <span class="kv-v">${telJud3}</span></div>
         </div>
 
         <div class="cali-auth-legal">
@@ -690,12 +705,16 @@ const TemplateEngine = {
     const niif = data.grupoNiif || 'Grupo 2';
     const direccion = data.direccion || 'CALLE 100 # 105-20';
     const municipio = data.ciudadCompleta || data.municipioJudicial || 'Apartadó - Antioquia';
-    const email = data.email || 'contacto@empresa.com.co';
-    const tel1 = data.telefono || '8281234';
+    const email = data.email || 'No reportó';
+    const tel1 = data.telefono || 'No reportó';
+    const tel2 = data.telefono2 || 'No reportó';
+    const tel3 = data.telefono3 || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
-    const telJud1 = data.telefonoJudicial || tel1;
+    const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
+    const telJud2 = data.telefonoJudicial2 || 'No reportó';
+    const telJud3 = data.telefonoJudicial3 || 'No reportó';
     const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     return `
@@ -746,11 +765,15 @@ const TemplateEngine = {
           <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${municipio}</span></div>
           <div class="kv-row"><span class="kv-k">Correo electrónico:</span> <span class="kv-v">${email}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${tel1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span> <span class="kv-v">${tel2}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 3:</span> <span class="kv-v">${tel3}</span></div>
           <br>
           <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span> <span class="kv-v">${dirJud}</span></div>
           <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${munJud}</span></div>
           <div class="kv-row"><span class="kv-k">Correo notificación judicial:</span> <span class="kv-v">${emailJud}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono para notificación:</span> <span class="kv-v">${telJud1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 1:</span> <span class="kv-v">${telJud1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 2:</span> <span class="kv-v">${telJud2}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 3:</span> <span class="kv-v">${telJud3}</span></div>
         </div>
 
         <div class="cali-auth-legal">
@@ -786,13 +809,16 @@ const TemplateEngine = {
     const niif = data.grupoNiif || 'Grupo 2';
     const direccion = data.direccion || 'CL 9 # 56-69 OF 201';
     const municipio = (data.ciudadCompleta || data.municipioJudicial || chamber.city || 'COLOMBIA').toUpperCase();
-    const email = data.email || 'contacto@empresa.com.co';
-    const tel1 = data.telefono || '3006864940';
+    const email = data.email || 'No reportó';
+    const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
+    const tel3 = data.telefono3 || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = (data.municipioJudicial || municipio).toUpperCase();
     const emailJud = data.emailNotificacion || email;
-    const telJud1 = data.telefonoJudicial || tel1;
+    const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
+    const telJud2 = data.telefonoJudicial2 || 'No reportó';
+    const telJud3 = data.telefonoJudicial3 || 'No reportó';
     const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
 
     const disclaimer = chamber.disclaimer || 
@@ -869,11 +895,14 @@ const TemplateEngine = {
           <div class="kv-row"><span class="kv-k">Correo electrónico:</span><span class="kv-v">${email}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span><span class="kv-v">${tel1}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span><span class="kv-v">${tel2}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono comercial 3:</span><span class="kv-v">${tel3}</span></div>
           <br>
           <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span><span class="kv-v">${dirJud}</span></div>
           <div class="kv-row"><span class="kv-k">Municipio:</span><span class="kv-v">${munJud}</span></div>
           <div class="kv-row"><span class="kv-k">Correo notificación judicial:</span><span class="kv-v">${emailJud}</span></div>
-          <div class="kv-row"><span class="kv-k">Teléfono para notificación:</span><span class="kv-v">${telJud1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 1:</span><span class="kv-v">${telJud1}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 2:</span><span class="kv-v">${telJud2}</span></div>
+          <div class="kv-row"><span class="kv-k">Teléfono para notificación 3:</span><span class="kv-v">${telJud3}</span></div>
         </div>
 
         <div class="bga-legal-notif" style="font-size: 8.5pt; text-align: justify; margin-top: 14px; line-height: 1.3;">
@@ -916,3 +945,6 @@ const TemplateEngine = {
     }
   }
 };
+
+if (typeof window !== 'undefined') window.TemplateEngine = TemplateEngine;
+if (typeof module !== 'undefined') module.exports = TemplateEngine;
