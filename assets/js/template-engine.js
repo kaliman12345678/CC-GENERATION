@@ -79,6 +79,7 @@ const TemplateEngine = {
     const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const email = data.email || 'No reportó';
+    const sitioWeb = data.sitioWeb || data.paginaWeb || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = (data.municipioJudicial || municipio).toUpperCase();
     const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
@@ -141,6 +142,7 @@ const TemplateEngine = {
             <div class="bga-line-item"><span class="bga-lbl">TELEFONO1:</span> <span class="bga-val">${tel1}</span></div>
             <div class="bga-line-item"><span class="bga-lbl">TELEFONO2:</span> <span class="bga-val">${tel2}</span></div>
             <div class="bga-line-item"><span class="bga-lbl">EMAIL :</span> <span class="bga-val">${email}</span></div>
+            ${sitioWeb !== 'No reportó' ? `<div class="bga-line-item"><span class="bga-lbl">PAGINA WEB:</span> <span class="bga-val">${sitioWeb}</span></div>` : ''}
           </div>
           <br>
           <div class="bga-bold-sub">NOTIFICACION JUDICIAL</div>
@@ -190,6 +192,7 @@ const TemplateEngine = {
     const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const tel3 = data.telefono3 || 'No reportó';
+    const sitioWeb = data.sitioWeb || data.paginaWeb || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
@@ -246,6 +249,7 @@ const TemplateEngine = {
           <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${tel1}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span> <span class="kv-v">${tel2}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 3:</span> <span class="kv-v">${tel3}</span></div>
+          <div class="kv-row"><span class="kv-k">Página web:</span> <span class="kv-v">${sitioWeb}</span></div>
           <br>
           <div class="kv-row"><span class="kv-k">Direccion para notificación judicial:</span> <span class="kv-v">${dirJud}</span></div>
           <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${munJud}</span></div>
@@ -288,6 +292,7 @@ const TemplateEngine = {
     const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const tel3 = data.telefono3 || 'No reportó';
+    const sitioWeb = data.sitioWeb || data.paginaWeb || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = (data.municipioJudicial || municipio).toUpperCase();
     const emailJud = data.emailNotificacion || email;
@@ -347,7 +352,7 @@ const TemplateEngine = {
           <div class="med-row"><span class="med-lbl">Teléfono comercial 1:</span> <span class="med-val">${tel1}</span></div>
           <div class="med-row"><span class="med-lbl">Teléfono comercial 2:</span> <span class="med-val">${tel2}</span></div>
           <div class="med-row"><span class="med-lbl">Teléfono comercial 3:</span> <span class="med-val">${tel3}</span></div>
-          <div class="med-row"><span class="med-lbl">Página web:</span> <span class="med-val">No reportó</span></div>
+          <div class="med-row"><span class="med-lbl">Página web:</span> <span class="med-val">${sitioWeb}</span></div>
           <br>
           <div class="med-row"><span class="med-lbl">Dirección para notificación judicial:</span> <span class="med-val">${dirJud}</span></div>
           <div class="med-row"><span class="med-lbl">Municipio:</span> <span class="med-val">${munJud}</span></div>
@@ -393,6 +398,7 @@ const TemplateEngine = {
     const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const tel3 = data.telefono3 || 'No reportó';
+    const sitioWeb = data.sitioWeb || data.paginaWeb || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
@@ -450,6 +456,7 @@ const TemplateEngine = {
           <div class="ctg-row"><span class="ctg-lbl">Teléfono comercial 1 :</span> <span class="ctg-val">${tel1}</span></div>
           <div class="ctg-row"><span class="ctg-lbl">Teléfono comercial 2 :</span> <span class="ctg-val">${tel2}</span></div>
           <div class="ctg-row"><span class="ctg-lbl">Teléfono comercial 3 :</span> <span class="ctg-val">${tel3}</span></div>
+          <div class="ctg-row"><span class="ctg-lbl">Página web :</span> <span class="ctg-val">${sitioWeb}</span></div>
           <br>
           <div class="ctg-row"><span class="ctg-lbl">Dirección para notificación judicial :</span> <span class="ctg-val">${dirJud}</span></div>
           <div class="ctg-row"><span class="ctg-lbl">Barrio :</span> <span class="ctg-val">BOSQUE</span></div>
@@ -501,6 +508,7 @@ const TemplateEngine = {
     const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const tel3 = data.telefono3 || 'No reportó';
+    const sitioWeb = data.sitioWeb || data.paginaWeb || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
@@ -561,6 +569,7 @@ const TemplateEngine = {
           <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono comercial 1:</span> <span class="cali-val-auth">${tel1}</span></div>
           <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono comercial 2:</span> <span class="cali-val-auth">${tel2}</span></div>
           <div class="cali-row-auth"><span class="cali-lbl-auth">Teléfono comercial 3:</span> <span class="cali-val-auth">${tel3}</span></div>
+          <div class="cali-row-auth"><span class="cali-lbl-auth">Página web:</span> <span class="cali-val-auth">${sitioWeb}</span></div>
           <br>
           <div class="cali-row-auth"><span class="cali-lbl-auth">Dirección para notificación judicial:</span> <span class="cali-val-auth">${dirJud}</span></div>
           <div class="cali-row-auth"><span class="cali-lbl-auth">Municipio:</span> <span class="cali-val-auth">${munJud}</span></div>
@@ -606,6 +615,7 @@ const TemplateEngine = {
     const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const tel3 = data.telefono3 || 'No reportó';
+    const sitioWeb = data.sitioWeb || data.paginaWeb || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
@@ -664,6 +674,7 @@ const TemplateEngine = {
           <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${tel1}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span> <span class="kv-v">${tel2}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 3:</span> <span class="kv-v">${tel3}</span></div>
+          <div class="kv-row"><span class="kv-k">Página web:</span> <span class="kv-v">${sitioWeb}</span></div>
           <br>
           <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span> <span class="kv-v">${dirJud}</span></div>
           <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${munJud}</span></div>
@@ -709,6 +720,7 @@ const TemplateEngine = {
     const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const tel3 = data.telefono3 || 'No reportó';
+    const sitioWeb = data.sitioWeb || data.paginaWeb || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = data.municipioJudicial || municipio;
     const emailJud = data.emailNotificacion || email;
@@ -767,6 +779,7 @@ const TemplateEngine = {
           <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span> <span class="kv-v">${tel1}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span> <span class="kv-v">${tel2}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 3:</span> <span class="kv-v">${tel3}</span></div>
+          <div class="kv-row"><span class="kv-k">Página web:</span> <span class="kv-v">${sitioWeb}</span></div>
           <br>
           <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span> <span class="kv-v">${dirJud}</span></div>
           <div class="kv-row"><span class="kv-k">Municipio:</span> <span class="kv-v">${munJud}</span></div>
@@ -813,6 +826,7 @@ const TemplateEngine = {
     const tel1 = data.telefono || 'No reportó';
     const tel2 = data.telefono2 || 'No reportó';
     const tel3 = data.telefono3 || 'No reportó';
+    const sitioWeb = data.sitioWeb || data.paginaWeb || 'No reportó';
     const dirJud = data.direccionJudicial || direccion;
     const munJud = (data.municipioJudicial || municipio).toUpperCase();
     const emailJud = data.emailNotificacion || email;
@@ -896,6 +910,7 @@ const TemplateEngine = {
           <div class="kv-row"><span class="kv-k">Teléfono comercial 1:</span><span class="kv-v">${tel1}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 2:</span><span class="kv-v">${tel2}</span></div>
           <div class="kv-row"><span class="kv-k">Teléfono comercial 3:</span><span class="kv-v">${tel3}</span></div>
+          <div class="kv-row"><span class="kv-k">Página web:</span><span class="kv-v">${sitioWeb}</span></div>
           <br>
           <div class="kv-row"><span class="kv-k">Dirección notificación judicial:</span><span class="kv-v">${dirJud}</span></div>
           <div class="kv-row"><span class="kv-k">Municipio:</span><span class="kv-v">${munJud}</span></div>
