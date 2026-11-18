@@ -28,18 +28,21 @@ const AppState = {
     telefono3: 'No reportó',
     sitioWeb: 'No reportó',
     direccionJudicial: 'CL 9 # 56-69 of 201',
-    municipioJudicial: 'Cali - Valle del Cauca',
+    municipioJudicial: 'Cali - Valle',
     emailNotificacion: 'administracion@compramas.space',
     telefonoJudicial: '3006864940',
     telefonoJudicial2: 'No reportó',
     telefonoJudicial3: 'No reportó',
-    textoNotificacion: 'La persona jurídica Aura y Home SI autorizó recibir notificaciones personales a  través de correo electrónico, de conformidad con lo establecido en los artículos 291  del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de  lo Contencioso administrativo.'
+    textoNotificacion: 'La persona jurídica COMPRAMAS SI autorizó recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso administrativo.'
   },
   zoomLevel: 1.0,
   currentPageIndex: 0,
   totalPages: 1,
   previewVerified: true,
   manualChamberSelection: false,
+  manuallyEditedJudicial: {},
+  manuallyEditedTextoNotificacion: false,
+  manuallyEditedEstablecimiento: false,
   bulkList: []
 };
 
@@ -64,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   populateChamberDropdown();
   initFormInputs();
+  initJudicialSyncButton();
   renderCurrentDocument();
   initMandatoryButtons();
   initPreviewControls();
@@ -118,6 +122,14 @@ function populateChamberDropdown() {
 }
 
 /**
+ * Genera el texto oficial de notificación autorizada con la razón social
+ */
+function getAuthorizedNotificationText(companyName) {
+  const name = (companyName || 'la sociedad').trim().toUpperCase();
+  return `La persona jurídica ${name} SI autorizó recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso administrativo.`;
+}
+
+/**
  * Vincula los inputs del formulario al estado de manera bidireccional y dinámica
  */
 function initFormInputs() {
@@ -134,14 +146,65 @@ function initFormInputs() {
       input.oninput = (e) => {
         AppState.currentData[key] = e.target.value;
         
-        // Sincronizar sinónimos de domicilio/ciudad
+        // 1. Sincronizar sinónimos de domicilio/ciudad
         if (key === 'domicilioPrincipal') {
           AppState.currentData.ciudad = e.target.value;
         } else if (key === 'ciudad') {
           AppState.currentData.domicilioPrincipal = e.target.value;
         }
 
-        // Si el usuario cambia la ciudad, auto-detectar y sugerir la cámara si no ha sido forzada
+        // 2. Si se edita la Razón Social: sincronizar establecimiento y actualizar automáticamente
+        // el párrafo de notificación autorizada con la razón social ingresada
+        if (key === 'razonSocial') {
+          if (!AppState.manuallyEditedEstablecimiento) {
+            AppState.currentData.establecimiento = e.target.value;
+            const estInput = document.getElementById('field-establecimiento');
+            if (estInput) estInput.value = e.target.value;
+          }
+
+          if (!AppState.manuallyEditedTextoNotificacion) {
+            const newText = getAuthorizedNotificationText(e.target.value);
+            AppState.currentData.textoNotificacion = newText;
+            const txtInput = document.getElementById('field-textoNotificacion');
+            if (txtInput) txtInput.value = newText;
+          }
+        }
+
+        if (key === 'establecimiento') {
+          AppState.manuallyEditedEstablecimiento = true;
+        }
+
+        if (key === 'textoNotificacion') {
+          AppState.manuallyEditedTextoNotificacion = true;
+        }
+
+        // 3. Auto-llenado automático de Sección 4 (Ubicación y Contacto) -> Sección 5 (Notificación Judicial)
+        const judicialSyncMap = {
+          'direccion': 'direccionJudicial',
+          'ciudadCompleta': 'municipioJudicial',
+          'email': 'emailNotificacion',
+          'telefono': 'telefonoJudicial',
+          'telefono2': 'telefonoJudicial2',
+          'telefono3': 'telefonoJudicial3'
+        };
+
+        if (judicialSyncMap[key]) {
+          const judTarget = judicialSyncMap[key];
+          // Solo auto-llenar si el usuario no ha personalizado ese campo judicial de forma independiente
+          if (!AppState.manuallyEditedJudicial[judTarget]) {
+            AppState.currentData[judTarget] = e.target.value;
+            const judInput = document.getElementById(`field-${judTarget}`);
+            if (judInput) judInput.value = e.target.value;
+          }
+        }
+
+        // Si el usuario edita directamente un campo de notificación judicial, marcarlo para no sobrescribir
+        const judicialKeys = ['direccionJudicial', 'municipioJudicial', 'emailNotificacion', 'telefonoJudicial', 'telefonoJudicial2', 'telefonoJudicial3'];
+        if (judicialKeys.includes(key)) {
+          AppState.manuallyEditedJudicial[key] = true;
+        }
+
+        // 4. Si el usuario cambia la ciudad, auto-detectar y sugerir la cámara si no ha sido forzada
         if (key === 'ciudad' || key === 'domicilioPrincipal') {
           const matchedChamber = getChamberByCity(e.target.value);
           const camaraSelect = document.getElementById('field-camaraSeleccionada');
@@ -171,6 +234,47 @@ function initFormInputs() {
       renderCurrentDocument();
     };
   }
+}
+
+/**
+ * Inicializa el botón para copiar/sincronizar datos de Ubicación y Contacto a Notificación Judicial
+ */
+function initJudicialSyncButton() {
+  const btn = document.getElementById('btn-sync-judicial');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    AppState.manuallyEditedJudicial = {};
+    AppState.manuallyEditedTextoNotificacion = false;
+
+    // Sincronizar todos los campos de Sección 4 a Sección 5
+    const syncPairs = [
+      ['direccion', 'direccionJudicial'],
+      ['ciudadCompleta', 'municipioJudicial'],
+      ['email', 'emailNotificacion'],
+      ['telefono', 'telefonoJudicial'],
+      ['telefono2', 'telefonoJudicial2'],
+      ['telefono3', 'telefonoJudicial3']
+    ];
+
+    syncPairs.forEach(([commKey, judKey]) => {
+      const val = AppState.currentData[commKey] || '';
+      AppState.currentData[judKey] = val;
+      const judInput = document.getElementById(`field-${judKey}`);
+      if (judInput) judInput.value = val;
+    });
+
+    // Actualizar párrafo de notificación autorizada con la razón social actual
+    const legalText = getAuthorizedNotificationText(AppState.currentData.razonSocial);
+    AppState.currentData.textoNotificacion = legalText;
+    const txtInput = document.getElementById('field-textoNotificacion');
+    if (txtInput) txtInput.value = legalText;
+
+    AppState.previewVerified = false;
+    updateActionButtonsState();
+    renderCurrentDocument();
+    showToast('Notificación Judicial sincronizada con Ubicación y Razón Social');
+  });
 }
 
 /**
@@ -550,6 +654,8 @@ window.handleHistoryOpen = function(id) {
   if (!record) return;
 
   AppState.currentData = { ...record };
+  AppState.manuallyEditedJudicial = {};
+  AppState.manuallyEditedTextoNotificacion = true;
   initFormInputs();
   renderCurrentDocument();
 

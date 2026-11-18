@@ -299,7 +299,10 @@ const TemplateEngine = {
     const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
     const telJud2 = data.telefonoJudicial2 || 'No reportó';
     const telJud3 = data.telefonoJudicial3 || 'No reportó';
-    const textoLegal = data.textoNotificacion || `La persona jurídica ${razon} SI autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento...`;
+    let textoLegal = data.textoNotificacion;
+    if (!textoLegal || textoLegal.includes('Aura y Home')) {
+      textoLegal = `La persona jurídica ${razon} SI autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento...`;
+    }
 
     return `
       <div class="cc-page style-medellin">
@@ -405,7 +408,10 @@ const TemplateEngine = {
     const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
     const telJud2 = data.telefonoJudicial2 || 'No reportó';
     const telJud3 = data.telefonoJudicial3 || 'No reportó';
-    const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través del correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y del 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    let textoLegal = data.textoNotificacion;
+    if (!textoLegal || textoLegal.includes('Aura y Home')) {
+      textoLegal = `La persona jurídica <strong>${razon}</strong> SI autorizó para recibir notificaciones personales a través del correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y del 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    }
 
     return `
       <div class="cc-page style-cartagena">
@@ -515,7 +521,10 @@ const TemplateEngine = {
     const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
     const telJud2 = data.telefonoJudicial2 || 'No reportó';
     const telJud3 = data.telefonoJudicial3 || 'No reportó';
-    const textoLegal = data.textoNotificacion || `La persona jurídica ${razon} SI autorizó recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    let textoLegal = data.textoNotificacion;
+    if (!textoLegal || textoLegal.includes('Aura y Home')) {
+      textoLegal = `La persona jurídica ${razon} SI autorizó recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    }
 
     return `
       <div class="cc-page style-cali-authentic">
@@ -622,7 +631,10 @@ const TemplateEngine = {
     const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
     const telJud2 = data.telefonoJudicial2 || 'No reportó';
     const telJud3 = data.telefonoJudicial3 || 'No reportó';
-    const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    let textoLegal = data.textoNotificacion;
+    if (!textoLegal || textoLegal.includes('Aura y Home')) {
+      textoLegal = `La persona jurídica <strong>${razon}</strong> SI autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    }
 
     return `
       <div class="cc-page style-manizales">
@@ -727,7 +739,10 @@ const TemplateEngine = {
     const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
     const telJud2 = data.telefonoJudicial2 || 'No reportó';
     const telJud3 = data.telefonoJudicial3 || 'No reportó';
-    const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    let textoLegal = data.textoNotificacion;
+    if (!textoLegal || textoLegal.includes('Aura y Home')) {
+      textoLegal = `La persona jurídica <strong>${razon}</strong> SI autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    }
 
     return `
       <div class="cc-page style-uraba">
@@ -833,7 +848,10 @@ const TemplateEngine = {
     const telJud1 = data.telefonoJudicial || tel1 || 'No reportó';
     const telJud2 = data.telefonoJudicial2 || 'No reportó';
     const telJud3 = data.telefonoJudicial3 || 'No reportó';
-    const textoLegal = data.textoNotificacion || `La persona jurídica <strong>SI</strong> autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    let textoLegal = data.textoNotificacion;
+    if (!textoLegal || textoLegal.includes('Aura y Home')) {
+      textoLegal = `La persona jurídica <strong>${razon}</strong> SI autorizó para recibir notificaciones personales a través de correo electrónico, de conformidad con lo establecido en los artículos 291 del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de lo Contencioso Administrativo.`;
+    }
 
     const disclaimer = chamber.disclaimer || 
       `LA PERSONA O ENTIDAD A LA QUE USTED LE VA A ENTREGAR EL CERTIFICADO PUEDE VERIFICAR EL CONTENIDO Y CONFIABILIDAD, INGRESANDO A ${chamber.verifyUrl || 'WWW.CONFECAMARAS.ORG.CO'} Y DIGITANDO EL CÓDIGO DE VERIFICACIÓN CITADO EN EL ENCABEZADO. ESTE CERTIFICADO PODRÁ SER VALIDADO DE MANERA ILIMITADA DURANTE 60 DÍAS CALENDARIO A PARTIR DE SU EXPEDICIÓN.`;

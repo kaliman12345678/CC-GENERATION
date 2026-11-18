@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Creador CC — Generación y Exportación Oficial a PDF</title>
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261118_1">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261118_2">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
 </head>
 <body>
@@ -205,7 +205,12 @@
               </div>
             </div>
 
-            <div class="form-accordion-title">5. Notificación Judicial</div>
+            <div class="form-accordion-title" style="display: flex; justify-content: space-between; align-items: center;">
+              <span>5. Notificación Judicial</span>
+              <button type="button" id="btn-sync-judicial" class="action-btn-sm" style="font-size: 11px; padding: 3px 8px; background: #e0f2fe; color: #0284c7; border: 1px solid #7dd3fc; border-radius: 4px; cursor: pointer;" title="Copiar y sincronizar datos con Ubicación y Contacto">
+                🔄 Copiar de Ubicación
+              </button>
+            </div>
 
             <div class="form-group">
               <label class="form-label" for="field-direccionJudicial">Dirección Notificación Judicial:</label>
@@ -215,7 +220,7 @@
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label" for="field-municipioJudicial">Municipio Notificación:</label>
-                <input type="text" id="field-municipioJudicial" class="form-control" value="Cali - Valle del Cauca">
+                <input type="text" id="field-municipioJudicial" class="form-control" value="Cali - Valle">
               </div>
               <div class="form-group">
                 <label class="form-label" for="field-emailNotificacion">Correo Notificación Judicial:</label>
@@ -241,7 +246,7 @@
 
             <div class="form-group">
               <label class="form-label" for="field-textoNotificacion">Párrafo de Notificación Autorizada:</label>
-              <textarea id="field-textoNotificacion" class="form-control" rows="4">La persona jurídica Aura y Home SI autorizó recibir notificaciones personales a  través de correo electrónico, de conformidad con lo establecido en los artículos 291  del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de  lo Contencioso administrativo.</textarea>
+              <textarea id="field-textoNotificacion" class="form-control" rows="4">La persona jurídica COMPRAMAS SI autorizó recibir notificaciones personales a  través de correo electrónico, de conformidad con lo establecido en los artículos 291  del Código General del Proceso y 67 del Código de Procedimiento Administrativo y de  lo Contencioso administrativo.</textarea>
             </div>
 
           </form>
@@ -512,13 +517,13 @@
   <script src="assets/libs/jspdf.umd.min.js"></script>
   <script src="assets/libs/html2canvas.min.js"></script>
   <script src="assets/libs/jszip.min.js"></script>
-  <script src="assets/js/template-image-data.js?v=20261118_1"></script>
-  <script src="assets/js/official-logos-data.js?v=20261118_1"></script>
-  <script src="assets/js/logos.js?v=20261118_1"></script>
-  <script src="assets/js/template-engine.js?v=20261118_1"></script>
-  <script src="assets/js/pdf-generator.js?v=20261118_1"></script>
-  <script src="assets/js/storage.js?v=20261118_1"></script>
-  <script src="assets/js/app.js?v=20261118_1"></script>
+  <script src="assets/js/template-image-data.js?v=20261118_2"></script>
+  <script src="assets/js/official-logos-data.js?v=20261118_2"></script>
+  <script src="assets/js/logos.js?v=20261118_2"></script>
+  <script src="assets/js/template-engine.js?v=20261118_2"></script>
+  <script src="assets/js/pdf-generator.js?v=20261118_2"></script>
+  <script src="assets/js/storage.js?v=20261118_2"></script>
+  <script src="assets/js/app.js?v=20261118_2"></script>
 
 </body>
 </html>
