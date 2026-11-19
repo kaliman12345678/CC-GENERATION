@@ -112,8 +112,7 @@ function populateChamberDropdown() {
   const catalog = getUnifiedChamberCatalog();
 
   select.innerHTML = Object.values(catalog).map(ch => {
-    const isCustomTag = ch.isCustom ? ' (Personalizada)' : '';
-    return `<option value="${ch.id}">${ch.name}${isCustomTag}</option>`;
+    return `<option value="${ch.id}">${ch.name}</option>`;
   }).join('');
 
   if (catalog[currentVal]) {
@@ -221,6 +220,21 @@ function initFormInputs() {
     }
   });
 
+  // Inicializar campo de nombre de cámara si está vacío
+  const nombreInput = document.getElementById('field-nombreCamara');
+  if (nombreInput) {
+    if (!AppState.currentData.nombreCamara) {
+      const catalog = getUnifiedChamberCatalog();
+      const ch = catalog[AppState.currentData.camaraSeleccionada || 'bucaramanga'];
+      if (ch) {
+        AppState.currentData.nombreCamara = ch.name;
+        nombreInput.value = ch.name;
+      }
+    } else {
+      nombreInput.value = AppState.currentData.nombreCamara;
+    }
+  }
+
   // Cambio manual de Cámara de Comercio Oficial
   const camaraSelect = document.getElementById('field-camaraSeleccionada');
   if (camaraSelect) {
@@ -231,6 +245,15 @@ function initFormInputs() {
       const chamberKey = e.target.value;
       AppState.manualChamberSelection = true;
       AppState.currentData.camaraSeleccionada = chamberKey;
+      
+      const catalog = getUnifiedChamberCatalog();
+      const chamber = catalog[chamberKey];
+      if (chamber) {
+        AppState.currentData.nombreCamara = chamber.name;
+        const nInput = document.getElementById('field-nombreCamara');
+        if (nInput) nInput.value = chamber.name;
+      }
+
       renderCurrentDocument();
     };
   }
@@ -856,29 +879,27 @@ function analyzeCertificateHeader(imgElement) {
 }
 
 function initTemplateManager() {
-  // Elementos de la sección de clonación inteligente
-  const sampleTemplateInput = document.getElementById('sample-template-file');
-  const sampleLogoInput = document.getElementById('sample-logo-file');
-  const analysisPanel = document.getElementById('template-analysis-panel');
-  const detectedPosBadge = document.getElementById('detected-pos-badge');
-  const detectedLogoPreview = document.getElementById('detected-logo-preview');
-  const detectedChamberNameInput = document.getElementById('detected-chamber-name');
-  const detectedChamberCityInput = document.getElementById('detected-chamber-city');
-  const btnCreateEditableCopy = document.getElementById('btn-create-editable-copy');
-  const btnApplyToCustomForm = document.getElementById('btn-apply-to-custom-form');
-
-  // Elementos del formulario manual
-  const fileInput = document.getElementById('custom-logo-file');
+  const sampleInput = document.getElementById('custom-sample-file');
+  const logoInput = document.getElementById('custom-logo-file');
   const previewBox = document.getElementById('custom-logo-preview-box');
   const previewImg = document.getElementById('custom-logo-preview-img');
+  const feedbackMsg = document.getElementById('detection-feedback-msg');
+
+  const nameInput = document.getElementById('custom-name');
+  const cityInput = document.getElementById('custom-city');
+  const kwInput = document.getElementById('custom-keywords');
+  const urlInput = document.getElementById('custom-verify-url');
+  const disclaimerInput = document.getElementById('custom-disclaimer');
+
+  const btnSaveAndOpen = document.getElementById('btn-save-and-open');
   const saveBtn = document.getElementById('btn-save-custom-template');
   const resetBtn = document.getElementById('btn-reset-custom-form');
   const exportBtn = document.getElementById('btn-export-templates');
   const importBtn = document.getElementById('btn-import-templates');
   const inputImportJson = document.getElementById('input-import-json');
 
-  // 1. Manejo de archivo de muestra para reconocimiento de plantilla
-  sampleTemplateInput?.addEventListener('change', (e) => {
+  // 1. Manejo de archivo de muestra para reconocimiento automático de plantilla
+  sampleInput?.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -891,163 +912,121 @@ function initTemplateManager() {
         const analysis = analyzeCertificateHeader(img);
         currentDetectedAnalysis = analysis;
 
-        // Si el archivo del nombre o directorio sugiere una posición conocida, considerarla
         if (matchedChamber && matchedChamber.logoPosition) {
           analysis.position = matchedChamber.logoPosition;
         }
 
-        const posText = analysis.position === 'center' ? '📍 Superior Centro' : (analysis.position === 'right' ? '📍 Superior Derecha' : '📍 Superior Izquierda');
-        if (detectedPosBadge) detectedPosBadge.innerHTML = posText;
+        // Marcar la opción de posición detectada
+        const radio = document.querySelector(`input[name="custom-logo-pos"][value="${analysis.position}"]`);
+        if (radio) radio.checked = true;
 
-        if (detectedLogoPreview && analysis.croppedLogo && !currentUploadedLogoBase64) {
-          detectedLogoPreview.src = analysis.croppedLogo;
+        // Si no se ha subido un logo por separado, usar el logo recortado automáticamente de la muestra
+        if (!currentUploadedLogoBase64 && analysis.croppedLogo) {
+          currentUploadedLogoBase64 = analysis.croppedLogo;
+          if (previewImg) previewImg.src = analysis.croppedLogo;
+          if (previewBox) previewBox.style.display = 'flex';
         }
 
-        if (detectedChamberNameInput) {
-          detectedChamberNameInput.value = matchedChamber ? matchedChamber.name : (detectedChamberNameInput.value || 'CÁMARA DE COMERCIO');
+        // Autocompletar sugerencias de nombre y ciudad si se reconocen
+        if (matchedChamber) {
+          if (nameInput && (!nameInput.value || nameInput.value === 'CÁMARA DE COMERCIO')) {
+            nameInput.value = matchedChamber.name;
+          }
+          if (cityInput && (!cityInput.value || cityInput.value === 'COLOMBIA')) {
+            cityInput.value = matchedChamber.city;
+          }
+          if (kwInput && !kwInput.value) {
+            kwInput.value = matchedChamber.keywords;
+          }
+          if (urlInput && !urlInput.value) {
+            urlInput.value = matchedChamber.verifyUrl;
+          }
         }
 
-        if (detectedChamberCityInput) {
-          detectedChamberCityInput.value = matchedChamber ? matchedChamber.city : (detectedChamberCityInput.value || 'COLOMBIA');
+        const posLabel = analysis.position === 'center' ? 'Superior Centro' : (analysis.position === 'right' ? 'Superior Derecha' : 'Superior Izquierda');
+        if (feedbackMsg) {
+          feedbackMsg.textContent = `✓ Formato reconocido: Logo ubicado en ${posLabel}.`;
         }
 
-        if (analysisPanel) analysisPanel.style.display = 'block';
-        showToast(`✓ Plantilla analizada: Logo detectado en posición "${analysis.position.toUpperCase()}"`);
+        showToast(`✓ Plantilla analizada con éxito: Logo en posición "${posLabel}".`);
       };
       img.src = currentSampleTemplateBase64;
     };
     reader.readAsDataURL(file);
   });
 
-  // 2. Manejo de archivo de logotipo en alta calidad para la clonación
-  sampleLogoInput?.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      currentUploadedLogoBase64 = evt.target.result;
-      if (detectedLogoPreview) detectedLogoPreview.src = currentUploadedLogoBase64;
-      if (previewImg) previewImg.src = currentUploadedLogoBase64;
-      if (previewBox) previewBox.style.display = 'block';
-      showToast("✓ Logotipo en alta calidad vinculado a la plantilla.");
-    };
-    reader.readAsDataURL(file);
-  });
-
-  // 3. Crear copia exacta editable y abrir directamente en el generador
-  btnCreateEditableCopy?.addEventListener('click', () => {
-    const pos = currentDetectedAnalysis ? currentDetectedAnalysis.position : 'right';
-    const logoData = currentUploadedLogoBase64 || (currentDetectedAnalysis ? currentDetectedAnalysis.croppedLogo : null);
-    const chamberName = detectedChamberNameInput?.value.trim() || 'CÁMARA DE COMERCIO';
-    const city = detectedChamberCityInput?.value.trim() || 'COLOMBIA';
-
-    const matchedChamber = matchChamberFromText(city) || matchChamberFromText(chamberName);
-    const templateId = 'custom_' + city.toLowerCase().replace(/[^a-z0-9]/g, '') + '_' + Date.now();
-
-    const templateData = {
-      id: templateId,
-      name: chamberName,
-      city: city,
-      keywords: matchedChamber ? matchedChamber.keywords : city.toLowerCase(),
-      verifyUrl: matchedChamber ? matchedChamber.verifyUrl : 'www.confecamaras.org.co',
-      disclaimer: matchedChamber?.disclaimer || null,
-      logoPosition: pos,
-      logoBase64: logoData,
-      isCustom: true
-    };
-
-    StorageManager.saveCustomTemplate(templateData);
-    populateChamberDropdown();
-    renderCustomTemplatesTable();
-    useCustomTemplate(templateId);
-
-    showToast(`⚡ ¡Copia exacta creada! Plantilla lista y editable en el Generador.`);
-  });
-
-  // 4. Copiar datos al formulario avanzado de plantillas
-  btnApplyToCustomForm?.addEventListener('click', () => {
-    const pos = currentDetectedAnalysis ? currentDetectedAnalysis.position : 'right';
-    const chamberName = detectedChamberNameInput?.value.trim() || '';
-    const city = detectedChamberCityInput?.value.trim() || '';
-    const matchedChamber = matchChamberFromText(city) || matchChamberFromText(chamberName);
-
-    const nameInput = document.getElementById('custom-name');
-    const cityInput = document.getElementById('custom-city');
-    const kwInput = document.getElementById('custom-keywords');
-    const urlInput = document.getElementById('custom-verify-url');
-
-    if (nameInput) nameInput.value = chamberName;
-    if (cityInput) cityInput.value = city;
-    if (kwInput) kwInput.value = matchedChamber ? matchedChamber.keywords : city.toLowerCase();
-    if (urlInput) urlInput.value = matchedChamber ? matchedChamber.verifyUrl : 'www.confecamaras.org.co';
-
-    const radio = document.querySelector(`input[name="custom-logo-pos"][value="${pos}"]`);
-    if (radio) radio.checked = true;
-
-    const logoData = currentUploadedLogoBase64 || (currentDetectedAnalysis ? currentDetectedAnalysis.croppedLogo : null);
-    if (logoData) {
-      currentUploadedLogoBase64 = logoData;
-      if (previewImg) previewImg.src = logoData;
-      if (previewBox) previewBox.style.display = 'block';
-    }
-
-    document.getElementById('custom-template-form')?.scrollIntoView({ behavior: 'smooth' });
-    showToast("Datos copiados al editor avanzado de plantillas.");
-  });
-
-  // 5. Vista previa al cargar logotipo en el formulario manual
-  fileInput?.addEventListener('change', (e) => {
+  // 2. Manejo de archivo de logotipo oficial en alta calidad
+  logoInput?.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = function(evt) {
         currentUploadedLogoBase64 = evt.target.result;
         if (previewImg) previewImg.src = currentUploadedLogoBase64;
-        if (previewBox) previewBox.style.display = 'block';
+        if (previewBox) previewBox.style.display = 'flex';
+        if (feedbackMsg) {
+          feedbackMsg.textContent = `✓ Logotipo en alta calidad vinculado a la plantilla.`;
+        }
+        showToast("✓ Logotipo en alta calidad cargado.");
       };
       reader.readAsDataURL(file);
     }
   });
 
-  // 6. Guardar nueva plantilla desde formulario manual
-  saveBtn?.addEventListener('click', () => {
-    const name = document.getElementById('custom-name')?.value.trim();
-    const city = document.getElementById('custom-city')?.value.trim();
-    const keywords = document.getElementById('custom-keywords')?.value.trim();
-    const verifyUrl = document.getElementById('custom-verify-url')?.value.trim();
-    const disclaimer = document.getElementById('custom-disclaimer')?.value.trim();
+  // Función común para guardar plantilla
+  function saveTemplate(openAfterSave = false) {
+    const name = nameInput?.value.trim();
+    const city = cityInput?.value.trim();
+    const keywords = kwInput?.value.trim();
+    const verifyUrl = urlInput?.value.trim();
+    const disclaimer = disclaimerInput?.value.trim();
     const posRadio = document.querySelector('input[name="custom-logo-pos"]:checked');
-    const logoPosition = posRadio ? posRadio.value : 'left';
+    const logoPosition = posRadio ? posRadio.value : (currentDetectedAnalysis ? currentDetectedAnalysis.position : 'left');
     const editId = document.getElementById('custom-template-id')?.value;
 
     if (!name || !city) {
-      alert("Por favor ingrese el Nombre de la Cámara y la Ciudad Principal.");
+      alert("Por favor ingrese el Nombre Oficial de la Plantilla / Cámara y la Ciudad Principal.");
       return;
     }
 
+    const matchedChamber = matchChamberFromText(city) || matchChamberFromText(name);
+    const templateId = editId || ('custom_' + city.toLowerCase().replace(/[^a-z0-9]/g, '') + '_' + Date.now());
+
     const templateData = {
-      id: editId || 'custom_' + city.toLowerCase().replace(/[^a-z0-9]/g, '') + '_' + Date.now(),
+      id: templateId,
       name: name,
       city: city,
-      keywords: keywords || city,
-      verifyUrl: verifyUrl || 'www.confecamaras.org.co',
+      keywords: keywords || (matchedChamber ? matchedChamber.keywords : city.toLowerCase()),
+      verifyUrl: verifyUrl || (matchedChamber ? matchedChamber.verifyUrl : 'www.confecamaras.org.co'),
       disclaimer: disclaimer || null,
       logoPosition: logoPosition,
-      logoBase64: currentUploadedLogoBase64 || null
+      logoBase64: currentUploadedLogoBase64 || (currentDetectedAnalysis ? currentDetectedAnalysis.croppedLogo : null),
+      isCustom: true
     };
 
     StorageManager.saveCustomTemplate(templateData);
-    showToast(`✓ Plantilla "${name}" guardada exitosamente.`);
-
-    resetCustomForm();
     populateChamberDropdown();
     renderCustomTemplatesTable();
-  });
 
+    if (openAfterSave) {
+      useCustomTemplate(templateId);
+      showToast(`⚡ ¡Plantilla "${name}" guardada y cargada en el generador!`);
+    } else {
+      showToast(`✓ Plantilla "${name}" guardada exitosamente en el catálogo.`);
+      resetCustomForm();
+    }
+  }
+
+  // 3. Botón: Guardar y Abrir en el Generador
+  btnSaveAndOpen?.addEventListener('click', () => saveTemplate(true));
+
+  // 4. Botón: Guardar en el Catálogo
+  saveBtn?.addEventListener('click', () => saveTemplate(false));
+
+  // 5. Botón: Limpiar formulario
   resetBtn?.addEventListener('click', resetCustomForm);
 
-  // 7. Exportar e importar plantillas JSON
+  // 6. Exportar e importar plantillas JSON
   exportBtn?.addEventListener('click', () => {
     StorageManager.exportTemplatesJSON();
     showToast("Archivo JSON de plantillas descargado.");
@@ -1081,8 +1060,20 @@ function resetCustomForm() {
   if (form) form.reset();
   document.getElementById('custom-template-id').value = '';
   currentUploadedLogoBase64 = null;
+  currentSampleTemplateBase64 = null;
+  currentDetectedAnalysis = null;
   const previewBox = document.getElementById('custom-logo-preview-box');
   if (previewBox) previewBox.style.display = 'none';
+  const feedbackMsg = document.getElementById('detection-feedback-msg');
+  if (feedbackMsg) feedbackMsg.textContent = '';
+  const titleEl = document.getElementById('template-form-title');
+  if (titleEl) titleEl.innerHTML = `<span>⚡ Configurar Plantilla y Logotipo</span>`;
+  const badgeEl = document.getElementById('template-mode-badge');
+  if (badgeEl) {
+    badgeEl.textContent = 'Nueva Plantilla';
+    badgeEl.style.background = '#e0f2fe';
+    badgeEl.style.color = '#0369a1';
+  }
 }
 
 function renderCustomTemplatesTable() {
@@ -1103,6 +1094,7 @@ function renderCustomTemplatesTable() {
 
     const actions = isCustom ? `
       <button class="action-btn-sm btn-open" onclick="useCustomTemplate('${item.id}')" title="Usar en el editor">Usar</button>
+      <button class="action-btn-sm" style="background:#e0f2fe; color:#0369a1; border-color:#bae6fd;" onclick="editCustomTemplate('${item.id}')" title="Modificar nombre o parámetros de la plantilla">✏️ Editar</button>
       <button class="action-btn-sm btn-del" onclick="deleteCustomTemplate('${item.id}')" title="Eliminar plantilla">🗑️</button>
     ` : `
       <button class="action-btn-sm btn-open" onclick="useCustomTemplate('${item.id}')" title="Usar en el editor">Usar</button>
@@ -1126,17 +1118,72 @@ function renderCustomTemplatesTable() {
   }).join('');
 }
 
+window.editCustomTemplate = function(id) {
+  const catalog = getUnifiedChamberCatalog();
+  const item = catalog[id];
+  if (!item) return;
+
+  const idInput = document.getElementById('custom-template-id');
+  const nameInput = document.getElementById('custom-name');
+  const cityInput = document.getElementById('custom-city');
+  const kwInput = document.getElementById('custom-keywords');
+  const urlInput = document.getElementById('custom-verify-url');
+  const disclaimerInput = document.getElementById('custom-disclaimer');
+
+  if (idInput) idInput.value = item.id;
+  if (nameInput) nameInput.value = item.name || '';
+  if (cityInput) cityInput.value = item.city || '';
+  if (kwInput) kwInput.value = (item.keywords || []).join(', ');
+  if (urlInput) urlInput.value = item.verifyUrl || '';
+  if (disclaimerInput) disclaimerInput.value = item.disclaimer || '';
+
+  const radio = document.querySelector(`input[name="custom-logo-pos"][value="${item.logoPosition || 'left'}"]`);
+  if (radio) radio.checked = true;
+
+  currentUploadedLogoBase64 = item.logoBase64 || null;
+  const previewBox = document.getElementById('custom-logo-preview-box');
+  const previewImg = document.getElementById('custom-logo-preview-img');
+  const feedbackMsg = document.getElementById('detection-feedback-msg');
+
+  if (currentUploadedLogoBase64) {
+    if (previewImg) previewImg.src = currentUploadedLogoBase64;
+    if (previewBox) previewBox.style.display = 'flex';
+  } else {
+    if (previewBox) previewBox.style.display = 'none';
+  }
+
+  if (feedbackMsg) {
+    feedbackMsg.textContent = `Modificando plantilla guardada. Puede actualizar el nombre o logotipo.`;
+  }
+
+  const titleEl = document.getElementById('template-form-title');
+  if (titleEl) titleEl.innerHTML = `<span>✏️ Modificando Plantilla: ${item.name}</span>`;
+  const badgeEl = document.getElementById('template-mode-badge');
+  if (badgeEl) {
+    badgeEl.textContent = 'Modo Edición';
+    badgeEl.style.background = '#fef3c7';
+    badgeEl.style.color = '#92400e';
+  }
+
+  document.getElementById('custom-template-form')?.scrollIntoView({ behavior: 'smooth' });
+  showToast(`Editando plantilla "${item.name}". Modifique el nombre y guarde los cambios.`);
+};
+
 window.useCustomTemplate = function(id) {
   const catalog = getUnifiedChamberCatalog();
   const item = catalog[id];
   if (!item) return;
 
   AppState.currentData.camaraSeleccionada = item.id;
+  AppState.currentData.nombreCamara = item.name;
   AppState.currentData.ciudad = item.city;
   AppState.currentData.ciudadCompleta = `${item.city} - Colombia`;
 
   const camaraSelect = document.getElementById('field-camaraSeleccionada');
   if (camaraSelect) camaraSelect.value = item.id;
+
+  const nombreCamaraInput = document.getElementById('field-nombreCamara');
+  if (nombreCamaraInput) nombreCamaraInput.value = item.name;
 
   const ciudadInput = document.getElementById('field-ciudad');
   if (ciudadInput) ciudadInput.value = item.city;

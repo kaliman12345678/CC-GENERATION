@@ -91,7 +91,7 @@ const TemplateEngine = {
       <div class="cc-page style-bucaramanga">
         <div class="bga-header-grid">
           <div class="bga-header-left">
-            <div class="bga-main-title">CÁMARA DE COMERCIO DE BUCARAMANGA</div>
+            <div class="bga-main-title">${(data.nombreCamara || 'CÁMARA DE COMERCIO DE BUCARAMANGA').toUpperCase()}</div>
             <div class="bga-sub">CERTIFICADO GENERADO A TRAVÉS DE PLATAFORMA VIRTUAL</div>
             <div class="bga-meta">LUGAR Y FECHA DE EXPEDICIÓN: BUCARAMANGA, ${fecha}</div>
             <div class="bga-receipt">${recibo}</div>
@@ -207,7 +207,7 @@ const TemplateEngine = {
             <img src="${logoSrc}" alt="Cámara de Comercio de Barranquilla" class="baq-logo-img">
           </div>
           <div class="baq-title-box">
-            <div class="baq-name">Cámara de Comercio de Barranquilla</div>
+            <div class="baq-name">${data.nombreCamara || 'Cámara de Comercio de Barranquilla'}</div>
             <div class="baq-cert-type">CERTIFICADO DE EXISTENCIA Y REPRESENTACION LEGAL<br>ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="baq-date">Fecha de expedición: ${fecha}</div>
             <div class="baq-receipt">Recibo No. ${recibo}, Valor: 11,600</div>
@@ -308,7 +308,7 @@ const TemplateEngine = {
       <div class="cc-page style-medellin">
         <div class="med-header-grid">
           <div class="med-header-center">
-            <div class="med-name">Cámara de Comercio de Medellín para Antioquia</div>
+            <div class="med-name">${data.nombreCamara || 'Cámara de Comercio de Medellín para Antioquia'}</div>
             <div class="med-title">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
             <div class="med-title" style="font-size: 8.5pt; margin-top: 1px;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="med-date">Fecha de expedición: ${fecha}</div>
@@ -420,7 +420,7 @@ const TemplateEngine = {
             <img src="${logoSrc}" alt="Cámara de Comercio de Cartagena" class="ctg-logo-img">
           </div>
           <div class="ctg-center-titles">
-            <div class="ctg-main-name">CÁMARA DE COMERCIO DE CARTAGENA</div>
+            <div class="ctg-main-name">${(data.nombreCamara || 'CÁMARA DE COMERCIO DE CARTAGENA').toUpperCase()}</div>
             <div class="ctg-sub-name">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
             <div class="ctg-sub-name" style="font-size: 8pt; margin-top: 1px;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="ctg-meta">Fecha expedición: ${fecha}</div>
@@ -533,7 +533,7 @@ const TemplateEngine = {
             <img src="${logoSrc}" alt="Cámara de Comercio de Cali" class="cali-logo-img-auth">
           </div>
           <div class="cali-titles-centered">
-            <div class="cali-auth-name">Camara de Comercio de Cali</div>
+            <div class="cali-auth-name">${data.nombreCamara || 'Camara de Comercio de Cali'}</div>
             <div class="cali-auth-title">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
             <div class="cali-auth-subtitle">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="cali-auth-date">Fecha expedición: ${fecha}</div>
@@ -640,7 +640,7 @@ const TemplateEngine = {
       <div class="cc-page style-manizales">
         <div class="bga-header-grid">
           <div class="bga-header-left">
-            <div class="bga-main-title">CÁMARA DE COMERCIO DE MANIZALES POR CALDAS</div>
+            <div class="bga-main-title">${(data.nombreCamara || 'CÁMARA DE COMERCIO DE MANIZALES POR CALDAS').toUpperCase()}</div>
             <div class="bga-sub">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
             <div class="bga-sub" style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="bga-meta">Fecha de expedición: ${fecha}</div>
@@ -748,7 +748,7 @@ const TemplateEngine = {
       <div class="cc-page style-uraba">
         <div class="bga-header-grid">
           <div class="bga-header-left">
-            <div class="bga-main-title">CÁMARA DE COMERCIO DE URABÁ</div>
+            <div class="bga-main-title">${(data.nombreCamara || 'CÁMARA DE COMERCIO DE URABÁ').toUpperCase()}</div>
             <div class="bga-sub">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
             <div class="bga-sub" style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="bga-meta">Fecha de expedición: ${fecha}</div>
@@ -861,12 +861,14 @@ const TemplateEngine = {
     const lawIntro = chamber.lawIntro ||
       `CON FUNDAMENTO EN LA MATRÍCULA E INSCRIPCIONES EFECTUADAS EN EL REGISTRO MERCANTIL, LA CÁMARA DE COMERCIO CERTIFICA:`;
 
+    const chamberName = (data.nombreCamara || chamber.name || 'CÁMARA DE COMERCIO').toUpperCase();
+
     let headerHtml = '';
     if (isCenter) {
       headerHtml = `
         <div style="text-align: center; margin-bottom: 10px;">
-          <img src="${logoSrc}" alt="${chamber.name}" style="max-height: 75px; max-width: 220px; object-fit: contain; margin-bottom: 6px;">
-          <div style="font-family: Arial, sans-serif; font-size: 11pt; font-weight: bold; color: #000;">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
+          <img src="${logoSrc}" alt="${chamberName}" style="max-height: 75px; max-width: 220px; object-fit: contain; margin-bottom: 6px;">
+          <div style="font-family: Arial, sans-serif; font-size: 11pt; font-weight: bold; color: #000;">${chamberName}</div>
           <div style="font-size: 9.5pt; font-weight: bold; margin-top: 2px;">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
           <div style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
           <div style="font-size: 8pt; margin-top: 4px;">Fecha expedición: ${fecha}</div>
@@ -878,7 +880,7 @@ const TemplateEngine = {
       headerHtml = `
         <div class="bga-header-grid">
           <div class="bga-header-left">
-            <div class="bga-main-title">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
+            <div class="bga-main-title">${chamberName}</div>
             <div class="bga-sub">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
             <div class="bga-sub" style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="bga-meta">LUGAR Y FECHA DE EXPEDICIÓN: ${(chamber.city || data.ciudad || 'COLOMBIA').toUpperCase()}, ${fecha}</div>
@@ -886,7 +888,7 @@ const TemplateEngine = {
             <div class="bga-code">CÓDIGO DE VERIFICACIÓN: <strong>${codigo}</strong></div>
           </div>
           <div class="bga-header-right">
-            <img src="${logoSrc}" alt="${chamber.name}" style="max-width: 175px; max-height: 75px; object-fit: contain;">
+            <img src="${logoSrc}" alt="${chamberName}" style="max-width: 175px; max-height: 75px; object-fit: contain;">
           </div>
         </div>
       `;
@@ -894,10 +896,10 @@ const TemplateEngine = {
       headerHtml = `
         <div class="ctg-header">
           <div class="ctg-logo-box">
-            <img src="${logoSrc}" alt="${chamber.name}" style="max-width: 135px; max-height: 75px; object-fit: contain;">
+            <img src="${logoSrc}" alt="${chamberName}" style="max-width: 135px; max-height: 75px; object-fit: contain;">
           </div>
           <div class="ctg-center-titles">
-            <div class="ctg-main-name">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
+            <div class="ctg-main-name">${chamberName}</div>
             <div class="ctg-sub-name">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
             <div class="ctg-sub-name" style="font-size: 8pt; margin-top: 1px;">ENTIDADES SIN ANIMO DE LUCRO</div>
             <div class="ctg-meta">Fecha expedición: ${fecha}</div>

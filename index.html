@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Creador CC — Generación y Exportación Oficial a PDF</title>
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261119_1">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261119_2">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
 </head>
 <body>
@@ -94,6 +94,14 @@
             </div>
 
             <div class="form-accordion-title">1. Encabezado Oficial</div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label class="form-label" for="field-nombreCamara" style="font-weight: 700; color: #003366;">
+                Nombre Oficial de la Cámara / Título de la Plantilla:
+              </label>
+              <input type="text" id="field-nombreCamara" class="form-control" style="font-weight: 700; color: #003366;" placeholder="Ej: CÁMARA DE COMERCIO DE BOGOTÁ">
+              <small style="color: #64748b; font-size: 11px;">Título que encabeza el certificado. Puede cambiar el nombre libremente en cualquier momento.</small>
+            </div>
 
             <div class="form-row">
               <div class="form-group">
@@ -362,125 +370,80 @@
           </div>
         </div>
 
-        <!-- SECCIÓN DE RECONOCIMIENTO INTELIGENTE Y CLONACIÓN EXACTA DE PLANTILLAS -->
-        <div style="background: linear-gradient(135deg, #f0f7ff 0%, #f0fdf4 100%); border: 2px solid #3b82f6; border-radius: 12px; padding: 22px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
-            <div>
-              <h3 style="font-size: 17px; font-weight: 800; color: #1e3a8a; margin: 0; display: flex; align-items: center; gap: 8px;">
-                <span>⚡ Clonador Inteligente de Plantillas Oficiales</span>
-                <span style="font-size: 11px; background: #2563eb; color: white; padding: 3px 8px; border-radius: 999px; text-transform: uppercase; font-weight: 700;">Reconocimiento Automático</span>
-              </h3>
-              <p style="font-size: 13px; color: #334155; margin-top: 5px;">
-                Suba una imagen de muestra del certificado oficial (y opcionalmente el archivo de su logotipo). El sistema analizará el encabezado, detectará automáticamente la posición exacta del logo (izquierda, derecha o centro), extraerá los datos institucionales y generará una <strong>copia exacta 100% editable</strong> en el Generador.
-              </p>
-            </div>
-          </div>
-
-          <div class="form-row" style="margin-bottom: 16px;">
-            <div class="form-group">
-              <label class="form-label" for="sample-template-file" style="font-weight: 700; color: #1e40af;">
-                📄 1. Subir Certificado / Plantilla de Muestra (PNG, JPG):
-              </label>
-              <input type="file" id="sample-template-file" class="form-control" accept="image/*" style="border-color: #93c5fd; background: #ffffff;">
-              <small style="color: #64748b; font-size: 11px;">El sistema analizará el encabezado y calculará la ubicación exacta del logotipo.</small>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="sample-logo-file" style="font-weight: 700; color: #1e40af;">
-                🎨 2. Subir Logotipo Oficial en Alta Calidad (Opcional):
-              </label>
-              <input type="file" id="sample-logo-file" class="form-control" accept="image/*" style="border-color: #93c5fd; background: #ffffff;">
-              <small style="color: #64748b; font-size: 11px;">Si no dispone del archivo del logo, el sistema lo recortará automáticamente de la muestra.</small>
-            </div>
-          </div>
-
-          <!-- PANEL DE RECONOCIMIENTO Y ANÁLISIS EN VIVO -->
-          <div id="template-analysis-panel" style="display: none; background: white; border: 1.5px solid #60a5fa; border-radius: 10px; padding: 18px; margin-bottom: 14px;">
-            <div style="font-size: 14px; font-weight: 800; color: #1e3a8a; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span>🎯 Resultado del Reconocimiento de Plantilla:</span>
-                <span id="analysis-status-badge" style="background: #dcfce7; color: #166534; font-size: 12px; padding: 2px 10px; border-radius: 6px; font-weight: 700;">Encabezado detectado</span>
-              </div>
-              <span id="analysis-fidelity-label" style="font-size: 12px; color: #0369a1; font-weight: 600;">Estructura verificada</span>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; align-items: end; margin-bottom: 16px;">
-              <div>
-                <label class="form-label" style="font-size: 12px; margin-bottom: 4px;">Ubicación detectada del Logo:</label>
-                <div id="detected-pos-badge" style="display: inline-flex; align-items: center; gap: 6px; background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: 6px;">
-                  📍 Detectando...
-                </div>
-              </div>
-
-              <div>
-                <label class="form-label" style="font-size: 12px; margin-bottom: 4px;">Logotipo identificado:</label>
-                <div style="height: 52px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 4px;">
-                  <img id="detected-logo-preview" src="" alt="Logo detectado" style="max-height: 44px; max-width: 100%; object-fit: contain;">
-                </div>
-              </div>
-
-              <div>
-                <label class="form-label" for="detected-chamber-name" style="font-size: 12px; margin-bottom: 4px;">Cámara de Comercio:</label>
-                <input type="text" id="detected-chamber-name" class="form-control" placeholder="Ej: CÁMARA DE COMERCIO DE MEDELLÍN" style="font-size: 13px; font-weight: 600;">
-              </div>
-
-              <div>
-                <label class="form-label" for="detected-chamber-city" style="font-size: 12px; margin-bottom: 4px;">Ciudad Principal:</label>
-                <input type="text" id="detected-chamber-city" class="form-control" placeholder="Ej: MEDELLÍN" style="font-size: 13px; font-weight: 600;">
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-              <button id="btn-create-editable-copy" class="btn-mandatory btn-download" style="background: #16a34a; border-color: #15803d; font-size: 14px; font-weight: 800; padding: 10px 22px;">
-                ⚡ Crear Copia Exacta y Abrir en el Generador
-              </button>
-              <button id="btn-apply-to-custom-form" class="btn-mandatory btn-edit" style="font-size: 13px;">
-                ✏️ Pasar al Editor Avanzado de Plantillas
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- FORMULARIO DE AGREGAR / EDITAR CÁMARA -->
-        <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 20px; margin-bottom: 28px;">
-          <h3 style="font-size: 16px; font-weight: 700; color: #003366; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
-            <span>➕ Registrar Nueva Cámara / Plantilla</span>
-          </h3>
-
+        <!-- CREADOR Y GESTOR UNIFICADO DE PLANTILLAS Y LOGOS -->
+        <div style="background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 12px; padding: 22px; margin-bottom: 28px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">
+          
           <form id="custom-template-form" onsubmit="return false;">
             <input type="hidden" id="custom-template-id" value="">
 
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="custom-name">Nombre Oficial de la Cámara:</label>
-                <input type="text" id="custom-name" class="form-control" placeholder="Ej: Cámara de Comercio de Bogotá" required>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <h3 id="template-form-title" style="font-size: 16px; font-weight: 800; color: #1e3a8a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                <span>⚡ Configurar Plantilla y Logotipo</span>
+              </h3>
+              <span id="template-mode-badge" style="background: #e0f2fe; color: #0369a1; font-size: 11px; padding: 3px 10px; border-radius: 999px; font-weight: 700;">
+                Nueva Plantilla
+              </span>
+            </div>
+
+            <!-- PASO 1: CARGA DE ARCHIVOS (MUESTRA Y LOGO) -->
+            <div style="background: linear-gradient(135deg, #f0f7ff 0%, #f0fdf4 100%); border: 1.5px dashed #60a5fa; border-radius: 10px; padding: 18px; margin-bottom: 20px;">
+              <div style="font-size: 13px; font-weight: 800; color: #1d4ed8; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                <span>📁 1. Cargar Certificado de Muestra y/o Logotipo Oficial (Copia de Formato Automática):</span>
               </div>
-              <div class="form-group">
-                <label class="form-label" for="custom-city">Ciudad Principal:</label>
-                <input type="text" id="custom-city" class="form-control" placeholder="Ej: Bogotá" required>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="custom-sample-file" style="font-weight: 700; color: #1e40af;">
+                    📄 Subir Certificado de Muestra (PNG, JPG):
+                  </label>
+                  <input type="file" id="custom-sample-file" class="form-control" accept="image/*" style="background: white;">
+                  <small style="color: #64748b; font-size: 11px;">El sistema analizará el encabezado, detectará la ubicación exacta del logo y copiará el formato.</small>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="custom-logo-file" style="font-weight: 700; color: #1e40af;">
+                    🎨 Subir Logotipo Oficial en Alta Calidad (Opcional):
+                  </label>
+                  <input type="file" id="custom-logo-file" class="form-control" accept="image/*" style="background: white;">
+                  <small style="color: #64748b; font-size: 11px;">Si no dispone del archivo del logo, el sistema lo recortará automáticamente de la muestra.</small>
+                </div>
               </div>
+
+              <!-- VISTA PREVIA Y RETROALIMENTACIÓN DE RECONOCIMIENTO -->
+              <div id="custom-logo-preview-box" style="display: none; margin-top: 12px; padding: 12px 16px; background: white; border: 1px solid #bbf7d0; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                  <span style="font-size: 12px; font-weight: 700; color: #166534;">Logo Vinculado:</span>
+                  <img id="custom-logo-preview-img" src="" alt="Logo" style="max-height: 48px; max-width: 170px; object-fit: contain; background: #fff; padding: 3px; border-radius: 4px; border: 1px solid #cbd5e1;">
+                </div>
+                <div id="detection-feedback-msg" style="font-size: 12px; color: #15803d; font-weight: 700;"></div>
+              </div>
+            </div>
+
+            <!-- PASO 2: NOMBRE Y DATOS OFICIALES (100% EDITABLES) -->
+            <div style="font-size: 13px; font-weight: 800; color: #003366; margin-bottom: 12px;">
+              <span>✏️ 2. Nombre y Parámetros Oficiales de la Plantilla (Totalmente Editables):</span>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="custom-keywords">Ciudades / Palabras Clave Abarcadas (separadas por coma):</label>
-                <input type="text" id="custom-keywords" class="form-control" placeholder="Ej: bogota, soacha, chia, cundinamarca">
-                <small style="color: #64748b; font-size: 11px;">Al escribir cualquiera de estas ciudades en el generador, se aplicará esta plantilla automáticamente.</small>
+                <label class="form-label" for="custom-name" style="font-weight: 700; color: #0f172a;">
+                  Nombre Oficial de la Plantilla / Cámara: <span style="color: #dc2626;">*</span>
+                </label>
+                <input type="text" id="custom-name" class="form-control" placeholder="Ej: Cámara de Comercio de Bogotá" style="font-weight: 700; font-size: 14px; color: #003366;" required>
+                <small style="color: #64748b; font-size: 11px;">Este nombre aparecerá en el encabezado oficial del certificado y en el selector.</small>
               </div>
+
               <div class="form-group">
-                <label class="form-label" for="custom-verify-url">Portal Web de Verificación:</label>
-                <input type="text" id="custom-verify-url" class="form-control" placeholder="Ej: www.ccb.org.co">
+                <label class="form-label" for="custom-city" style="font-weight: 700; color: #0f172a;">
+                  Ciudad Principal / Sede: <span style="color: #dc2626;">*</span>
+                </label>
+                <input type="text" id="custom-city" class="form-control" placeholder="Ej: Bogotá" required>
               </div>
             </div>
 
             <div class="form-row" style="align-items: center; margin-top: 6px;">
               <div class="form-group">
-                <label class="form-label" for="custom-logo-file">Subir Logotipo Oficial (PNG, JPG, SVG):</label>
-                <input type="file" id="custom-logo-file" class="form-control" accept="image/*">
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Ubicación del Logotipo en el Documento:</label>
+                <label class="form-label" style="font-weight: 700; color: #0f172a;">Ubicación del Logotipo en el Documento:</label>
                 <div style="display: flex; gap: 20px; align-items: center; margin-top: 8px;">
                   <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
                     <input type="radio" name="custom-logo-pos" value="left" checked> Superior Izquierda
@@ -493,25 +456,35 @@
                   </label>
                 </div>
               </div>
+
+              <div class="form-group">
+                <label class="form-label" for="custom-verify-url">Portal Web de Verificación:</label>
+                <input type="text" id="custom-verify-url" class="form-control" placeholder="Ej: www.ccb.org.co">
+              </div>
             </div>
 
-            <!-- VISTA PREVIA DEL LOGO SUBIDO -->
-            <div id="custom-logo-preview-box" style="display: none; margin-bottom: 16px; padding: 12px; background: white; border: 1px dashed #94a3b8; border-radius: 8px; width: fit-content;">
-              <span style="font-size: 12px; font-weight: 600; color: #475569; display: block; margin-bottom: 6px;">Vista previa del logo:</span>
-              <img id="custom-logo-preview-img" src="" alt="Logo" style="max-height: 60px; max-width: 220px; object-fit: contain;">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="custom-keywords">Ciudades / Palabras Clave Abarcadas (separadas por coma):</label>
+                <input type="text" id="custom-keywords" class="form-control" placeholder="Ej: bogota, soacha, chia, cundinamarca">
+                <small style="color: #64748b; font-size: 11px;">Al escribir cualquiera de estas ciudades en el generador, se aplicará esta plantilla automáticamente.</small>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="custom-disclaimer">Leyenda de Verificación Oficial (Opcional):</label>
+                <input type="text" id="custom-disclaimer" class="form-control" placeholder="Texto legal del encabezado. Deje vacío para generar el texto oficial estándar.">
+              </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="custom-disclaimer">Leyenda de Verificación Oficial (Opcional):</label>
-              <textarea id="custom-disclaimer" class="form-control" rows="2" placeholder="Texto de validación legal que aparecerá en el encabezado. Si se deja vacío, se generará el texto oficial estándar con la URL de la entidad."></textarea>
-            </div>
-
-            <div style="display: flex; gap: 12px; margin-top: 16px;">
-              <button id="btn-save-custom-template" class="btn-mandatory btn-download">
-                ✓ Guardar Plantilla y Logo
+            <!-- BOTONES DE ACCIÓN -->
+            <div style="display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap;">
+              <button id="btn-save-and-open" class="btn-mandatory btn-download" style="background: #16a34a; border-color: #15803d; font-size: 14px; font-weight: 800; padding: 10px 22px;">
+                ⚡ Guardar y Abrir en el Generador
               </button>
-              <button id="btn-reset-custom-form" class="btn-mandatory btn-edit" type="button">
-                Limpiar Formulario
+              <button id="btn-save-custom-template" class="btn-mandatory btn-download" style="font-size: 13px;">
+                ✓ Guardar en Catálogo
+              </button>
+              <button id="btn-reset-custom-form" class="btn-mandatory btn-edit" type="button" style="font-size: 13px;">
+                Limpiar Formulario / Nueva Plantilla
               </button>
             </div>
           </form>
@@ -599,13 +572,13 @@
   <script src="assets/libs/jspdf.umd.min.js"></script>
   <script src="assets/libs/html2canvas.min.js"></script>
   <script src="assets/libs/jszip.min.js"></script>
-  <script src="assets/js/template-image-data.js?v=20261119_1"></script>
-  <script src="assets/js/official-logos-data.js?v=20261119_1"></script>
-  <script src="assets/js/logos.js?v=20261119_1"></script>
-  <script src="assets/js/template-engine.js?v=20261119_1"></script>
-  <script src="assets/js/pdf-generator.js?v=20261119_1"></script>
-  <script src="assets/js/storage.js?v=20261119_1"></script>
-  <script src="assets/js/app.js?v=20261119_1"></script>
+  <script src="assets/js/template-image-data.js?v=20261119_2"></script>
+  <script src="assets/js/official-logos-data.js?v=20261119_2"></script>
+  <script src="assets/js/logos.js?v=20261119_2"></script>
+  <script src="assets/js/template-engine.js?v=20261119_2"></script>
+  <script src="assets/js/pdf-generator.js?v=20261119_2"></script>
+  <script src="assets/js/storage.js?v=20261119_2"></script>
+  <script src="assets/js/app.js?v=20261119_2"></script>
 
 </body>
 </html>
