@@ -826,6 +826,8 @@ const TemplateEngine = {
     const recibo = data.reciboNo || this.generateReceiptNumber('bucaramanga');
     const codigo = data.codigoVerificacion || this.generateVerificationCode('bucaramanga');
     const isRight = chamber.logoPosition === 'right';
+    const isCenter = chamber.logoPosition === 'center';
+
     const razon = (data.razonSocial || 'EMPRESA REGISTRADA S.A.S.').toUpperCase();
     const sigla = data.sigla || data.establecimiento || 'No reportó';
     const nit = data.nit || '900.123.456-7';
@@ -859,35 +861,52 @@ const TemplateEngine = {
     const lawIntro = chamber.lawIntro ||
       `CON FUNDAMENTO EN LA MATRÍCULA E INSCRIPCIONES EFECTUADAS EN EL REGISTRO MERCANTIL, LA CÁMARA DE COMERCIO CERTIFICA:`;
 
-    const headerHtml = isRight ? `
-      <div class="bga-header-grid">
-        <div class="bga-header-left">
-          <div class="bga-main-title">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
-          <div class="bga-sub">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
-          <div class="bga-sub" style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
-          <div class="bga-meta">LUGAR Y FECHA DE EXPEDICIÓN: ${(chamber.city || data.ciudad || 'COLOMBIA').toUpperCase()}, ${fecha}</div>
-          <div class="bga-receipt">Recibo No. ${recibo}</div>
-          <div class="bga-code">CÓDIGO DE VERIFICACIÓN: <strong>${codigo}</strong></div>
+    let headerHtml = '';
+    if (isCenter) {
+      headerHtml = `
+        <div style="text-align: center; margin-bottom: 10px;">
+          <img src="${logoSrc}" alt="${chamber.name}" style="max-height: 75px; max-width: 220px; object-fit: contain; margin-bottom: 6px;">
+          <div style="font-family: Arial, sans-serif; font-size: 11pt; font-weight: bold; color: #000;">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
+          <div style="font-size: 9.5pt; font-weight: bold; margin-top: 2px;">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+          <div style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
+          <div style="font-size: 8pt; margin-top: 4px;">Fecha expedición: ${fecha}</div>
+          <div style="font-size: 8pt;">Recibo No. ${recibo}</div>
+          <div style="font-size: 8.5pt; font-weight: bold; margin-top: 2px;">CÓDIGO DE VERIFICACIÓN ${codigo}</div>
         </div>
-        <div class="bga-header-right">
-          <img src="${logoSrc}" alt="${chamber.name}" style="max-width: 175px; max-height: 75px; object-fit: contain;">
+      `;
+    } else if (isRight) {
+      headerHtml = `
+        <div class="bga-header-grid">
+          <div class="bga-header-left">
+            <div class="bga-main-title">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
+            <div class="bga-sub">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+            <div class="bga-sub" style="font-size: 8pt; margin-top: 1px; font-weight: bold;">ENTIDADES SIN ANIMO DE LUCRO</div>
+            <div class="bga-meta">LUGAR Y FECHA DE EXPEDICIÓN: ${(chamber.city || data.ciudad || 'COLOMBIA').toUpperCase()}, ${fecha}</div>
+            <div class="bga-receipt">Recibo No. ${recibo}</div>
+            <div class="bga-code">CÓDIGO DE VERIFICACIÓN: <strong>${codigo}</strong></div>
+          </div>
+          <div class="bga-header-right">
+            <img src="${logoSrc}" alt="${chamber.name}" style="max-width: 175px; max-height: 75px; object-fit: contain;">
+          </div>
         </div>
-      </div>
-    ` : `
-      <div class="ctg-header">
-        <div class="ctg-logo-box">
-          <img src="${logoSrc}" alt="${chamber.name}" style="max-width: 135px; max-height: 75px; object-fit: contain;">
+      `;
+    } else {
+      headerHtml = `
+        <div class="ctg-header">
+          <div class="ctg-logo-box">
+            <img src="${logoSrc}" alt="${chamber.name}" style="max-width: 135px; max-height: 75px; object-fit: contain;">
+          </div>
+          <div class="ctg-center-titles">
+            <div class="ctg-main-name">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
+            <div class="ctg-sub-name">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
+            <div class="ctg-sub-name" style="font-size: 8pt; margin-top: 1px;">ENTIDADES SIN ANIMO DE LUCRO</div>
+            <div class="ctg-meta">Fecha expedición: ${fecha}</div>
+            <div class="ctg-receipt">Recibo No. ${recibo}</div>
+            <div class="ctg-code">CÓDIGO DE VERIFICACIÓN ${codigo}</div>
+          </div>
         </div>
-        <div class="ctg-center-titles">
-          <div class="ctg-main-name">${(chamber.name || 'CÁMARA DE COMERCIO').toUpperCase()}</div>
-          <div class="ctg-sub-name">CERTIFICADO DE EXISTENCIA Y REPRESENTACIÓN LEGAL</div>
-          <div class="ctg-sub-name" style="font-size: 8pt; margin-top: 1px;">ENTIDADES SIN ANIMO DE LUCRO</div>
-          <div class="ctg-meta">Fecha expedición: ${fecha}</div>
-          <div class="ctg-receipt">Recibo No. ${recibo}</div>
-          <div class="ctg-code">CÓDIGO DE VERIFICACIÓN ${codigo}</div>
-        </div>
-      </div>
-    `;
+      `;
+    }
 
     return `
       <div class="cc-page style-custom-chamber">

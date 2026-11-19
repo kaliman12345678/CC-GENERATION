@@ -708,12 +708,166 @@ window.handleHistoryDelete = function(id) {
 
 /**
  * =========================================================================
- * GESTOR DE PLANTILLAS Y LOGOS (SUBIR SIN TOCAR CÓDIGO)
+ * GESTOR DE PLANTILLAS Y LOGOS (RECONOCIMIENTO AUTOMÁTICO Y CLONACIÓN)
  * =========================================================================
  */
 let currentUploadedLogoBase64 = null;
+let currentSampleTemplateBase64 = null;
+let currentDetectedAnalysis = null;
+
+const COLOMBIAN_CHAMBERS_DIRECTORY = [
+  { name: 'CÁMARA DE COMERCIO DE BOGOTÁ', city: 'Bogotá', keywords: 'bogota, soacha, cundinamarca, chia, zipaquira', verifyUrl: 'www.ccb.org.co', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE MEDELLÍN PARA ANTIOQUIA', city: 'Medellín', keywords: 'medellin, antioquia, bello, envigado, itagui, rionegro', verifyUrl: 'www.camaramedellin.com.co', logoPosition: 'right' },
+  { name: 'CÁMARA DE COMERCIO DE CALI', city: 'Cali', keywords: 'cali, valle, yumbo, jamundi, palmira', verifyUrl: 'www.ccc.org.co', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE BARRANQUILLA', city: 'Barranquilla', keywords: 'barranquilla, atlantico, soledad, malambo', verifyUrl: 'www.camarabaq.org.co', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE BUCARAMANGA', city: 'Bucaramanga', keywords: 'bucaramanga, santander, floridablanca, giron, piedecuesta', verifyUrl: 'www.camaradirecta.com', logoPosition: 'right' },
+  { name: 'CÁMARA DE COMERCIO DE CARTAGENA', city: 'Cartagena', keywords: 'cartagena, bolivar, turbaco, arjona', verifyUrl: 'www.cccartagena.org.co', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE MANIZALES POR CALDAS', city: 'Manizales', keywords: 'manizales, caldas, villamaria, chinchina', verifyUrl: 'www.ccmpc.org.co', logoPosition: 'right' },
+  { name: 'CÁMARA DE COMERCIO DE PEREIRA', city: 'Pereira', keywords: 'pereira, risaralda, dosquebradas, santa rosa', verifyUrl: 'www.camarapereira.org.co', logoPosition: 'right' },
+  { name: 'CÁMARA DE COMERCIO DE CÚCUTA', city: 'Cúcuta', keywords: 'cucuta, norte de santander, villa del rosario, los patios', verifyUrl: 'www.cccucuta.org.co', logoPosition: 'right' },
+  { name: 'CÁMARA DE COMERCIO DE ARMENIA Y DEL QUINDÍO', city: 'Armenia', keywords: 'armenia, quindio, calarca, montenegro, quimbaya', verifyUrl: 'www.camaraarmenia.org.co', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE IBAGUÉ', city: 'Ibagué', keywords: 'ibague, tolima, espinal, melgar', verifyUrl: 'www.ccibague.org', logoPosition: 'right' },
+  { name: 'CÁMARA DE COMERCIO DE SANTA MARTA PARA EL MAGDALENA', city: 'Santa Marta', keywords: 'santa marta, magdalena, cienaga, fundacion', verifyUrl: 'www.ccsm.org.co', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE VILLAVICENCIO', city: 'Villavicencio', keywords: 'villavicencio, meta, acacias, granada', verifyUrl: 'www.ccv.org.co', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE PASTO', city: 'Pasto', keywords: 'pasto, narino, ipiales, tuquerres', verifyUrl: 'www.ccpasto.org.co', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE MONTERÍA', city: 'Montería', keywords: 'monteria, cordoba, cerete, lorica', verifyUrl: 'www.ccmonteria.org.co', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE NEIVA', city: 'Neiva', keywords: 'neiva, huila, pitalito, garzon', verifyUrl: 'www.ccneiva.org', logoPosition: 'left' },
+  { name: 'CÁMARA DE COMERCIO DE VALLEDUPAR', city: 'Valledupar', keywords: 'valledupar, cesar, aguachica, agustin codazzi', verifyUrl: 'www.ccvalledupar.org.co', logoPosition: 'right' },
+  { name: 'CÁMARA DE COMERCIO DE TUNJA', city: 'Tunja', keywords: 'tunja, boyaca, duitama, sogamoso', verifyUrl: 'www.cctunja.org.co', logoPosition: 'right' },
+  { name: 'CÁMARA DE COMERCIO DE URABÁ', city: 'Apartadó', keywords: 'uraba, apartado, turbo, carepa, chigorodo', verifyUrl: 'www.ccuraba.org.co', logoPosition: 'right' },
+  { name: 'CÁMARA DE COMERCIO DEL ORIENTE ANTIOQUEÑO', city: 'Rionegro', keywords: 'oriente antioqueno, rionegro, marinilla, la ceja, guarne', verifyUrl: 'www.ccoa.org.co', logoPosition: 'right' }
+];
+
+function matchChamberFromText(text) {
+  if (!text) return null;
+  const clean = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  for (const chamber of COLOMBIAN_CHAMBERS_DIRECTORY) {
+    const cityClean = chamber.city.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const kwList = chamber.keywords.split(',').map(k => k.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+    if (clean.includes(cityClean) || kwList.some(k => clean.includes(k))) {
+      return chamber;
+    }
+  }
+  return null;
+}
+
+function analyzeCertificateHeader(imgElement) {
+  const canvas = document.createElement('canvas');
+  const targetWidth = 1000;
+  const targetHeight = Math.round((imgElement.naturalHeight || imgElement.height || 1400) * (targetWidth / (imgElement.naturalWidth || imgElement.width || 1000)));
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  ctx.drawImage(imgElement, 0, 0, targetWidth, targetHeight);
+
+  const headerH = Math.min(Math.round(targetHeight * 0.24), 320);
+  const leftX1 = Math.round(targetWidth * 0.02);
+  const leftX2 = Math.round(targetWidth * 0.42);
+  const rightX1 = Math.round(targetWidth * 0.58);
+  const rightX2 = Math.round(targetWidth * 0.98);
+  const centerX1 = Math.round(targetWidth * 0.30);
+  const centerX2 = Math.round(targetWidth * 0.70);
+
+  function getZoneMetrics(xStart, xEnd, yStart, yEnd) {
+    const w = xEnd - xStart;
+    const h = yEnd - yStart;
+    if (w <= 0 || h <= 0) return { nonWhite: 0, chromaSum: 0, avgChroma: 0, bbox: null };
+    const imgData = ctx.getImageData(xStart, yStart, w, h);
+    const data = imgData.data;
+    let nonWhite = 0;
+    let chromaSum = 0;
+    let minX = w, maxX = 0, minY = h, maxY = 0;
+
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const idx = (y * w + x) * 4;
+        const r = data[idx], g = data[idx + 1], b = data[idx + 2], a = data[idx + 3];
+        if (a < 50) continue;
+        const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+        const chroma = Math.abs(r - g) + Math.abs(g - b) + Math.abs(r - b);
+        if (lum < 240 || chroma > 25) {
+          nonWhite++;
+          chromaSum += chroma;
+          if (x < minX) minX = x;
+          if (x > maxX) maxX = x;
+          if (y < minY) minY = y;
+          if (y > maxY) maxY = y;
+        }
+      }
+    }
+    return {
+      nonWhite,
+      chromaSum,
+      avgChroma: nonWhite > 0 ? chromaSum / nonWhite : 0,
+      bbox: minX <= maxX ? {
+        x: xStart + minX,
+        y: yStart + minY,
+        w: maxX - minX + 1,
+        h: maxY - minY + 1
+      } : null
+    };
+  }
+
+  const leftMetrics = getZoneMetrics(leftX1, leftX2, 10, headerH);
+  const rightMetrics = getZoneMetrics(rightX1, rightX2, 10, headerH);
+  const centerMetrics = getZoneMetrics(centerX1, centerX2, 10, Math.round(headerH * 0.55));
+
+  let detectedPosition = 'right';
+  let targetBbox = rightMetrics.bbox;
+
+  const leftScore = (leftMetrics.chromaSum * 2) + leftMetrics.nonWhite;
+  const rightScore = (rightMetrics.chromaSum * 2) + rightMetrics.nonWhite;
+
+  if (centerMetrics.nonWhite > 300 && centerMetrics.avgChroma > 20 && Math.abs(leftMetrics.nonWhite - rightMetrics.nonWhite) < Math.max(leftMetrics.nonWhite, rightMetrics.nonWhite) * 0.3) {
+    detectedPosition = 'center';
+    targetBbox = centerMetrics.bbox;
+  } else if (rightScore > leftScore * 1.35 || (rightMetrics.avgChroma > 22 && rightMetrics.avgChroma > leftMetrics.avgChroma * 1.3)) {
+    detectedPosition = 'right';
+    targetBbox = rightMetrics.bbox || { x: rightX1, y: 15, w: 180, h: 80 };
+  } else if (leftScore > rightScore * 1.35 || (leftMetrics.avgChroma > 22 && leftMetrics.avgChroma > rightMetrics.avgChroma * 1.3)) {
+    detectedPosition = 'left';
+    targetBbox = leftMetrics.bbox || { x: leftX1, y: 15, w: 180, h: 80 };
+  } else {
+    detectedPosition = rightMetrics.nonWhite >= leftMetrics.nonWhite ? 'right' : 'left';
+    targetBbox = (detectedPosition === 'right' ? rightMetrics.bbox : leftMetrics.bbox) || { x: 20, y: 20, w: 160, h: 70 };
+  }
+
+  let croppedLogoBase64 = null;
+  if (targetBbox && targetBbox.w > 20 && targetBbox.h > 15) {
+    const pad = 8;
+    const cropX = Math.max(0, targetBbox.x - pad);
+    const cropY = Math.max(0, targetBbox.y - pad);
+    const cropW = Math.min(targetWidth - cropX, targetBbox.w + pad * 2);
+    const cropH = Math.min(targetHeight - cropY, targetBbox.h + pad * 2);
+
+    const cropCanvas = document.createElement('canvas');
+    cropCanvas.width = cropW;
+    cropCanvas.height = cropH;
+    const cropCtx = cropCanvas.getContext('2d');
+    cropCtx.drawImage(canvas, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+    croppedLogoBase64 = cropCanvas.toDataURL('image/png');
+  }
+
+  return {
+    position: detectedPosition,
+    croppedLogo: croppedLogoBase64,
+    bbox: targetBbox
+  };
+}
 
 function initTemplateManager() {
+  // Elementos de la sección de clonación inteligente
+  const sampleTemplateInput = document.getElementById('sample-template-file');
+  const sampleLogoInput = document.getElementById('sample-logo-file');
+  const analysisPanel = document.getElementById('template-analysis-panel');
+  const detectedPosBadge = document.getElementById('detected-pos-badge');
+  const detectedLogoPreview = document.getElementById('detected-logo-preview');
+  const detectedChamberNameInput = document.getElementById('detected-chamber-name');
+  const detectedChamberCityInput = document.getElementById('detected-chamber-city');
+  const btnCreateEditableCopy = document.getElementById('btn-create-editable-copy');
+  const btnApplyToCustomForm = document.getElementById('btn-apply-to-custom-form');
+
+  // Elementos del formulario manual
   const fileInput = document.getElementById('custom-logo-file');
   const previewBox = document.getElementById('custom-logo-preview-box');
   const previewImg = document.getElementById('custom-logo-preview-img');
@@ -723,7 +877,126 @@ function initTemplateManager() {
   const importBtn = document.getElementById('btn-import-templates');
   const inputImportJson = document.getElementById('input-import-json');
 
-  // Vista previa al cargar un logotipo
+  // 1. Manejo de archivo de muestra para reconocimiento de plantilla
+  sampleTemplateInput?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const matchedChamber = matchChamberFromText(file.name);
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      currentSampleTemplateBase64 = evt.target.result;
+      const img = new Image();
+      img.onload = function() {
+        const analysis = analyzeCertificateHeader(img);
+        currentDetectedAnalysis = analysis;
+
+        // Si el archivo del nombre o directorio sugiere una posición conocida, considerarla
+        if (matchedChamber && matchedChamber.logoPosition) {
+          analysis.position = matchedChamber.logoPosition;
+        }
+
+        const posText = analysis.position === 'center' ? '📍 Superior Centro' : (analysis.position === 'right' ? '📍 Superior Derecha' : '📍 Superior Izquierda');
+        if (detectedPosBadge) detectedPosBadge.innerHTML = posText;
+
+        if (detectedLogoPreview && analysis.croppedLogo && !currentUploadedLogoBase64) {
+          detectedLogoPreview.src = analysis.croppedLogo;
+        }
+
+        if (detectedChamberNameInput) {
+          detectedChamberNameInput.value = matchedChamber ? matchedChamber.name : (detectedChamberNameInput.value || 'CÁMARA DE COMERCIO');
+        }
+
+        if (detectedChamberCityInput) {
+          detectedChamberCityInput.value = matchedChamber ? matchedChamber.city : (detectedChamberCityInput.value || 'COLOMBIA');
+        }
+
+        if (analysisPanel) analysisPanel.style.display = 'block';
+        showToast(`✓ Plantilla analizada: Logo detectado en posición "${analysis.position.toUpperCase()}"`);
+      };
+      img.src = currentSampleTemplateBase64;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 2. Manejo de archivo de logotipo en alta calidad para la clonación
+  sampleLogoInput?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      currentUploadedLogoBase64 = evt.target.result;
+      if (detectedLogoPreview) detectedLogoPreview.src = currentUploadedLogoBase64;
+      if (previewImg) previewImg.src = currentUploadedLogoBase64;
+      if (previewBox) previewBox.style.display = 'block';
+      showToast("✓ Logotipo en alta calidad vinculado a la plantilla.");
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 3. Crear copia exacta editable y abrir directamente en el generador
+  btnCreateEditableCopy?.addEventListener('click', () => {
+    const pos = currentDetectedAnalysis ? currentDetectedAnalysis.position : 'right';
+    const logoData = currentUploadedLogoBase64 || (currentDetectedAnalysis ? currentDetectedAnalysis.croppedLogo : null);
+    const chamberName = detectedChamberNameInput?.value.trim() || 'CÁMARA DE COMERCIO';
+    const city = detectedChamberCityInput?.value.trim() || 'COLOMBIA';
+
+    const matchedChamber = matchChamberFromText(city) || matchChamberFromText(chamberName);
+    const templateId = 'custom_' + city.toLowerCase().replace(/[^a-z0-9]/g, '') + '_' + Date.now();
+
+    const templateData = {
+      id: templateId,
+      name: chamberName,
+      city: city,
+      keywords: matchedChamber ? matchedChamber.keywords : city.toLowerCase(),
+      verifyUrl: matchedChamber ? matchedChamber.verifyUrl : 'www.confecamaras.org.co',
+      disclaimer: matchedChamber?.disclaimer || null,
+      logoPosition: pos,
+      logoBase64: logoData,
+      isCustom: true
+    };
+
+    StorageManager.saveCustomTemplate(templateData);
+    populateChamberDropdown();
+    renderCustomTemplatesTable();
+    useCustomTemplate(templateId);
+
+    showToast(`⚡ ¡Copia exacta creada! Plantilla lista y editable en el Generador.`);
+  });
+
+  // 4. Copiar datos al formulario avanzado de plantillas
+  btnApplyToCustomForm?.addEventListener('click', () => {
+    const pos = currentDetectedAnalysis ? currentDetectedAnalysis.position : 'right';
+    const chamberName = detectedChamberNameInput?.value.trim() || '';
+    const city = detectedChamberCityInput?.value.trim() || '';
+    const matchedChamber = matchChamberFromText(city) || matchChamberFromText(chamberName);
+
+    const nameInput = document.getElementById('custom-name');
+    const cityInput = document.getElementById('custom-city');
+    const kwInput = document.getElementById('custom-keywords');
+    const urlInput = document.getElementById('custom-verify-url');
+
+    if (nameInput) nameInput.value = chamberName;
+    if (cityInput) cityInput.value = city;
+    if (kwInput) kwInput.value = matchedChamber ? matchedChamber.keywords : city.toLowerCase();
+    if (urlInput) urlInput.value = matchedChamber ? matchedChamber.verifyUrl : 'www.confecamaras.org.co';
+
+    const radio = document.querySelector(`input[name="custom-logo-pos"][value="${pos}"]`);
+    if (radio) radio.checked = true;
+
+    const logoData = currentUploadedLogoBase64 || (currentDetectedAnalysis ? currentDetectedAnalysis.croppedLogo : null);
+    if (logoData) {
+      currentUploadedLogoBase64 = logoData;
+      if (previewImg) previewImg.src = logoData;
+      if (previewBox) previewBox.style.display = 'block';
+    }
+
+    document.getElementById('custom-template-form')?.scrollIntoView({ behavior: 'smooth' });
+    showToast("Datos copiados al editor avanzado de plantillas.");
+  });
+
+  // 5. Vista previa al cargar logotipo en el formulario manual
   fileInput?.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -737,7 +1010,7 @@ function initTemplateManager() {
     }
   });
 
-  // Guardar nueva plantilla
+  // 6. Guardar nueva plantilla desde formulario manual
   saveBtn?.addEventListener('click', () => {
     const name = document.getElementById('custom-name')?.value.trim();
     const city = document.getElementById('custom-city')?.value.trim();
@@ -774,13 +1047,12 @@ function initTemplateManager() {
 
   resetBtn?.addEventListener('click', resetCustomForm);
 
-  // Exportar plantillas a JSON
+  // 7. Exportar e importar plantillas JSON
   exportBtn?.addEventListener('click', () => {
     StorageManager.exportTemplatesJSON();
     showToast("Archivo JSON de plantillas descargado.");
   });
 
-  // Importar plantillas desde JSON
   importBtn?.addEventListener('click', () => {
     inputImportJson?.click();
   });
@@ -827,6 +1099,8 @@ function renderCustomTemplatesTable() {
       ? `<span style="background:#dcfce7; color:#15803d; font-size:11px; padding:3px 8px; border-radius:4px; font-weight:700;">Personalizada</span>`
       : `<span style="background:#e2e8f0; color:#475569; font-size:11px; padding:3px 8px; border-radius:4px; font-weight:700;">Sistema</span>`;
 
+    const posLabel = item.logoPosition === 'center' ? 'Sup. Centro' : (item.logoPosition === 'right' ? 'Sup. Derecha' : 'Sup. Izquierda');
+
     const actions = isCustom ? `
       <button class="action-btn-sm btn-open" onclick="useCustomTemplate('${item.id}')" title="Usar en el editor">Usar</button>
       <button class="action-btn-sm btn-del" onclick="deleteCustomTemplate('${item.id}')" title="Eliminar plantilla">🗑️</button>
@@ -844,7 +1118,7 @@ function renderCustomTemplatesTable() {
           ${item.city} <br>
           <small style="color:#64748b;">${(item.keywords || []).slice(0, 4).join(', ')}</small>
         </td>
-        <td><span style="font-size:12px; font-weight:600;">${item.logoPosition === 'right' ? 'Sup. Derecha' : 'Sup. Izquierda'}</span></td>
+        <td><span style="font-size:12px; font-weight:600;">${posLabel}</span></td>
         <td>${typeBadge}</td>
         <td style="text-align: right; white-space: nowrap;">${actions}</td>
       </tr>

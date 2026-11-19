@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Creador CC — Generación y Exportación Oficial a PDF</title>
-  <link rel="stylesheet" href="assets/css/styles.css?v=20261118_2">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20261119_1">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
 </head>
 <body>
@@ -362,6 +362,85 @@
           </div>
         </div>
 
+        <!-- SECCIÓN DE RECONOCIMIENTO INTELIGENTE Y CLONACIÓN EXACTA DE PLANTILLAS -->
+        <div style="background: linear-gradient(135deg, #f0f7ff 0%, #f0fdf4 100%); border: 2px solid #3b82f6; border-radius: 12px; padding: 22px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h3 style="font-size: 17px; font-weight: 800; color: #1e3a8a; margin: 0; display: flex; align-items: center; gap: 8px;">
+                <span>⚡ Clonador Inteligente de Plantillas Oficiales</span>
+                <span style="font-size: 11px; background: #2563eb; color: white; padding: 3px 8px; border-radius: 999px; text-transform: uppercase; font-weight: 700;">Reconocimiento Automático</span>
+              </h3>
+              <p style="font-size: 13px; color: #334155; margin-top: 5px;">
+                Suba una imagen de muestra del certificado oficial (y opcionalmente el archivo de su logotipo). El sistema analizará el encabezado, detectará automáticamente la posición exacta del logo (izquierda, derecha o centro), extraerá los datos institucionales y generará una <strong>copia exacta 100% editable</strong> en el Generador.
+              </p>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-bottom: 16px;">
+            <div class="form-group">
+              <label class="form-label" for="sample-template-file" style="font-weight: 700; color: #1e40af;">
+                📄 1. Subir Certificado / Plantilla de Muestra (PNG, JPG):
+              </label>
+              <input type="file" id="sample-template-file" class="form-control" accept="image/*" style="border-color: #93c5fd; background: #ffffff;">
+              <small style="color: #64748b; font-size: 11px;">El sistema analizará el encabezado y calculará la ubicación exacta del logotipo.</small>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="sample-logo-file" style="font-weight: 700; color: #1e40af;">
+                🎨 2. Subir Logotipo Oficial en Alta Calidad (Opcional):
+              </label>
+              <input type="file" id="sample-logo-file" class="form-control" accept="image/*" style="border-color: #93c5fd; background: #ffffff;">
+              <small style="color: #64748b; font-size: 11px;">Si no dispone del archivo del logo, el sistema lo recortará automáticamente de la muestra.</small>
+            </div>
+          </div>
+
+          <!-- PANEL DE RECONOCIMIENTO Y ANÁLISIS EN VIVO -->
+          <div id="template-analysis-panel" style="display: none; background: white; border: 1.5px solid #60a5fa; border-radius: 10px; padding: 18px; margin-bottom: 14px;">
+            <div style="font-size: 14px; font-weight: 800; color: #1e3a8a; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span>🎯 Resultado del Reconocimiento de Plantilla:</span>
+                <span id="analysis-status-badge" style="background: #dcfce7; color: #166534; font-size: 12px; padding: 2px 10px; border-radius: 6px; font-weight: 700;">Encabezado detectado</span>
+              </div>
+              <span id="analysis-fidelity-label" style="font-size: 12px; color: #0369a1; font-weight: 600;">Estructura verificada</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; align-items: end; margin-bottom: 16px;">
+              <div>
+                <label class="form-label" style="font-size: 12px; margin-bottom: 4px;">Ubicación detectada del Logo:</label>
+                <div id="detected-pos-badge" style="display: inline-flex; align-items: center; gap: 6px; background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: 6px;">
+                  📍 Detectando...
+                </div>
+              </div>
+
+              <div>
+                <label class="form-label" style="font-size: 12px; margin-bottom: 4px;">Logotipo identificado:</label>
+                <div style="height: 52px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 4px;">
+                  <img id="detected-logo-preview" src="" alt="Logo detectado" style="max-height: 44px; max-width: 100%; object-fit: contain;">
+                </div>
+              </div>
+
+              <div>
+                <label class="form-label" for="detected-chamber-name" style="font-size: 12px; margin-bottom: 4px;">Cámara de Comercio:</label>
+                <input type="text" id="detected-chamber-name" class="form-control" placeholder="Ej: CÁMARA DE COMERCIO DE MEDELLÍN" style="font-size: 13px; font-weight: 600;">
+              </div>
+
+              <div>
+                <label class="form-label" for="detected-chamber-city" style="font-size: 12px; margin-bottom: 4px;">Ciudad Principal:</label>
+                <input type="text" id="detected-chamber-city" class="form-control" placeholder="Ej: MEDELLÍN" style="font-size: 13px; font-weight: 600;">
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button id="btn-create-editable-copy" class="btn-mandatory btn-download" style="background: #16a34a; border-color: #15803d; font-size: 14px; font-weight: 800; padding: 10px 22px;">
+                ⚡ Crear Copia Exacta y Abrir en el Generador
+              </button>
+              <button id="btn-apply-to-custom-form" class="btn-mandatory btn-edit" style="font-size: 13px;">
+                ✏️ Pasar al Editor Avanzado de Plantillas
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- FORMULARIO DE AGREGAR / EDITAR CÁMARA -->
         <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 20px; margin-bottom: 28px;">
           <h3 style="font-size: 16px; font-weight: 700; color: #003366; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
@@ -408,6 +487,9 @@
                   </label>
                   <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
                     <input type="radio" name="custom-logo-pos" value="right"> Superior Derecha
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                    <input type="radio" name="custom-logo-pos" value="center"> Superior Centro
                   </label>
                 </div>
               </div>
@@ -517,13 +599,13 @@
   <script src="assets/libs/jspdf.umd.min.js"></script>
   <script src="assets/libs/html2canvas.min.js"></script>
   <script src="assets/libs/jszip.min.js"></script>
-  <script src="assets/js/template-image-data.js?v=20261118_2"></script>
-  <script src="assets/js/official-logos-data.js?v=20261118_2"></script>
-  <script src="assets/js/logos.js?v=20261118_2"></script>
-  <script src="assets/js/template-engine.js?v=20261118_2"></script>
-  <script src="assets/js/pdf-generator.js?v=20261118_2"></script>
-  <script src="assets/js/storage.js?v=20261118_2"></script>
-  <script src="assets/js/app.js?v=20261118_2"></script>
+  <script src="assets/js/template-image-data.js?v=20261119_1"></script>
+  <script src="assets/js/official-logos-data.js?v=20261119_1"></script>
+  <script src="assets/js/logos.js?v=20261119_1"></script>
+  <script src="assets/js/template-engine.js?v=20261119_1"></script>
+  <script src="assets/js/pdf-generator.js?v=20261119_1"></script>
+  <script src="assets/js/storage.js?v=20261119_1"></script>
+  <script src="assets/js/app.js?v=20261119_1"></script>
 
 </body>
 </html>
